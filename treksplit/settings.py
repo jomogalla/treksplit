@@ -117,7 +117,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-import os.path
+
 PROJECT_DIR = os.path.dirname(__file__) # this is not Django setting.
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -125,5 +125,5 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     # "/Users/j/Dropbox/treksplit_mac/templates/"
     # "C:/Users/Jason/Dropbox/pyWeather/templates"
-    os.path.join(PROJECT_DIR, "templates"),
+    os.path.join(PROJECT_DIR, "../templates/"),
 )
