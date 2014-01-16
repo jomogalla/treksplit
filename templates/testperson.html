@@ -1,0 +1,110 @@
+<html>
+<head>
+
+</head>
+<body>
+<input type="text" id="name"><button id="name_button">change name</button>
+<!-- <button id="add_person">add someone</button>
+<button id="delete_person">delete someone</button>
+<button id="add_expense">add expense</button>
+<button id="delete_expense">delete expense</button> -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$( "body" ).on( "click", "#add_group", function() {
+		// Dump this person from the tables VIA AJAX
+		$.ajax({
+		    url: '/',
+		    type: 'POST',
+		    data: {},
+		    success: function(result) {
+		   	     // put the code below in here plz
+		   	     // alert(result);
+		   	     window.location.replace("./" + result);
+		    }
+		});
+	});
+
+// // DELETING ROW FROM PERSON
+// $( "body" ).on( "click", "#delete_person", function() {
+// 	// Dump this person from the tables VIA AJAX
+// 	$.ajax({
+// 	    url: '/expense/THE EXPENSES ID',
+// 	    type: 'DELETE',
+// 	    data: {
+// 	    	expense: "THE EXPENSE ID",
+// 	    },
+// 	    success: function(result) {
+// 	   	     // put the code below in here plz
+// 	    }
+// 	});
+// });
+
+
+
+
+
+// // ADDING ROW TO PERSON
+// $( "body" ).on( "click", ".expense_button.add", function(){
+// 	// send request to add, get an expense ID back, add 
+// 	$.ajax({
+// 	    url: '/expense/THE EXPENSE ID',
+// 	    type: 'DELETE',
+// 	    success: function(result) {
+// 	   	     // put the code below in here plz
+// 	    }
+// 	});
+// });
+
+
+
+
+
+
+
+// // DELETE PERSON
+
+// $( "#expense_area" ).on( "click", ".delete_person", function(){
+// 	// send an id, remove div on success
+// 	$(".delete_person" ).click(function() {
+// 		$.ajax({
+// 		    url: '/person/THEIR ID',
+// 		    type: 'DELETE',
+// 		    success: function(result) {
+// 		   	     // put the code below in here plz
+// 		    }
+// 		});
+		
+// 	});
+// });
+
+
+
+
+// // ADD PERSON
+// $('#add_user').click(function(){
+// 	// THIS SHOULD JUST CALL DJANGO TO CREATE A NEW PERSON AND USE THE RETURNED HTML/FORM
+// 	// FOR NOW ITS IN JS
+// 	var new_id = create_pseudo_id();
+// 	$( this ).before( '<div class="expense_wrapper"><div class="expense  new_row" id="' + new_id +'"><div class="expense_header"><button class="expense_button edit" ></button><span class="expense_owner"><input type="text"  placeholder="name"></span><span class="expense_total">0.00</span></div><div class="edit_person_wrapper"><table><tr><td class="align_right">passcode</td><td> <input type="password" placeholder="optional"></td></tr><tr><td class="align_right"></td><td> <input type="password" placeholder="confirm passcode"></td></tr><tr><td class="align_right">email</td><td> <input type="email" placeholder="optional" ></td></tr><tr><td class="align_right">color</td><td> <input type="color" placeholder="optional"></td></tr><tr><td colspan="2" class="align_center"><button class="delete_person text_button">delete person</button></td></tr></table></div><table class="expense_table"><tr class="odd_row"><td colspan="3" class="align_center"> <button class="expense_button add"></button></td></tr></table></div></div>');
+// 	$('#' + new_id).slideToggle("slow");
+// 	$('#' + new_id).removeClass('new_row');
+
+// 	// ADD A ROW ON THE SIDEBAR FOR THEIR SIDEBAR TOTAL AS WELL
+// 	$('#average_row').before('<tr class="sidebar_person_total new_row" id="sidebar_person_total_' + new_id + '"><td style="color:#ffa58f">' + $(this).siblings(".expense").attr("id")  + '</td><td class="align_right negative_amount"> 0 </td><td class="align_right">$123</td></tr>');
+// 	$('#sidebar_person_total_' + new_id).show("slow");
+// 	$('#sidebar_person_total_' + new_id).removeClass('new_row');
+
+// 	// $('#right_info_bar').css('height', $('body').height());
+// 	update_numbers();
+// });
+
+
+
+});
+
+</script>
+
+</body>
+</html>

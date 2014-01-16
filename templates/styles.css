@@ -1,0 +1,404 @@
+<style type="text/css">
+
+body{
+	margin: 0 0 0 0;
+	font-family: Verdana, Geneva, sans-serif;
+	color: #555555;
+	min-width: 735px;
+	background-color:#f3f3f3;
+	position: relative;
+	min-height: 100%;
+}
+
+html{
+height: 100%;
+}
+#totals h3{
+	margin-left: 15px;
+}
+#expense_area{
+	margin-right: 300px;
+}
+#totals{
+	float:right;
+}
+#payment{
+	float:right;
+}
+#right_info_background{
+	width: 299px;
+	position: absolute;
+	top:0px;
+	bottom: 0px;
+	z-index: -10;
+	background-color:#fafafa;
+	border-left:1px #DCD2FA solid;
+}
+#right_info_bar{
+	width:301px;
+/*	position: relative;
+	float:right;
+	min-height: 100%;
+	height: auto;*/
+	position: absolute;
+	top:0px;
+	bottom: 0px;
+	right: 0px;
+
+}
+#bar_top{
+	background-color: #fcfcfc;
+	border-bottom: 1px #f8f8f8;
+}
+/*Fixed position below results in the controls sliding right on a small screen*/
+/*Absolute Positon below results in */
+#right_control_bar{
+	z-index: 10;
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	width: 300px;
+}
+#logo{
+	font-size: 36px;
+	padding-left: 45px;
+	background-image: url('logo_background.png');
+}
+.expense{
+	background-color: white;
+	float: left;
+	margin:15px;
+	border: 1px solid #e7e7e7;
+
+}
+.expense_total{
+	float: right;
+	margin-right: 10px;
+	font-size: 16pt;
+}
+.expense_header{
+	background-color:#8fd0ff; 
+	padding: 2px;
+}
+.edit_person_wrapper{
+	background-color: #fafafa;
+	border-bottom: 1px solid #e7e7e7;
+	border-top: 1px solid #dadada;
+	display: none;
+}
+.edit_person_wrapper table{
+	margin: 0 auto;
+}
+.delete_person{
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+.expense_header button{
+	margin-bottom: 5px;
+}
+.expense_table tr{
+	border:1px solid black;
+	height: 20px;
+}
+input{
+	border: none;
+	background-color: transparent;
+	margin: 0;
+	padding-left: 3px;
+	font-family: Verdana, Geneva, sans-serif;
+	color: #555555;
+}
+.expense_table input{
+	border: none;
+	background-color: transparent;
+	margin: 0;
+	font-size: 16px;
+	padding-left: 3px;
+	font-family: Verdana, Geneva, sans-serif;
+	color: #555555;
+}
+
+.expense_owner input{
+
+	font-size: 16pt;
+}
+.expense_table{
+	width: 400px;
+	border-spacing: 0px;
+}
+.expense_table tr td button{
+	visibility: hidden;
+}
+.expense_table tr:hover td button{
+	visibility: visible;
+}
+.expense_header button{
+	visibility: hidden;
+	margin-top: 4px;
+	margin-left: 4px;
+}
+.expense_header:hover button{
+	visibility: visible;
+}
+.expense_button{
+	border: 0px solid #F3F3F3;
+	background-color: transparent;
+	cursor:pointer;
+	height: 12px;
+	background-repeat: no-repeat;
+
+}
+.expense_button:hover{
+	background-repeat: no-repeat;
+}
+.delete{
+	background-image:url("./delete.png");
+}
+.delete:hover{
+	background-image:url("./delete_dark.png");
+}
+.add{
+	background-image:url("./add.png");
+	visibility: visible !important;
+	width: 100%;
+	background-position: center;
+}
+.add:hover{
+	background-image:url("./add_dark.png");
+	visibility: visible;
+}
+.edit{
+	background-image:url("./edit.png");
+	height: 16px;
+	width: 16px;
+	background-position: left center;
+}
+.odd_row{
+	background-color: #fafafa;
+	border-top: 1px solid #dddddd;
+}
+.even_row{
+	border-top: 1px solid #dddddd;
+	background-color: white;
+
+}
+#breakdown_header{
+	font-size: 18pt;
+	margin: 3px;
+	margin-left: 10px;
+	padding-bottom: 3px;
+}
+table{
+	border-spacing: 0px;
+}
+#breakdown_table{
+	width: 300px;
+	background-color:white;
+	border-spacing: 0px;
+}
+#breakdown_table td{
+	padding: 3px;
+	padding-left: 10px;	
+}
+#total_header{
+	font-size: 20px;
+}
+#total_header td{
+	border-bottom: 1px #dbdbdb solid;
+}
+#average_row td{
+	border-top: 1px #dbdbdb solid;
+	font-size: 17px;
+}
+td{
+	border-top: 1px solid #F7F7F7;
+}
+#payment_header{
+	font-size: 18pt;
+	margin-left: 10px;
+	padding-bottom: 3px;
+}
+#payment_table{
+	width: 300px;
+	background-color:white;
+	border-spacing: 0px;
+}
+#payment_table td{
+	padding-left: 10px;
+}
+#payment{
+	margin-top: 40px;
+	padding-bottom: 315px;
+}
+#advertisement{
+	font-size: 10pt;
+/*	position: fixed;
+	bottom: 0px;*/
+	padding:25px;
+	padding-bottom:15px;
+	background-color:white;
+	border-top: solid 1px #ededed;
+	z-index:10;
+}
+
+#advertisement img{
+	width: 250px;
+}
+.date input{
+	font-size: 10pt;
+}
+.cost input{
+	width:6em;
+	text-align: right;
+	padding-right: 3px;
+}
+#add_user{
+	float: left;
+	margin: 15px;
+	width:400px;
+	text-align: center;
+}
+#add_user button{
+	border:0;
+	color:#aaaaaa;
+	font-size:15pt;
+	background-color:transparent;
+}
+#add_user button:hover{
+	color:#777777;
+	cursor: pointer;
+}
+#settings_buttons{
+	padding-left: 95px;
+	padding-bottom:8px;
+	background-color: #fafafa;
+}
+#settings_buttons button{
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+#add_new_person{
+	float: left;
+	margin:15px;
+	border: 1px solid #e7e7e7;
+	background-color: white;
+}
+#add_new_person_header{
+	padding: 3px;
+	background-color:#DCD2FA;
+	padding-left: 8px;
+}
+.align_right{
+	text-align: right;
+	padding: 3px;
+	padding-left: 6px;
+}
+.align_center{
+	text-align: center;
+}
+.text_button{
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: #888888;
+	font-size: 15px;
+}
+.text_button:hover{
+	color: #555555;
+}
+#settings{
+	/*width: 100%;*/
+	display:none;
+	background-color: #fafafa;
+	padding-bottom:8px;
+	/*margin-bottom: 4px;*/
+/*	background-color: #fcfcfc;
+	border-bottom: 1px solid #e7e7e7;
+	border-top: 1px solid #dadada;*/
+}
+#share{
+	padding-top: 4px;
+/*	width: 100%;*/
+	display:none;
+	/*margin-bottom:4px;*/
+	padding-bottom:8px;
+	background-color: #fafafa;
+	padding-left: 15px;
+/*	background-color: #fcfcfc;
+	border-bottom: 1px solid #e7e7e7;
+	border-top: 1px solid #dadada;*/
+}
+#share input{
+	font-size:12pt;
+	margin-bottom:3px;
+}
+#settings_header{
+
+	padding: 3px;
+	font-size:14pt;
+	margin-left: 10px;
+
+}
+#settings button{
+	padding: 3px;
+	margin-left: 15px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	display:block;
+	
+}
+.arrow_right{
+	width: 0; 
+	height: 0; 
+	border-top: 9px solid transparent;
+	border-bottom:9px solid transparent;
+	
+	border-left: 18px solid #8fd0ff;
+}
+.arrow_box{
+	background-color: #8fd0ff;
+}
+.negative_amount{
+	color: #F86C6C;
+}
+.updating{
+	font-style: italic;
+}
+.delete_confirmation{
+
+	/*color: #F86C6C;*/
+	font-weight: bold;
+}
+.new_row{
+	display: none;
+}
+#extras{
+/*	position:fixed;*/
+	width:100%;
+/*	bottom:224px;*/
+	z-index:5;
+	background-color: inherit;
+}
+.extras_up{
+	bottom:235 !important;
+}
+.money_sign:first-letter{
+	vertical-align:super;
+	font-size:10pt;
+	padding-right: 3px;
+}
+.clear_element{
+	clear:both;
+}
+
+/*SHIT FROM THE INTERNET*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+</style>

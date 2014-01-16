@@ -65,12 +65,12 @@ DATABASES = {
     #     'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
     #     'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     # }
-    # copper database on heroku
+    # gold database on heroku
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'd6ittlkkbf93gn',                      # Or path to database file if using sqlite3.
-        'USER': 'nodvcnyzahkghk',                      # Not used with sqlite3.
-        'PASSWORD': 'CNJO2SNW9aP-9YYUrVTs2hUIVZ',                  # Not used with sqlite3.
+        'NAME': 'd116sk88i3pfev',                      # Or path to database file if using sqlite3.
+        'USER': 'ojxpubpdbnpvhm',                      # Not used with sqlite3.
+        'PASSWORD': 'w8qFxXwjVq-6hIC0kyRsaNQulS',                  # Not used with sqlite3.
         'HOST': 'ec2-54-204-43-138.compute-1.amazonaws.com',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -93,7 +93,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_URL = '/static/'
 MEDIA_ROOT = 'media'
 
 
@@ -111,9 +110,16 @@ ALLOWED_HOSTS = ['*']
 # Static asset configuration
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = '/Users/j/Dropbox/treksplit_mac/'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+)
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    "/Users/j/Dropbox/treksplit_mac/templates/"
+    # "C:/Users/Jason/Dropbox/pyWeather/templates"
 )

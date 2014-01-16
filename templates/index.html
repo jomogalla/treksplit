@@ -1,0 +1,992 @@
+<head>
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<style type="text/css">
+
+body{
+	margin: 0 0 0 0;
+	font-family: Verdana, Geneva, sans-serif;
+	color: #555555;
+	min-width: 735px;
+	background-color:#f3f3f3;
+	position: relative;
+	min-height: 100%;
+}
+
+html{
+height: 100%;
+}
+#totals h3{
+	margin-left: 15px;
+}
+#expense_area{
+	margin-right: 300px;
+}
+#totals{
+	float:right;
+}
+#payment{
+	float:right;
+}
+#right_info_background{
+	width: 299px;
+	position: absolute;
+	top:0px;
+	bottom: 0px;
+	z-index: -10;
+	background-color:#fafafa;
+	border-left:1px #DCD2FA solid;
+}
+#right_info_bar{
+	width:301px;
+/*	position: relative;
+	float:right;
+	min-height: 100%;
+	height: auto;*/
+	position: absolute;
+	top:0px;
+	bottom: 0px;
+	right: 0px;
+
+}
+#bar_top{
+	background-color: #fcfcfc;
+	border-bottom: 1px #f8f8f8;
+}
+/*Fixed position below results in the controls sliding right on a small screen*/
+/*Absolute Positon below results in */
+#right_control_bar{
+	z-index: 10;
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	width: 300px;
+	background-color: #fafafa;
+	border-top: 1px #eeeeee solid;
+}
+#logo{
+	font-size: 36px;
+	padding-left: 45px;
+	/*background-image: url('logo_background.png');*/
+}
+.expense{
+	background-color: white;
+	float: left;
+	margin:15px;
+	border: 1px solid #e7e7e7;
+
+}
+.expense_total{
+	float: right;
+	margin-right: 10px;
+	font-size: 16pt;
+}
+.expense_header{
+	background-color:#8fd0ff; 
+	padding: 2px;
+}
+.edit_person_wrapper{
+	background-color: #fafafa;
+	border-bottom: 1px solid #e7e7e7;
+	border-top: 1px solid #dadada;
+	display: none;
+}
+.edit_person_wrapper table{
+	margin: 0 auto;
+}
+.delete_person{
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+.expense_header button{
+	margin-bottom: 5px;
+}
+.expense_table tr{
+	border:1px solid black;
+	height: 20px;
+}
+input{
+	border: none;
+	background-color: transparent;
+	margin: 0;
+	padding-left: 3px;
+	font-family: Verdana, Geneva, sans-serif;
+	color: #555555;
+}
+.expense_table input{
+	border: none;
+	background-color: transparent;
+	margin: 0;
+	font-size: 16px;
+	padding-left: 3px;
+	font-family: Verdana, Geneva, sans-serif;
+	color: #555555;
+}
+
+.expense_owner input{
+
+	font-size: 16pt;
+}
+.expense_table{
+	width: 400px;
+	border-spacing: 0px;
+}
+.expense_table tr td button{
+	visibility: hidden;
+}
+.expense_table tr:hover td button{
+	visibility: visible;
+}
+.expense_header button{
+	visibility: hidden;
+	/*margin-top: 4px;*/
+	margin-left: 6px;
+}
+.expense_header:hover button{
+
+	visibility: visible;
+}
+.expense_button{
+	border: 0px solid #F3F3F3;
+	background-color: transparent;
+	cursor:pointer;
+	height: 12px;
+	background-repeat: no-repeat;
+
+}
+.expense_button:hover{
+	background-repeat: no-repeat;
+}
+.delete{
+	color:#d2d2d2;
+}
+.delete:hover{
+	color:#ff6e6b;
+}
+.add{
+	color: #d2d2d2;
+	visibility: visible !important;
+	width: 100%;
+	background-position: center;
+}
+.add:hover{
+	color: #9c9c9c;
+	visibility: visible;
+}
+.edit{
+	color: #d2d2d2;
+	font-size: 18px;
+	background-position: left center;
+	height: 16px;
+	width: 16px;
+	padding: 0px;
+}
+.odd_row{
+	background-color: #fafafa;
+	border-top: 1px solid #dddddd;
+}
+.even_row{
+	border-top: 1px solid #dddddd;
+	background-color: white;
+
+}
+#breakdown_header{
+	font-size: 18pt;
+	margin: 3px;
+	margin-left: 10px;
+	padding-bottom: 3px;
+}
+table{
+	border-spacing: 0px;
+}
+#breakdown_table{
+	width: 300px;
+	background-color:white;
+	border-spacing: 0px;
+}
+#breakdown_table td{
+	padding: 3px;
+	padding-left: 10px;	
+}
+#total_header{
+	font-size: 20px;
+}
+#total_header td{
+	border-bottom: 1px #dbdbdb solid;
+}
+#average_row td{
+	border-top: 1px #dbdbdb solid;
+	font-size: 17px;
+}
+td{
+	border-top: 1px solid #F7F7F7;
+}
+#payment_header{
+	font-size: 18pt;
+	margin-left: 10px;
+	padding-bottom: 3px;
+}
+#payment_table{
+	width: 300px;
+	background-color:white;
+	border-spacing: 0px;
+}
+#payment_table td{
+	padding-left: 10px;
+}
+#payment{
+	margin-top: 40px;
+	padding-bottom: 103px;
+}
+#advertisement{
+	font-size: 8pt;
+/*	position: fixed;
+	bottom: 0px;*/
+	/*padding:25px;*/
+	padding:5px;
+	/*padding-bottom:15px;*/
+	background-color:white;
+	border-top: solid 1px #ededed;
+	z-index:10;
+}
+
+#advertisement img{
+	width: 250px;
+}
+.date input{
+	font-size: 10pt;
+}
+.cost input{
+	width:6em;
+	text-align: right;
+	padding-right: 3px;
+}
+#add_user{
+	float: left;
+	margin: 15px;
+	width:400px;
+	text-align: center;
+}
+#add_user button{
+	border:0;
+	color:#aaaaaa;
+	font-size:15pt;
+	background-color:transparent;
+}
+#add_user button:hover{
+	color:#777777;
+	cursor: pointer;
+}
+#settings_buttons{
+	padding-left: 95px;
+	padding-bottom:8px;
+	background-color: #fafafa;
+}
+#settings_buttons button{
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+#add_new_person{
+	float: left;
+	margin:15px;
+	border: 1px solid #e7e7e7;
+	background-color: white;
+}
+#add_new_person_header{
+	padding: 3px;
+	background-color:#DCD2FA;
+	padding-left: 8px;
+}
+.align_right{
+	text-align: right;
+	padding: 3px;
+	padding-left: 6px;
+}
+.align_center{
+	text-align: center;
+}
+.text_button{
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: #888888;
+	font-size: 15px;
+}
+.text_button:hover{
+	color: #555555;
+}
+#settings{
+	/*width: 100%;*/
+	display:none;
+	background-color: #fafafa;
+	padding-bottom:8px;
+	/*margin-bottom: 4px;*/
+/*	background-color: #fcfcfc;
+	border-bottom: 1px solid #e7e7e7;
+	border-top: 1px solid #dadada;*/
+}
+#share{
+	padding-top: 4px;
+/*	width: 100%;*/
+	display:none;
+	/*margin-bottom:4px;*/
+	padding-bottom:8px;
+	background-color: #fafafa;
+	padding-left: 15px;
+/*	background-color: #fcfcfc;
+	border-bottom: 1px solid #e7e7e7;
+	border-top: 1px solid #dadada;*/
+}
+#share input{
+	font-size:12pt;
+	margin-bottom:3px;
+}
+#settings_header{
+
+	padding: 3px;
+	font-size:14pt;
+	margin-left: 10px;
+
+}
+#settings button{
+	padding: 3px;
+	margin-left: 15px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	display:block;
+	
+}
+.arrow_right{
+	width: 0; 
+	height: 0; 
+	border-top: 9px solid transparent;
+	border-bottom:9px solid transparent;
+	
+	border-left: 18px solid #8fd0ff;
+}
+.arrow_box{
+	background-color: #8fd0ff;
+}
+.negative_amount{
+	color: #F86C6C;
+}
+.updating{
+	font-style: italic;
+}
+.delete_confirmation{
+
+	/*color: #F86C6C;*/
+	font-weight: bold;
+}
+.new_row{
+	display: none;
+}
+#extras{
+/*	position:fixed;*/
+	width:100%;
+/*	bottom:224px;*/
+	z-index:5;
+	background-color: inherit;
+}
+.extras_up{
+	bottom:235 !important;
+}
+.money_sign:first-letter{
+	vertical-align:super;
+	font-size:10pt;
+	padding-right: 3px;
+}
+.clear_element{
+	clear:both;
+}
+.updating{
+	font-style: italic;
+}
+.edit_open{
+	margin-bottom: 126px;
+}
+#update_display{
+	/*position: fixed;*/
+	/*bottom: 3px;*/
+	/*left: 3px;*/
+	color: #969696;
+	max-height: 200px;
+	font-family: "Courier New", Courier, monospace;
+	text-align: center;
+}
+.deleting{
+	background-color: #ffe5e5;
+}
+</style>
+</head>
+<body>
+{% include "sidebar.html" %}
+
+<div id="expense_area">
+	<!-- CALL EXPENSE.HTML HERE -->
+	<!-- for all the expenses... -->
+	{% for person in people %}
+		{% include "person.html" %}
+	{% endfor %}
+
+	<div id="add_user" class="expense_wrapper">
+		<button>add another person</button>
+	</div>
+	<div class="clear_element"></div>	
+</div>
+<!-- <div id="update_display">
+I'm here!
+</div> -->
+<!-- <script src="jquery-1.10.2.min.js"></script> -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- <script src="https://dl.dropboxusercontent.com/u/59139532/jquery.masonry.min.js"></script> -->
+
+<!-- YEA YEA ILL STRIP THIS OUT AND PUT IT IN ITS OWN FILE -->
+<script>
+$(document).ready(function(){
+// RUNNING QUESTION
+// on the edit/settings boxes, do I have an edit toggle then do the updates in there?
+// or what? that doesnt make sense...have headache
+// ok...each button/functionality has a function...
+
+
+// also wondering about using all these tds, and tree traversals
+// seems like a very fragile system, where one small html change will fuck everything
+// 
+// ****BUGS****
+// > problem:
+// Create new user form is not editable
+// > reason:
+// the buttons are not bound to events as they are added after jquery initializes all its bindings
+// > problem:
+// expense totals are not updating on row delete, only after second row delete
+// > reason:
+// no clue
+
+
+//
+
+//   var $container = $('#expense_area');
+// // initialize
+// $container.masonry({
+// 	columnWidth: 440,
+// 	itemSelector: '.expense_wrapper',
+// 	isAnimated: true,
+// });
+// var msnry = $container.data('masonry');
+
+// Hide the advertisement
+$("#hide_ad").click(function(){
+	$('#advertisement').slideToggle("slow");
+});
+
+
+
+//******************************** Expense Functions ********************************//
+
+// Add Expense
+// triggered by focusing on the Add Button
+$( "#expense_area" ).on( "focus", ".expense_button.add", function(){
+
+	// THIS IS BIG:
+	// account for an expense not being set up when the user is updating fields...
+// $( ".expense_button.add" ).on('focus', function(){
+	// add the row to the html
+	// var new_expense_id;
+	// HACK TO KEEP TABS ON OUR NEW EXPENSE
+
+	// FIX HACK NOW
+
+	var random_identifier = Math.round(Math.random()*100)+9000000;
+	
+	var persons_id = $(this).closest(".expense").data("person");
+
+	// using templates to generate the expense code
+	// var new_row = 
+	// new_row.attr("id", random_identifier);
+	// new_row.attr("data-owner" persons_id);
+
+	var new_row = $('<tr class="even_row new_row" id="' + random_identifier + '" data-owner="' + persons_id +'"><td><button class="expense_button delete"><i class="fa fa-times"></i></button></td><td class="item_name"><input type="text" placeholder="item"></td><td class="cost"><input type="text" placeholder="price"></td></tr>');
+	
+	$('#' + persons_id +' table tr:last').before(new_row);
+	$('.new_row').show("slow");
+
+	$('.new_row').removeClass("new_row");
+	// add_row($(this).closest('div.expense').data('person'));
+	// focus the cursor in the created input box
+
+	$(this).closest('tr').prev().find('td input:first').focus();
+
+	
+	// alert(persons_id);
+	// add the expense to the database
+	$.ajax({
+	    url: '/expense/0/',
+	    type: 'POST',
+	    data: {
+	    	owner: persons_id,
+	    },
+	    success: function(result) {
+	    	// alert(new_row.html());
+	   	     display_update('expense ' + result + ' successfully added');
+	   	     // ALSO, UPDATE THE above added html's id!!!
+	   	     // new_expense_id = result;
+	   	     // alert(new_row.parent().html());
+	   	     // alert($("#" + random_identifier));
+	   	     $("#" + random_identifier).attr('data-expense', result); 
+
+			// $('.new_row').removeClass("new_row");
+	    }
+	});
+
+});
+
+
+// Delete expense
+$( "#expense_area" ).on( "click", ".expense_button.delete", function() {
+	var expense_button = $(this);
+	var expense_id = $(this).closest('tr').data("expense");
+	$(this).closest('tr').addClass('deleting');
+	$.ajax({
+	    url: '/expense/' + expense_id + '/',
+	    type: 'POST',
+	    data: {
+	    	operation: 'delete',
+	    },
+	    success: function(result) {
+	   	  	expense_button.closest("tr").hide('fast', function(){
+				expense_button.closest("tr").remove();
+			});
+			display_update('expense ' + expense_id + ' successfully deleted');
+	    }
+	});
+
+	
+	//this not working either
+	update_numbers();
+});
+
+
+// Change Expense's Name
+$("#expense_area").on("change", ".item_name input",function(){
+	// if the expense id does not exist, set timeout and try again
+	var expenses_id = $(this).closest("tr").data("expense");
+	
+	$.ajax({
+	    url: '/expense/' + expenses_id + "/",
+	    type: 'POST',
+	    data: {
+	    	operation: "change_name",
+	    	name: $(this).val(),
+	    },
+	    success: function(result) {
+	   	    display_update('expense ' + result + "\'s name successfully changed");			
+	    }
+	});
+});
+
+
+// Change Expense's Price
+$("#expense_area").on("change", ".cost input",function(){
+	// if the expense id does not exist, set timeout and try again
+	var expenses_id = $(this).closest("tr").data("expense");
+	
+	$.ajax({
+	    url: '/expense/' + expenses_id + "/",
+	    type: 'POST',
+	    data: {
+	    	operation: "change_price",
+	    	price: $(this).val(),
+	    },
+	    success: function(result) {
+	   	    display_update('expense ' + result + "\'s price successfully changed");			
+	    }
+	});
+});
+
+
+// THE BELOW CODE IS NOT GETTING CALLED, ON PURPOSE
+// adding row to person
+// $( "#expense_area" ).on( "click", ".expense_button.add", function(){
+// 	// add the row to the html first, so they can edit with no delays
+// 	// alert('blolo');
+// 	new_row = add_row($(this).closest('div.expense').data('person'));
+
+// 	// then add it to the DB
+// 	$.ajax({
+// 	    url: '/expense/0/',
+// 	    type: 'POST',
+// 	    data: {
+// 	    	owner: $(this).closest('.expense').data('person'),
+// 	    },
+// 	    success: function(result) {
+// 	   	     display_update('expense ' + result + ' successfully added');
+// 	   	     // ALSO, UPDATE THE above added html's id!!!
+// 	    }
+// 	});
+// 	// ADD TO HTML
+	
+// });
+
+// // ADD ROW FUNCTION
+// var add_row = function(person_id){
+// 	// ADD ROW IN AJAX UPON SUCCESS DO THE FOLLOWING
+// 	var new_row = '<tr class="even_row new_row"><td><button class="expense_button delete"><i class="fa fa-times"></i></button></td><td><input type="text" placeholder="item"></td><td class="cost"><input type="text" placeholder="price"></td></tr>'
+// 	$('#' + person_id +' table tr:last').before(new_row);
+// 	$('.new_row').show("slow");
+
+// 	$('.new_row').removeClass("new_row");
+// 	return new_row;
+// };
+// END UNCALLED CODE
+
+
+
+
+
+
+//******************************** Person Functions ********************************//
+
+// Add Person
+$('#add_user').click(function(){
+	$('#add_user button').text('adding person...');
+	var new_id = create_pseudo_id();
+		$.ajax({
+		    url: '/person/0/',
+		    type: 'POST',
+		    data: {
+		    	group: $(location).attr('pathname').replace("/","").replace("/",""),
+		    },
+		    success: function(result) {
+		   	     // put the code below in here plz
+		   	     display_update("person " + result + " successfully created");
+		   	     // var $new_expense = 
+	   	     	$('#add_user').before( '<div class="expense_wrapper"><div class="expense  new_row" id="' + result +'" data-person="'+ result+'"><div class="expense_header"><button class="expense_button edit" ><i class="fa fa-cog"></i></button><span class="expense_owner"><input type="text"  placeholder="name"></span><span class="expense_total">0.00</span></div><div class="edit_person_wrapper"><table><tr><td class="align_right">passcode</td><td> <input type="password" placeholder="optional"></td></tr><tr><td class="align_right"></td><td> <input type="password" placeholder="confirm passcode"></td></tr><tr><td class="align_right">email</td><td> <input type="email" placeholder="optional" ></td></tr><tr><td class="align_right">color</td><td> <input type="color" placeholder="optional" value="#8fd0ff"></td></tr><tr><td colspan="2" class="align_center"><button class="delete_person text_button">delete person</button></td></tr></table></div><table class="expense_table"><tr class="odd_row"><td colspan="3" class="align_center"> <button class="expense_button add"><i class="fa fa-plus"></i></button></td></tr></table></div></div>');
+	   	     	// ID
+	   	     	// PERSON
+				$('#' + result).slideToggle("slow");
+				$('#' + result).removeClass('new_row');
+
+				// update the sidebar for them
+				$('#average_row').before('<tr class="sidebar_person_total new_row" id="sidebar_person_total_' + result + '"><td>-----</td><td class="align_right negative_amount"> 0 </td><td class="align_right">0.00</td></tr>');
+				$('#sidebar_person_total_' + result).show("slow");
+				$('#sidebar_person_total_' + result).removeClass('new_row');
+				$('#add_user button').text('add another person');
+
+	// $('#right_info_bar').css('height', $('body').height());
+
+		    }
+		});
+	update_numbers();
+});
+
+
+// Delete Person
+$( "#expense_area" ).on( "click", ".delete_person", function(){
+	
+	// //double click animation, currently unused
+	// $(this).text('double click to delete');
+	// $(this).addClass('delete_confirmation');
+	
+	// // Reset if the button loses focus
+	// $(this).blur(function(){
+	// 	$(this).click();
+	// 	$(this).text("delete person");
+	// 	$(this).removeClass('delete_confirmation');
+	// });
+	
+	var delete_confirmation = confirm("delete " + $(this).closest(".expense").data("person") + "?");
+	if(delete_confirmation == true){
+	// $(".delete_person" ).dblclick(function() { <currently unused, swap brackets below
+		var persons_id = $(this).closest(".expense").data("person");
+		$.ajax({
+		    url: '/person/' + persons_id + "/",
+		    type: 'POST',
+		    data: {
+		    	operation: "delete",
+		    },
+		    success: function(result) {
+		   	     		//remove the person	
+
+		   	    display_update('person ' + result + ' successfully deleted');	
+				// $(this).closest(".expense_wrapper").slideToggle('slow', function(){
+				// 	//DO AJAX CALL THEN REMOVE
+					
+				// 	$(this).remove();
+				// });
+				
+				// // Remove them from the sidebar
+				// var sidebar_person = $('#sidebar_person_total_'+ $(this).closest(".expense").attr("id"));
+				// sidebar_person.hide('slow', function(){
+				// 	$(this).remove();
+				// });
+				// remove clicked element
+				// msnry.remove( $('#'+result).closest('.expense'));
+			  	// layout remaining item elements
+				// msnry.reload();
+				$('#'+result).closest('.expense_wrapper').remove();
+				$('#sidebar_person_total_'+ result).remove();				
+
+		    }
+		});
+
+		
+	}
+	// });
+	
+	
+	// not sure why this dont work
+	update_numbers();
+});
+
+
+// Toggle Edit Person slider
+$( "#expense_area" ).on( "click", ".expense_button.edit", function(){
+// $( ".expense_button.edit" ).click(function() {
+	// passcode required if it exists...
+	$(this).parent().next('.edit_person_wrapper').slideToggle( "fast");
+	// setTimeout(msnry.reload(),500);
+	// container.style.display = 'block';
+	// $container.masonry();
+	// $(this).closest(".expense_wrapper").toggleClass('edit_open');
+	// msrny.reload();
+});
+
+
+// Change Person's Name
+$( "#expense_area" ).on( "change", ".expense_owner input", function(){
+	var persons_id = $(this).closest(".expense").data("person");
+	
+	$.ajax({
+	    url: '/person/' + persons_id + "/",
+	    type: 'POST',
+	    data: {
+	    	operation: "change_name",
+	    	name: $(this).val(),
+	    },
+	    success: function(result) {
+	   	    display_update('person ' + result + "\'s name successfully changed");			
+	    }
+	});
+});
+
+
+// Change Person's Color
+$( "#expense_area" ).on( "change", ".color", function(){
+	// Grab the owners ID
+	var persons_id = $(this).closest(".expense").data("person");
+
+	// Swap out the header color
+	$(this).closest(".expense").find(".expense_header").css("background-color", $(this).val());
+
+	// Swap out their sidebar color
+	$('#sidebar_person_total_' + persons_id + " .person_name").css("color", $(this).val());
+
+	$.ajax({
+	    url: '/person/' + persons_id + "/",
+	    type: 'POST',
+	    data: {
+	    	operation: "change_color",
+	    	color: $(this).val(),
+	    },
+	    success: function(result) {
+
+	   	    display_update('person ' + result + "\'s color successfully changed");			
+	    }
+	});
+});
+
+
+// Change Person's Email
+$("#expense_area").on("change", ".email",function(){
+	display_update('functionality not implemented, sorry');
+});
+
+
+// Change Person's Passcode
+$("#expense_area").on("change", ".password",function(){
+	display_update('functionality not implemented, sorry');
+});
+$("#expense_area").on("change", ".confirm_password",function(){
+	display_update('functionality not implemented, sorry');
+});
+
+
+
+//******************************** Group Functions ********************************//
+
+// Add Group
+// currently unused
+$( "#expense_area" ).on( "click", "#add_group", function() {
+	// Dump this person from the tables VIA AJAX
+	$("#centered").text("TREK/SPLIT");
+	$("#centered").addClass("centered_text");
+
+
+
+	$.ajax({
+	    url: '/group/0/',
+	    type: 'POST',
+	    data: {},
+	    success: function(result) {
+	   	     // put the code below in here plz
+	   	     // alert(result);
+	   	     window.location.replace("./" + result);
+	    }
+	});
+});
+
+
+// Toggle Settings Tab
+$('#settings_button').click( function(){
+	if($('#share').css('display') == 'block'){
+	
+		$( "#share" ).slideToggle( "200");
+		$( "#settings" ).slideToggle( "slow");
+
+	}
+	else{
+		$( "#settings" ).slideToggle( "slow");
+	}
+    // Animation complete.
+});
+
+
+// Change the Group's expense options
+
+
+
+// Add Group Passcode
+
+
+
+// Toggle Requirement for individual Passcodes
+
+
+
+// Delete Group
+
+
+
+// Toggle Share Tab
+$('#share_button').click(function(){
+	//if settings is open, we gotta fade it out too
+	if($('#settings').css('display') == 'block'){
+		$( "#share" ).slideToggle( "300");
+		$( "#settings" ).slideToggle( "slow");
+		
+	}
+	else{
+		$( "#share" ).slideToggle( "400");
+	}
+});
+// includes spreadsheet export?
+
+
+
+//******************************** General Functions ********************************//
+
+// Update All Numbers on input change
+$( "#expense_area" ).on( "change", "input", function(){
+	update_numbers();
+});
+
+// Returns random ID, used for testing with no backend
+var create_pseudo_id = function(){
+	return Math.floor( (Math.random()*1000)+1);
+};
+
+// Changes the notification bar
+var display_update = function( message ){
+	$('#update_display').text(message);
+
+};
+
+// Updates number across the screen
+var update_numbers = function(){
+	// running question:
+	// Do I do this in jquery? Is that more vulnerable to people fucking around?
+	// it will mean less data transfer, maybe quicker UI?
+	// or do I do it server side and just return everything?
+
+	// UPDATES EACH PERSONS TOTAL
+	var numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
+	$('.expense').each(function(){
+		// UPDATES EACH PERSONS TOTAL
+		var personal_sum = 0;
+		$(this).find('td.cost input').each(function(){
+			// make sure our value is a number and there is something there
+			if(numberRegex.test($(this).val()) && $(this).val() != "") {
+	  			personal_sum += parseFloat($(this).val()); 
+	  			// FIGURE OUT HOW TO ROUND THESE DAMN NUMBERS
+	  			// $(this).val(parseFloat($(this).val()));
+			}
+		    
+		});  
+		// replace the total
+		$(this).children('.expense_header').children('.expense_total').text(personal_sum.toFixed(2));
+
+		// UPDATES TOTALS ON THE SIDEBAR
+		$('#sidebar_person_total_' + $(this).attr('id')).children('td:last').text(personal_sum.toFixed(2));
+
+	});
+
+	
+
+	//UPDATES THE GROUPS AVERAGE AND TOTAL FIELDS
+	var sum = 0,
+		num_expenses = 0;
+	$('.expense_total').each(function(){
+	    sum += parseFloat($(this).text());  
+	    num_expenses++;
+	});
+	var average = (sum/num_expenses).toFixed(2);
+	$("#total").text("$" + sum.toFixed(2));
+	$("#average").text("$" + average);
+
+
+	$('.expense').each(function(){
+		var difference_td = $('#sidebar_person_total_' + $(this).attr('id')).children('td:nth-last-child(2)');
+		var total_td = $('#sidebar_person_total_' + $(this).attr('id')).children('td:last');
+
+		var difference = parseFloat(total_td.text())-average;
+
+		if(difference<0){
+			if(!difference_td.hasClass('negative_amount')){
+				difference_td.addClass('negative_amount');
+			}
+		}
+		else{
+			if(difference_td.hasClass('negative_amount')){
+				difference_td.removeClass('negative_amount');
+			}			
+		}
+
+		difference_td.text(difference.toFixed(2));
+	});
+
+	// UPDATES THE NAMES
+	$('.expense').each(function(){
+		var name = $(this).find('.expense_owner input').val();
+
+		if(name.length == 0){
+			$('#sidebar_person_total_' + $(this).attr('id')).children('td:first').text('-----');	
+		}
+		else{
+			$('#sidebar_person_total_' + $(this).attr('id')).children('td:first').text(name);
+		}
+
+		
+	});
+
+
+	// UPDATES THE PAYMENT PLAN FIELDS
+	// Basically, people in the red need to pay the people in the black money.
+
+};
+});
+
+</script>
+</body>

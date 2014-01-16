@@ -1,0 +1,6 @@
+						<tr class="even_row" data-expense="{{expense.id}}" data-owner="{{person.id}}">
+							<!-- NEED AN IF STATEMENT FOR EXPENSE.PRICE & EXPENSE.NAME-->
+							<td><button class="expense_button delete"><i class="fa fa-times"></i></button></td>
+							<td class="item_name"><input type="text" placeholder="item" {% if expense.name %}value="{{expense.name}}"{% endif %}></td>
+							<td class="cost"><input type="text" placeholder="price" {% if expense.price %}value="{{expense.price}}"{% endif %}></td>
+						</tr>

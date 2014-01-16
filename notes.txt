@@ -1,0 +1,26 @@
+************ NOTES *************
+** a place to store me notes ***
+********************************
+> eventually move the contents of ./treksplit/ to ./ 
+	after looking at Mozilla's (https://github.com/jbalogh/zamboni) code it seems to be what they do
+	Looking at my current structure having it in a subfolder
+	just doesnt really make sense
+
+> Creating some sort of display:none area that holds all the data, that Django will populate 
+	and then jQuery will be responsible for updating the data elsewhere
+
+> Eventually translate all the tables to divs with display:table for using jQuery animations?
+	would result in a lot of jQuery work but meh, animations are pretty.
+
+> Currently the ajax calls certain urls to add/delete/modify all the shit
+	huge potential security flaw!? it might be wise to transfer the data being transfered to data
+	in the ajax call instead of calling a specific URL
+
+> INSTEAD OF PUTTING THE ID OF THE OBJECT IN THE HTML ID, USE A FUCKIN ATTRIBUTE DUMDUM
+
+> ALSO, send 3 dicts to the template: 
+	group dict, which dictates how the page displays/etc
+	expense dict
+	person dict,
+
+	the template then builds the page with this info

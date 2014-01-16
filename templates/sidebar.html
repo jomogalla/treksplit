@@ -1,0 +1,68 @@
+<div id="right_info_bar">
+	<!-- CALL SIDEBAR HERE -->
+	<div id="totals">
+		<div id="breakdown_header"> cost breakdown </div>
+		<table id="breakdown_table">
+			<tr class="even_row" id="total_header">
+				<td> total </td>
+				<td>  </td>
+				<td class="align_right money_sign" id="total"> <i class="fa fa-usd"></i> 0.00 </td>
+			</tr>
+			{% for person in people %}
+			<tr class="sidebar_person_total" id="sidebar_person_total_{{person.id}}" data-person="{{person.id}}">
+				<td style="color:{{person.header_color}};" class="person_name"> {% if person.name %} {{person.name}} {% else %} ----- {% endif %}</td>
+				
+				<td class="align_right average_offset"> 0.00 </td>
+				<td class="align_right person_total"> 0.00 </td>
+			</tr>
+			{% endfor %}
+			<tr  id="average_row">
+				<td> average </td>
+				<td>  </td>
+				<td class="align_right money_sign" id="average"> <i class="fa fa-usd"></i> 0.00</td>
+			</tr>
+		</table>
+	</div>
+	<div id="payment">
+		<div id="payment_header"> payment plan </div>
+		<table id="payment_table">
+			<tr class="even_row">
+				<td style="color:#8fd0ff"> No Name </td>
+				<td> owes </td>
+				<td   style="color:#ffa58f"> No Name </td>
+				<td class="align_center money_sign"> <i class="fa fa-usd"></i> 0.00</td>
+			</tr>
+		</table>
+	</div>
+	<div id="right_control_bar">
+		<div id="extras">
+			<div id="logo">
+				TREK/SPLIT
+			</div>
+			<div id="settings_buttons">
+				<button id="share_button" class="text_button">share</button>
+				<button id="settings_button" class="text_button">settings</button>
+			</div>
+			<div id="share">
+				share by <input type="email" placeholder="email" ><button id="send_email" class="text_button">send</button>
+			</div>
+			<div id="settings">
+				<div id="settings_header">settings</div>
+				<button id="delete_group" class="text_button" >delete group</button>
+				<button id="add_passcode" class="text_button">add passcode</button>
+				<button id="add_passcode_requirement" class="text_button">add passcode requirement</button>
+			</div>		
+		</div>
+		<div id="advertisement">
+			<!-- <img src="./goat.jpg"> -->
+<!-- 			<i class="fa fa-money fa-4x"></i>
+			<i class="fa fa-random fa-3x"></i>
+			<i class="fa fa-picture-o fa-5x"></i>
+			<button id="hide_ad" class="text_button align_right">hide</button> -->
+			<div id="update_display">
+				I'm here!
+			</div>
+		</div>
+	</div>
+	<div id="right_info_background"></div>
+</div>
