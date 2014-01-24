@@ -1,5 +1,7 @@
 <div id="right_info_bar">
-	<!-- CALL SIDEBAR HERE -->
+	<div id="group_name" data-group="{{ group.id }}">
+		{% if group.name %}{{group.name}}{% else %}{{ group.id }}{% endif %}
+	</div>
 	<div id="totals">
 		<div id="breakdown_header"> cost breakdown </div>
 		<table id="breakdown_table">
@@ -27,30 +29,49 @@
 		<div id="payment_header"> payment plan </div>
 		<table id="payment_table">
 			<tr class="even_row">
-				<td style="color:#8fd0ff"> No Name </td>
-				<td> owes </td>
-				<td   style="color:#ffa58f"> No Name </td>
-				<td class="align_center money_sign"> <i class="fa fa-usd"></i> 0.00</td>
+				<td style="color:#8fd0ff"> Nothing </td>
+				<td> here </td>
+				<td   style="color:#ffa58f"> yet </td>
+				<td class="align_center money_sign"> <i class="fa fa-usd"></i></td>
 			</tr>
 		</table>
 	</div>
 	<div id="right_control_bar">
 		<div id="extras">
 			<div id="logo">
-				TREK/SPLIT
+				trek/split
 			</div>
 			<div id="settings_buttons">
+				<button id="about_button" class="text_button">about</button>
 				<button id="share_button" class="text_button">share</button>
 				<button id="settings_button" class="text_button">settings</button>
 			</div>
+			<div id="about">
+				<p>
+					Split up your group's expenses. Spend the extra time having fun.
+				</p>
+				<p>
+					Created by <br><a href="http://www.domogalla.org" target="_blank">Jason Domogalla</a>
+				</p>
+				<p>
+					Enjoy!
+				</p>
+				<p>
+					<a href="mailto:jason@treksplit.com">Contact Me</a>
+				</p>
+			</div>
 			<div id="share">
-				share by <input type="email" placeholder="email" ><button id="send_email" class="text_button">send</button>
+				 <input type="email" id="invite_email"placeholder="share by email" ><button id="send_email" class="text_button">send <i class="fa fa-arrow-right"></i></button>
 			</div>
 			<div id="settings">
-				<div id="settings_header">settings</div>
 				<button id="delete_group" class="text_button" >delete group</button>
-				<button id="add_passcode" class="text_button">add passcode</button>
-				<button id="add_passcode_requirement" class="text_button">add passcode requirement</button>
+
+				<button id="change_passcode_requirement" class="text_button">add passcode requirement</button>
+				
+				<input type="text" 	placeholder="{% if group.name %}change{% else %}add{% endif %} group name" id="change_group_name" {% if group.name %}data-name="{{ group.name }}"{% endif %} class="faux_button">
+
+				<input type="password" 	placeholder="{% if group.passcode %}change{% else %}add{% endif %} group passcode" id="change_group_passcode" class="faux_button">
+				
 			</div>		
 		</div>
 		<div id="advertisement">

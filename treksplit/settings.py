@@ -57,6 +57,7 @@ WSGI_APPLICATION = 'treksplit.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
+    # # local server
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
     #     'NAME': 'meow',                      # Or path to database file if using sqlite3.
@@ -109,14 +110,22 @@ ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
 import os
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = '/Users/j/Dropbox/treksplit_mac/'
+# PROJECT_DIR = os.path.dirname(__file__)
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# STATIC_ROOT = '/Users/j/Dropbox/treksplit_mac/'
+# STATIC_URL = '/static/'
+
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, '/static/'),
+# )
+
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(PROJECT_PATH, 'static'),
 )
-
 
 PROJECT_DIR = os.path.dirname(__file__) # this is not Django setting.
 TEMPLATE_DIRS = (

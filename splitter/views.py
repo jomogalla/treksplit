@@ -1,6 +1,7 @@
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt  
+from django.core.mail import send_mail
 
 from models import Group, Person, Item
 
@@ -16,15 +17,25 @@ def no_group(request):
 @csrf_exempt    
 def group(request, group_id):
 	# grab all the people in the group
-	people = Person.objects.filter(group_ID__exact = group_id)
+	people = Person.objects.filter(group_ID__exact = group_id).order_by('id')
+
+	# If the group does not exist return 404
+	# group = get_object_or_404(Group, pk=group_id)
+
+	# Or the alternate, redirect to create group page
+	try:
+		group = Group.objects.get(pk=group_id)
+	except Group.DoesNotExist:
+		return redirect('/')
+
 
 	# grab all the expenses with owners in the above list
 	# expenses = 
 
 	# TIRED OF THINKING, GRABBING ALL EXPENSES FOR NOW
-	expenses = Item.objects.all()
+	expenses = Item.objects.all().order_by('id')
 
-	return render_to_response('./index.html', {'people':people, 'expenses':expenses})
+	return render_to_response('./index.html', {'people':people, 'expenses':expenses, 'group':group})
 
 # handles all expense transactions
 @csrf_exempt   
@@ -69,8 +80,8 @@ def person_transaction(request, person_id):
 		# Create the Person
 		new_person = Person.objects.create(group_ID=group, header_color=get_me_a_color())
 		# return their ID
-		return HttpResponse(new_person.id)
-		return render_to_response('./person.html', {'people':people, 'expenses':expenses})
+		# return HttpResponse(new_person.id)
+		return render_to_response('./person.html', {'person':new_person,})
 
 	# Deleting a Person
 	elif request.POST['operation'] == 'delete':
@@ -96,6 +107,8 @@ def person_transaction(request, person_id):
 		return HttpResponse(person_id)
 
 	return HttpResponse("changin peoples huh, specifically # %s" % person_id)
+
+
 @csrf_exempt
 def group_transaction(request, group_id):
 	# if groupid=0 create a new group!
@@ -103,6 +116,29 @@ def group_transaction(request, group_id):
 		new_group = Group.objects.create()
 		# print new_group.id
 		return HttpResponse(new_group.id)
+
+	elif request.POST['operation'] == "change_name":
+		current_group = Group.objects.get(id__exact=group_id)
+		current_group.name = request.POST['name']
+		current_group.save()
+		return HttpResponse(current_group.name)
+
+	elif request.POST['operation'] == "send_invitation":
+		print "1"
+		current_group = Group.objects.get(id__exact=group_id)
+		print current_group
+		email_to_invite = request.POST['email']
+		print email_to_invite
+		subject = 'Join us in splitting up the expenses for ' + current_group.name
+		print subject
+		body = 'Here is the url:<br>http://www.treksplit.com/' + group_id + '/'
+		print body
+		sender = 'jason@treksplit.com'
+		print sender
+		send_mail(subject, body, sender, email_to_invite, fail_silently=False)
+		print "7"
+		return HttpResponse('email sent')
+
 
 
 	return HttpResponse("whoa making a group transaction on group %s" % group_id)

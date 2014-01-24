@@ -29,7 +29,8 @@ class Group(models.Model):
  use_pictures = models.BooleanField(blank=True, default=False)
  use_descriptions = models.BooleanField(blank=True, default=False)
  administrator_ID = models.ForeignKey('Person', null=True)
- #add a currency field
+ # currency = models.CharField(max_length=7, default="usd")
+ # url_hash = models.CharField(max_length=)
 
 
 

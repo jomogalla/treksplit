@@ -1,6 +1,17 @@
 ************ NOTES *************
 ** a place to store me notes ***
 ********************************
+> python code to generate random hex color
+	[
+	import random
+	r = lambda: random.randint(0,255)
+	print('#%02X%02X%02X' % (r(),r(),r()))
+	]
+
+> Stack overflows about creating hashes for Django Models (for Group URL)
+	http://stackoverflow.com/questions/16853815/how-to-generate-hash-for-django-model
+	http://stackoverflow.com/questions/2519896/generate-unique-hashes-for-django-models
+	
 > eventually move the contents of ./treksplit/ to ./ 
 	after looking at Mozilla's (https://github.com/jbalogh/zamboni) code it seems to be what they do
 	Looking at my current structure having it in a subfolder
@@ -18,9 +29,57 @@
 
 > INSTEAD OF PUTTING THE ID OF THE OBJECT IN THE HTML ID, USE A FUCKIN ATTRIBUTE DUMDUM
 
-> ALSO, send 3 dicts to the template: 
-	group dict, which dictates how the page displays/etc
-	expense dict
-	person dict,
+> Interesting article on security
+http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-using
 
-	the template then builds the page with this info
+||||||||||||||||| CRITIQUES ||||||||||||||||||||
+>Dannica
+	make it prettier. its super plain/clean, thinks i could do more with it
+
+>Kyle
+	i was confused at first, i don't like how it starts off with 'add' when you are starting with zero
+	like it should create the first ones automagically
+	same with adding a person
+
+>Ian
+	A description at the top of what it is and maybe a simple how to might be good
+
+
+||||||||||||||||||| FEATURES |||||||||||||||||||
+> Fix the expenses query to just get the necessary expenses << NUMERO DOS
+> Delete Expenses related to a person when deleting the person
+> Delete Everything related to a group when you delete it
+> Fix CSRF on all views  << NUMERO TRES
+> Update the expense functions to handle not having an id after being created
+> Add delete group functionality
+> Add share functionality << ADD SENDGRID
+> Add passcode functionality
+> integrate masonry
+> update tables to divs with display table? (for jquery animations) NO
+> Figure out payment plan algorithm  << NUMERO UNO
+> Add code to handle "touch" events
+> Add a how to? About? User guide?
+> Add a description to the main page?
+> Get CSS in a style sheet (fix static files)
+> Get jQuery in a script file?
+> Add a hashing algorithm for group urls?
+> Get rid of odd/even row classes
+> Add code to darken the background of light text names in sidebar?
+> Clean up CSS
+> Add something to notify the user that a Person is being deleted
+> Add italics to inputs as an updating notifier
+X Sort All Elements in the queries
+X Add group name functionality
+> add currency + hash fields to Group Model
+> remove tables out of the edit person
+> replicate the way change group name works for Person change password,email
+> switch group name editing to the group name at the top?
+
+||||||||||||||||||| BUGS |||||||||||||||||||
+> new person's colors are not updating in the sdiebar
+> add group button broken
+
+>> Longer Term To Do <<
+> Add a help button, that basically puts post it notes on everything explaining what they do
+> on a side note ^ add titles to everything
+> Make the Update Display more relevant

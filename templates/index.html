@@ -1,5 +1,12 @@
 <head>
+<title> trek/split - 	{% if group.name %}
+							{{ group.name }}
+						{% else %}
+							{{ group.id }}
+						{% endif %} 
+</title>
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.0.0/animate.min.css">
 <style type="text/css">
 
 body{
@@ -21,11 +28,17 @@ height: 100%;
 #expense_area{
 	margin-right: 300px;
 }
+#group_name{
+	text-align: center;
+	font-size: 22px;
+	padding: 5px;
+}
 #totals{
 	float:right;
 }
 #payment{
 	float:right;
+	display: none;
 }
 #right_info_background{
 	width: 299px;
@@ -65,20 +78,22 @@ height: 100%;
 }
 #logo{
 	font-size: 36px;
-	padding-left: 45px;
-	/*background-image: url('logo_background.png');*/
+	text-align: center;
 }
 .expense{
 	background-color: white;
 	float: left;
 	margin:15px;
+	width: 400px;
 	border: 1px solid #e7e7e7;
+	border-radius: 3px;
 
 }
 .expense_total{
 	float: right;
 	margin-right: 10px;
 	font-size: 16pt;
+	cursor:not-allowed;
 }
 .expense_header{
 	background-color:#8fd0ff; 
@@ -112,6 +127,7 @@ input{
 	padding-left: 3px;
 	font-family: Verdana, Geneva, sans-serif;
 	color: #555555;
+	cursor: pointer;
 }
 .expense_table input{
 	border: none;
@@ -191,6 +207,7 @@ input{
 
 }
 #breakdown_header{
+	display: none;
 	font-size: 18pt;
 	margin: 3px;
 	margin-left: 10px;
@@ -203,6 +220,8 @@ table{
 	width: 300px;
 	background-color:white;
 	border-spacing: 0px;
+	border-bottom: #F5F5F5 1px solid;
+	border-top: #F5F5F5 1px solid;
 }
 #breakdown_table td{
 	padding: 3px;
@@ -223,13 +242,17 @@ td{
 }
 #payment_header{
 	font-size: 18pt;
+	margin:3px;
 	margin-left: 10px;
 	padding-bottom: 3px;
+	display: none;
 }
 #payment_table{
 	width: 300px;
 	background-color:white;
 	border-spacing: 0px;
+	border-bottom: #F5F5F5 1px solid;
+	border-top: #F5F5F5 1px solid;
 }
 #payment_table td{
 	padding-left: 10px;
@@ -278,14 +301,30 @@ td{
 	cursor: pointer;
 }
 #settings_buttons{
-	padding-left: 95px;
-	padding-bottom:8px;
+	text-align: center;
 	background-color: #fafafa;
 }
 #settings_buttons button{
 	background: transparent;
 	border: none;
 	cursor: pointer;
+}
+.faux_button{
+	font-size: 15px;
+	padding: 3px;
+	cursor: pointer;
+}
+.faux_button::-webkit-input-placeholder { /* WebKit browsers */
+	color: #888888;
+}
+.faux_button:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #888888;
+}
+.faux_button::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #888888;
+}
+.faux_button:-ms-input-placeholder { /* Internet Explorer 10+ */
+	color: #888888;
 }
 #add_new_person{
 	float: left;
@@ -320,23 +359,25 @@ td{
 	/*width: 100%;*/
 	display:none;
 	background-color: #fafafa;
-	padding-bottom:8px;
+	padding:8px 0;
+	text-align: center;
+	/*padding-left: 20px;*/
 	/*margin-bottom: 4px;*/
 /*	background-color: #fcfcfc;
 	border-bottom: 1px solid #e7e7e7;
 	border-top: 1px solid #dadada;*/
 }
+#settings input{
+	text-align: center;
+}
 #share{
-	padding-top: 4px;
-/*	width: 100%;*/
 	display:none;
-	/*margin-bottom:4px;*/
-	padding-bottom:8px;
+	padding:8px 0;
 	background-color: #fafafa;
-	padding-left: 15px;
-/*	background-color: #fcfcfc;
-	border-bottom: 1px solid #e7e7e7;
-	border-top: 1px solid #dadada;*/
+	text-align: center;
+}
+p{
+	margin: 8px 0;
 }
 #share input{
 	font-size:12pt;
@@ -351,12 +392,12 @@ td{
 }
 #settings button{
 	padding: 3px;
-	margin-left: 15px;
+	/*margin-left: 15px;*/
 	background: transparent;
 	border: none;
 	cursor: pointer;
-	display:block;
-	
+	/*display:block;*/
+	margin: 0;
 }
 .arrow_right{
 	width: 0; 
@@ -417,13 +458,111 @@ td{
 	text-align: center;
 }
 .deleting{
-	background-color: #ffe5e5;
+	/*background-color: rgba(255, 148, 148, 0.8);*/
+	text-decoration:line-through;
+}
+#empty_expense{
+	display: none;
+}
+#about{
+	display: none;
+	/*padding:5px;*/
+	font-size: 14px;
+	text-align: center;
+}
+#about a{
+	text-decoration: none;
+	color: #999999;
+}
+.selected_button{
+	border-bottom: 2px solid #999999 !important;
+}
+
+@media only screen and (max-width: 735px){
+  #right_info_bar {
+    width: 100%;
+    text-align: center;
+    right:0px;
+    position: relative;
+    background-color:#fafafa;
+	border-bottom:1px #DCD2FA solid;
+  }
+  #right_info_background{
+  	display: none;
+  }
+  #right_control_bar{
+  	width: 100%;
+  	position: absolute;
+  	bottom: auto;
+  	top:0px;
+
+  }
+  #right_control_bar a{
+	font-size: 16px;
+}
+  #payment, #totals{
+  	float: none;
+  }
+  #totals{
+  	margin-top: 10px;
+  }
+  #advertisement{
+  	display: none;
+  }
+  #add_user{
+  	margin:0px;
+  	margin-bottom: 18px;
+  	width: 100%;
+
+  }
+  #payment{
+  	padding-bottom: 20px;
+  	margin-top: 0px;
+  }
+  #breakdown_table, #payment_table{
+  	width: 100%
+  }
+  #breakdown_header, #payment_header{
+  	margin-left: 0px;
+  }
+  body{
+  	min-width: 100%;
+  }
+  .expense{
+  	float:none;
+  	width: inherit;
+  }
+  #expense_area{
+  	margin-right: 0px;
+  }
+  .expense_table{
+  	width: 100%;
+  }
+  #settings_buttons{
+  	margin-left:0px;
+  }
+  #share, #settings_buttons, #share, #logo{
+  	padding-left: 0px;
+  }
+  #group_name{
+  	padding-top: 80px;
+  	float: none;
+  }
+}
+@media only screen and (min-width: 736px) and (max-width: 1163px){
+	.expense{
+		margin-right: auto;
+		margin-left: auto;
+		float: none;
+	}
+	#right_info_bar{
+		top:-15px;
+	}
 }
 </style>
 </head>
 <body>
 {% include "sidebar.html" %}
-
 <div id="expense_area">
 	<!-- CALL EXPENSE.HTML HERE -->
 	<!-- for all the expenses... -->
@@ -432,7 +571,11 @@ td{
 	{% endfor %}
 
 	<div id="add_user" class="expense_wrapper">
-		<button>add another person</button>
+		{% if people %}
+			<button>add another person</button>
+		{% else %}
+			<button>add person</button>
+		{%  endif %}
 	</div>
 	<div class="clear_element"></div>	
 </div>
@@ -477,10 +620,6 @@ $(document).ready(function(){
 // });
 // var msnry = $container.data('masonry');
 
-// Hide the advertisement
-$("#hide_ad").click(function(){
-	$('#advertisement').slideToggle("slow");
-});
 
 
 
@@ -489,34 +628,19 @@ $("#hide_ad").click(function(){
 // Add Expense
 // triggered by focusing on the Add Button
 $( "#expense_area" ).on( "focus", ".expense_button.add", function(){
-
-	// THIS IS BIG:
-	// account for an expense not being set up when the user is updating fields...
-// $( ".expense_button.add" ).on('focus', function(){
-	// add the row to the html
-	// var new_expense_id;
-	// HACK TO KEEP TABS ON OUR NEW EXPENSE
-
-	// FIX HACK NOW
-
-	var random_identifier = Math.round(Math.random()*100)+9000000;
-	
 	var persons_id = $(this).closest(".expense").data("person");
 
-	// using templates to generate the expense code
-	// var new_row = 
-	// new_row.attr("id", random_identifier);
-	// new_row.attr("data-owner" persons_id);
+	var new_row = $('{% include "expense.html" %}');
 
-	var new_row = $('<tr class="even_row new_row" id="' + random_identifier + '" data-owner="' + persons_id +'"><td><button class="expense_button delete"><i class="fa fa-times"></i></button></td><td class="item_name"><input type="text" placeholder="item"></td><td class="cost"><input type="text" placeholder="price"></td></tr>');
-	
+
 	$('#' + persons_id +' table tr:last').before(new_row);
+	new_row.attr('data-owner', persons_id);
+	new_row.addClass("new_row");
 	$('.new_row').show("slow");
 
 	$('.new_row').removeClass("new_row");
-	// add_row($(this).closest('div.expense').data('person'));
-	// focus the cursor in the created input box
 
+	// focus the cursor in the created input box
 	$(this).closest('tr').prev().find('td input:first').focus();
 
 	
@@ -535,7 +659,7 @@ $( "#expense_area" ).on( "focus", ".expense_button.add", function(){
 	   	     // new_expense_id = result;
 	   	     // alert(new_row.parent().html());
 	   	     // alert($("#" + random_identifier));
-	   	     $("#" + random_identifier).attr('data-expense', result); 
+	   	     new_row.attr('data-expense', result); 
 
 			// $('.new_row').removeClass("new_row");
 	    }
@@ -548,7 +672,7 @@ $( "#expense_area" ).on( "focus", ".expense_button.add", function(){
 $( "#expense_area" ).on( "click", ".expense_button.delete", function() {
 	var expense_button = $(this);
 	var expense_id = $(this).closest('tr').data("expense");
-	$(this).closest('tr').addClass('deleting');
+	$(this).closest('tr td input').addClass('deleting');
 	$.ajax({
 	    url: '/expense/' + expense_id + '/',
 	    type: 'POST',
@@ -660,19 +784,40 @@ $('#add_user').click(function(){
 		    	group: $(location).attr('pathname').replace("/","").replace("/",""),
 		    },
 		    success: function(result) {
-		   	     // put the code below in here plz
-		   	     display_update("person " + result + " successfully created");
-		   	     // var $new_expense = 
-	   	     	$('#add_user').before( '<div class="expense_wrapper"><div class="expense  new_row" id="' + result +'" data-person="'+ result+'"><div class="expense_header"><button class="expense_button edit" ><i class="fa fa-cog"></i></button><span class="expense_owner"><input type="text"  placeholder="name"></span><span class="expense_total">0.00</span></div><div class="edit_person_wrapper"><table><tr><td class="align_right">passcode</td><td> <input type="password" placeholder="optional"></td></tr><tr><td class="align_right"></td><td> <input type="password" placeholder="confirm passcode"></td></tr><tr><td class="align_right">email</td><td> <input type="email" placeholder="optional" ></td></tr><tr><td class="align_right">color</td><td> <input type="color" placeholder="optional" value="#8fd0ff"></td></tr><tr><td colspan="2" class="align_center"><button class="delete_person text_button">delete person</button></td></tr></table></div><table class="expense_table"><tr class="odd_row"><td colspan="3" class="align_center"> <button class="expense_button add"><i class="fa fa-plus"></i></button></td></tr></table></div></div>');
-	   	     	// ID
-	   	     	// PERSON
-				$('#' + result).slideToggle("slow");
-				$('#' + result).removeClass('new_row');
+	   	     	$('#add_user').before(result);
 
-				// update the sidebar for them
-				$('#average_row').before('<tr class="sidebar_person_total new_row" id="sidebar_person_total_' + result + '"><td>-----</td><td class="align_right negative_amount"> 0 </td><td class="align_right">0.00</td></tr>');
-				$('#sidebar_person_total_' + result).show("slow");
-				$('#sidebar_person_total_' + result).removeClass('new_row');
+	   	     	// Grab their ID
+	   	     	var persons_id = $('#add_user').prev().find('.expense').data("person");
+	   	     	$('#'+persons_id).addClass('new_row');
+
+
+	   	     	// Animate it all nicely
+				$('#' + persons_id).slideToggle("slow");
+				$('#' + persons_id).removeClass('new_row');
+
+				// Let them know whats happening
+				display_update("person " + persons_id + " successfully created");
+
+				// SEEMS TO COMPLICATED?
+				// update the sidebar with the new person
+				// Grab the last row in the totals
+				// var totals_row = $('#average_row').prev().html();
+				// // Insert its html before
+				// $('#average_row').before(totals_row);
+				// var new_row = $('#average_row').prev();
+				// new_row.addClass("new_row");
+				// new_row.attr("id", "sidebar_person_total_" + persons_id);
+				// new_row.show("slow");
+				// new_row.removeClass('new_row');
+				var persons_color = $("#"+persons_id).find(".expense_header").css("background-color");
+
+
+				$('#average_row').before('<tr class="sidebar_person_total new_row" id="sidebar_person_total_' + persons_id + '"><td style="color:' + persons_color +';">-----</td><td class="align_right"> 0.00 </td><td class="align_right">0.00</td></tr>');
+
+				$('#sidebar_person_total_' + persons_id).show("slow");
+				$('#sidebar_person_total_' + persons_id).removeClass('new_row');
+
+				// // swap back the add user button text
 				$('#add_user button').text('add another person');
 
 	// $('#right_info_bar').css('height', $('body').height());
@@ -697,10 +842,13 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 	// 	$(this).removeClass('delete_confirmation');
 	// });
 	
-	var delete_confirmation = confirm("delete " + $(this).closest(".expense").data("person") + "?");
+	var persons_name = $(this).closest(".expense").data("name");
+	var delete_confirmation = confirm("delete " + persons_name + "?");
 	if(delete_confirmation == true){
 	// $(".delete_person" ).dblclick(function() { <currently unused, swap brackets below
 		var persons_id = $(this).closest(".expense").data("person");
+		
+
 		$.ajax({
 		    url: '/person/' + persons_id + "/",
 		    type: 'POST',
@@ -710,7 +858,7 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 		    success: function(result) {
 		   	     		//remove the person	
 
-		   	    display_update('person ' + result + ' successfully deleted');	
+		   	    display_update(persons_name + ' successfully deleted');	
 				// $(this).closest(".expense_wrapper").slideToggle('slow', function(){
 				// 	//DO AJAX CALL THEN REMOVE
 					
@@ -758,16 +906,25 @@ $( "#expense_area" ).on( "click", ".expense_button.edit", function(){
 // Change Person's Name
 $( "#expense_area" ).on( "change", ".expense_owner input", function(){
 	var persons_id = $(this).closest(".expense").data("person");
+	var persons_old_name = $(this).closest(".expense").data("name");
+	var persons_new_name = $(this).val();
+
 	
 	$.ajax({
 	    url: '/person/' + persons_id + "/",
 	    type: 'POST',
 	    data: {
 	    	operation: "change_name",
-	    	name: $(this).val(),
+	    	name: persons_new_name,
 	    },
 	    success: function(result) {
-	   	    display_update('person ' + result + "\'s name successfully changed");			
+	    	// below code aimt working
+	    	if(typeof persons_old_name == undefined){
+				display_update(persons_new_name + "\'s name added");
+			}
+	   	    display_update(persons_old_name + "\'s name changed to " + persons_new_name);	
+	   	    $('#' + persons_id).data("name", persons_new_name);
+	   	    $('#' + persons_id).attr("data-name", persons_new_name);
 	    }
 	});
 });
@@ -777,12 +934,16 @@ $( "#expense_area" ).on( "change", ".expense_owner input", function(){
 $( "#expense_area" ).on( "change", ".color", function(){
 	// Grab the owners ID
 	var persons_id = $(this).closest(".expense").data("person");
+	var persons_name = $(this).closest(".expense").data("name");
 
 	// Swap out the header color
 	$(this).closest(".expense").find(".expense_header").css("background-color", $(this).val());
 
 	// Swap out their sidebar color
 	$('#sidebar_person_total_' + persons_id + " .person_name").css("color", $(this).val());
+
+	// Update the persons color data
+	$(this).closest(".expense").attr("data-color", $(this).val());
 
 	$.ajax({
 	    url: '/person/' + persons_id + "/",
@@ -792,8 +953,7 @@ $( "#expense_area" ).on( "change", ".color", function(){
 	    	color: $(this).val(),
 	    },
 	    success: function(result) {
-
-	   	    display_update('person ' + result + "\'s color successfully changed");			
+	   	    display_update(persons_name + "\'s color successfully changed");			
 	    }
 	});
 });
@@ -838,50 +998,159 @@ $( "#expense_area" ).on( "click", "#add_group", function() {
 	});
 });
 
+// Delete Group
+$("#right_info_bar").on("click", "#delete_group",function(){
+	display_update('functionality not implemented, sorry');
+});
+
+
+// No, Add/Change Group Name
+// Change the value to what the group name is on click
+$('#change_group_name').click(function(){
+	var group_name = $(this).data('name');
+	$(this).val(group_name);	
+});
+// switch back to the placeholder text on blur
+$('#change_group_name').blur(function(){
+	$(this).val("")
+});
+// actually do the work on change
+$('#change_group_name').change(function(){
+	var their_new_name = $(this).val();
+	// Using django to generate the below?
+	// bad/good?
+	var the_input_box = $(this);
+	var group_id = $("#group_name").data("group");
+
+	$.ajax({
+	    url: '/group/' + group_id + '/',
+	    type: 'POST',
+	    data: {
+	    	operation: 'change_name',
+	    	name: their_new_name,
+	    },
+	    success: function(result) {
+	   	     display_update('group name changed to ' + result);
+	   	     $(document).attr('title', 'trek/split - ' +result);
+	   	     the_input_box.data("name",result);
+	   	     $("#group_name").text(result);
+	    }
+	});
+});
+
+// Send Invitation Email
+$('#send_email').click(function(){
+	var email_to_invite = $('#invite_email').val();
+
+	var group_id = $("#group_name").data("group");
+
+	$.ajax({
+	    url: '/group/' + group_id + '/',
+	    type: 'POST',
+	    data: {
+	    	operation: 'send_invitation',
+	    	email: email_to_invite,
+	    },
+	    success: function(result) {
+
+	    }
+	});
+	display_update('functionality not implemented');
+});
 
 // Toggle Settings Tab
 $('#settings_button').click( function(){
+	// If the share tab is open, close it first
 	if($('#share').css('display') == 'block'){
-	
-		$( "#share" ).slideToggle( "200");
-		$( "#settings" ).slideToggle( "slow");
-
+		border_swap('#settings_button', '#share_button');
+		$( "#share" ).slideToggle( "fast");
+		$( "#settings" ).slideToggle( "fast");
+	}
+	// If the about tab is open, close it first
+	else if($('#about').css('display') == 'block'){
+		border_swap('#settings_button', '#about_button');
+		$( "#about" ).slideToggle( "fast");
+		$( "#settings" ).slideToggle( "fast");
 	}
 	else{
-		$( "#settings" ).slideToggle( "slow");
+		border_swap('#settings_button', '#settings_button');
+		$( "#settings" ).slideToggle( "fast");
+
 	}
+
     // Animation complete.
 });
 
+// Toggle Share Tab
+$('#share_button').click(function(){
+	//if settings is open, we gotta fade it out too
+	if($('#settings').css('display') == 'block'){
+		border_swap('#share_button', '#settings_button');
+		$( "#settings" ).slideToggle( "fast");
+		$( "#share" ).slideToggle( "fast");
+	}
+	//if about is open, we gotta close it
+	else if ($('#about').css('display') == 'block'){
+		border_swap('#share_button', '#about_button');
+		$( "#about" ).slideToggle( "fast");
+		$( "#share" ).slideToggle( "fast");
+	}
+	else{
+		border_swap('#share_button', '#share_button');
+		$( "#share" ).slideToggle( "fast");
+	}
+	// Below focuses on the email input
+	$("#invite_email").focus();
+});
+// Toggle About Tab
+$('#about_button').click(function(){
+	//if settings is open, we gotta fade it out too
+	if($('#settings').css('display') == 'block'){
+		border_swap('#about_button', '#settings_button');
+		$( "#settings" ).slideToggle( "fast");
+		$( "#about" ).slideToggle( "fast");
+		
+	}
+	//if share is open, we gotta close it
+	else if($('#share').css('display') == 'block'){
+		border_swap('#about_button', '#share_button');
+		$( "#share" ).slideToggle( "fast");
+		$( "#about" ).slideToggle( "fast");
+	}
+	else{
+		border_swap('#about_button', '#about_button');
+		$( '#about' ).slideToggle( "fast");
+
+	}
+});
 
 // Change the Group's expense options
 
 
 
 // Add Group Passcode
+$("#right_info_bar").on("click", "#change_group_passcode",function(){
+	display_update('functionality not implemented, sorry');
+});
 
 
 
 // Toggle Requirement for individual Passcodes
-
-
-
-// Delete Group
-
-
-
-// Toggle Share Tab
-$('#share_button').click(function(){
-	//if settings is open, we gotta fade it out too
-	if($('#settings').css('display') == 'block'){
-		$( "#share" ).slideToggle( "300");
-		$( "#settings" ).slideToggle( "slow");
-		
-	}
-	else{
-		$( "#share" ).slideToggle( "400");
-	}
+$("#right_info_bar").on("click", "#change_passcode_requirement",function(){
+	display_update('functionality not implemented, sorry');
 });
+
+// Share Group
+// $("#right_info_bar").on("click", "#send_email",function(){
+// 	display_update('functionality not implemented, sorry');
+// });
+
+// Hide the advertisement... display update for now, and the buttons not even here
+$("#hide_ad").click(function(){
+	$('#advertisement').slideToggle("slow");
+});
+
+
 // includes spreadsheet export?
 
 
@@ -892,6 +1161,20 @@ $('#share_button').click(function(){
 $( "#expense_area" ).on( "change", "input", function(){
 	update_numbers();
 });
+var border_swap = function(id_on, id_off){
+	if(id_on == id_off){
+		if($(id_on).hasClass('selected_button')){
+			$(id_on).removeClass('selected_button');
+		}
+		else{
+			$(id_on).addClass('selected_button');
+		}
+	}
+	else{
+		$(id_off).removeClass('selected_button');
+		$(id_on).addClass('selected_button');		
+	}
+};
 
 // Returns random ID, used for testing with no backend
 var create_pseudo_id = function(){
@@ -900,7 +1183,16 @@ var create_pseudo_id = function(){
 
 // Changes the notification bar
 var display_update = function( message ){
-	$('#update_display').text(message);
+	
+	$('#update_display').addClass('animated flash');
+	setTimeout(function(){
+		$('#update_display').text(message);
+	},175);
+	setTimeout(function(){
+		$('#update_display').removeClass('animated flash');
+	},1000);
+	
+
 
 };
 
@@ -986,6 +1278,7 @@ var update_numbers = function(){
 	// Basically, people in the red need to pay the people in the black money.
 
 };
+update_numbers();
 });
 
 </script>
