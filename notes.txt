@@ -32,6 +32,10 @@
 > Interesting article on security
 http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-using
 
+> Add a rounding/payment option to the payment plan
+	basically have, round to the nearest dollar, nearest 20 etc so that it will just round up/down
+	what people owe other people, instead of having cents etc
+
 ||||||||||||||||| CRITIQUES ||||||||||||||||||||
 >Dannica
 	make it prettier. its super plain/clean, thinks i could do more with it
@@ -43,6 +47,7 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 
 >Ian
 	A description at the top of what it is and maybe a simple how to might be good
+
 
 
 ||||||||||||||||||| FEATURES |||||||||||||||||||
@@ -77,7 +82,7 @@ X Add group name functionality
 
 ||||||||||||||||||| BUGS |||||||||||||||||||
 > new person's colors are not updating in the sdiebar
-> add group button broken
+X add group button broken
 > delete person not being removed from screen
 
 >> Longer Term To Do <<

@@ -1,35 +1,54 @@
 <html>
 <head>
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <style>
 #add_group{
-	margin-left: -35px;
-	margin-top: -9px;
 	cursor:pointer;
 }
 #centered{
-	position:absolute;
-	left:50%;
-	top:50%;
-	font-size: 18px;
+	height: 13em;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;	font-size: 18px;
+	text-align: center;
 }
-.centered_text{
-	margin-left: -53px;
-	margin-top: -11px;
-}
+
 body{
 	/*background-image: url(https://dl.dropboxusercontent.com/u/59139532/rando%20pics/IMG_4310.jpg);*/
 	font-family: Verdana, Geneva, sans-serif;
 }
-@media only screen and (max-width: 735px){
+.text_button{
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: #888888;
+	font-size: 20px;
+	text-align: center;
+}
+.text_button:hover{
+	color: #555555;
+}
+
+p:first-child{
+	font-size: 24px;
+}
+/*@media only screen and (max-width: 735px){
 	#add_group{
 		font-size: 18px;
 	}
-}
+}*/
 </style>
 </head>
 <body>
 <div id="centered">
-	<button id="add_group">add group</button>
+	<p>trek/split</p>
+	<p> take the busy work out of splitting up expenses between your friends.</p>
+	<p>no registration.</p>
+	<p>no cost.</p>
+	<button id="add_group" class="text_button">get started <i class="fa fa-arrow-right"></i></button>
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -38,10 +57,7 @@ $(document).ready(function(){
 	$( "body" ).on( "click", "#add_group", function() {
 
 		// Dump this person from the tables VIA AJAX
-		$("#centered").text("TREK/SPLIT");
-		$("#centered").addClass("centered_text");
-
-
+		$("#centered").html("<i class='fa fa-cog fa-spin fa-5x'></i><p>one moment please</p>");
 
 		$.ajax({
 		    url: '/group/0/',

@@ -227,6 +227,9 @@ table{
 	padding: 3px;
 	padding-left: 10px;	
 }
+/*.sidebar_person_total td:first-child{
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#5b5b5b), color-stop(61%,#c4c4c4), color-stop(75%,#dddddd), color-stop(87%,#f2f2f2), color-stop(100%,#ffffff));
+}*/
 #total_header{
 	font-size: 20px;
 }
@@ -326,6 +329,18 @@ td{
 .faux_button:-ms-input-placeholder { /* Internet Explorer 10+ */
 	color: #888888;
 }
+.faux_button:hover::-webkit-input-placeholder { /* WebKit browsers */
+	color: #555555;
+}
+.faux_button:hover:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #555555;
+}
+.faux_button:hover::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #555555;
+}
+.faux_button:hover:-ms-input-placeholder { /* Internet Explorer 10+ */
+	color: #555555;
+}
 #add_new_person{
 	float: left;
 	margin:15px;
@@ -367,7 +382,7 @@ td{
 	border-bottom: 1px solid #e7e7e7;
 	border-top: 1px solid #dadada;*/
 }
-#settings input{
+#extras input{
 	text-align: center;
 }
 #share{
@@ -776,54 +791,64 @@ $("#expense_area").on("change", ".cost input",function(){
 // Add Person
 $('#add_user').click(function(){
 	$('#add_user button').text('adding person...');
-	var new_id = create_pseudo_id();
-		$.ajax({
-		    url: '/person/0/',
-		    type: 'POST',
-		    data: {
-		    	group: $(location).attr('pathname').replace("/","").replace("/",""),
-		    },
-		    success: function(result) {
-	   	     	$('#add_user').before(result);
+	$.ajax({
+	    url: '/person/0/',
+	    type: 'POST',
+	    data: {
+	    	group: $(location).attr('pathname').replace("/","").replace("/",""),
+	    },
+	    success: function(result) {
+   	     	$('#add_user').before(result);
 
-	   	     	// Grab their ID
-	   	     	var persons_id = $('#add_user').prev().find('.expense').data("person");
-	   	     	$('#'+persons_id).addClass('new_row');
-
-
-	   	     	// Animate it all nicely
-				$('#' + persons_id).slideToggle("slow");
-				$('#' + persons_id).removeClass('new_row');
-
-				// Let them know whats happening
-				display_update("person " + persons_id + " successfully created");
-
-				// SEEMS TO COMPLICATED?
-				// update the sidebar with the new person
-				// Grab the last row in the totals
-				// var totals_row = $('#average_row').prev().html();
-				// // Insert its html before
-				// $('#average_row').before(totals_row);
-				// var new_row = $('#average_row').prev();
-				// new_row.addClass("new_row");
-				// new_row.attr("id", "sidebar_person_total_" + persons_id);
-				// new_row.show("slow");
-				// new_row.removeClass('new_row');
-				var persons_color = $("#"+persons_id).find(".expense_header").css("background-color");
+   	     	// Grab their ID
+   	     	// var persons_id = $('#add_user').prev().find('.expense').attr("data", "person");
+   	     	// var persons_color = $('#add_user').prev().find('.expense').attr("color");
+   	     	// if(typeof $('#add_user').prev().find('.expense').data("person") != null){
+   	     	// 	var persons_id = $('#add_user').prev().find('.expense').attr("data", "person");
+   	     	// }
+   	     	// else{
+   	     	// 	var persons_id = 
+   	     	// }
+   	     	var persons_id = $('#add_user').prev().data("person");
+   	     	var persons_color = $('#add_user').prev().data("color");
+   	     	$('#'+persons_id).addClass('new_row');
 
 
-				$('#average_row').before('<tr class="sidebar_person_total new_row" id="sidebar_person_total_' + persons_id + '"><td style="color:' + persons_color +';">-----</td><td class="align_right"> 0.00 </td><td class="align_right">0.00</td></tr>');
+   	     	// Animate it all nicely
+			$('#' + persons_id).slideToggle("slow");
+			$('#' + persons_id).removeClass('new_row');
+			// $('#' + persons_id).css('color', 'new_row');
 
-				$('#sidebar_person_total_' + persons_id).show("slow");
-				$('#sidebar_person_total_' + persons_id).removeClass('new_row');
+			// Let them know whats happening
+			display_update("person " + persons_id + " successfully created");
 
-				// // swap back the add user button text
-				$('#add_user button').text('add another person');
+			// SEEMS TO COMPLICATED?
+			// update the sidebar with the new person
+			// Grab the last row in the totals
+			// var totals_row = $('#average_row').prev().html();
+			// // Insert its html before
+			// $('#average_row').before(totals_row);
+			// var new_row = $('#average_row').prev();
+			// new_row.addClass("new_row");
+			// new_row.attr("id", "sidebar_person_total_" + persons_id);
+			// new_row.show("slow");
+			// new_row.removeClass('new_row');
 
-	// $('#right_info_bar').css('height', $('body').height());
 
-		    }
-		});
+			$('#average_row').before('<tr class="sidebar_person_total new_row" id="sidebar_person_total_' + persons_id + '"><td style="color:' + persons_color +';">-----</td><td class="align_right"> 0.00 </td><td class="align_right">0.00</td></tr>');
+
+			$('#sidebar_person_total_' + persons_id).show("slow");
+			$('#sidebar_person_total_' + persons_id).removeClass('new_row');
+			$('#sidebar_person_total_' + persons_id + ':first-child').css('color', '#' + persons_color);
+
+
+			// // swap back the add user button text
+			$('#add_user button').text('add another person');
+
+// $('#right_info_bar').css('height', $('body').height());
+
+	    }
+	});
 	update_numbers();
 });
 
@@ -843,10 +868,17 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 	// });
 	
 	var persons_name = $(this).closest(".expense").data("name");
+	var persons_id = $(this).closest(".expense").data("person");
+
+	if(typeof persons_name == "undefined"){
+		persons_name = "person " + persons_id;
+	}
+
 	var delete_confirmation = confirm("delete " + persons_name + "?");
+	
 	if(delete_confirmation == true){
 	// $(".delete_person" ).dblclick(function() { <currently unused, swap brackets below
-		var persons_id = $(this).closest(".expense").data("person");
+		
 		
 
 		$.ajax({
@@ -856,8 +888,7 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 		    	operation: "delete",
 		    },
 		    success: function(result) {
-		   	     		//remove the person	
-
+   	     		//remove the person	
 		   	    display_update(persons_name + ' successfully deleted');	
 				// $(this).closest(".expense_wrapper").slideToggle('slow', function(){
 				// 	//DO AJAX CALL THEN REMOVE
@@ -874,7 +905,7 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 				// msnry.remove( $('#'+result).closest('.expense'));
 			  	// layout remaining item elements
 				// msnry.reload();
-				$('#'+result).closest('.expense_wrapper').remove();
+				$('#'+result).closest('.expense').remove();
 				$('#sidebar_person_total_'+ result).remove();				
 
 		    }
@@ -1039,6 +1070,12 @@ $('#change_group_name').change(function(){
 });
 
 // Send Invitation Email
+$('#send_email').focus(function(){
+	$(this).attr("placeholder", "yolo");
+});
+$('#send_email').blur(function(){
+	$(this).attr("placeholder", "share by email");
+});
 $('#send_email').click(function(){
 	var email_to_invite = $('#invite_email').val();
 

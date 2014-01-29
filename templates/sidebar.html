@@ -61,7 +61,7 @@
 				</p>
 			</div>
 			<div id="share">
-				 <input type="email" id="invite_email"placeholder="share by email" ><button id="send_email" class="text_button">send <i class="fa fa-arrow-right"></i></button>
+				 <input type="email" id="invite_email" placeholder="share by email"><button id="send_email" class="text_button">send <i class="fa fa-arrow-right"></i></button>
 			</div>
 			<div id="settings">
 				<button id="delete_group" class="text_button" >delete group</button>
@@ -71,7 +71,8 @@
 				<input type="text" 	placeholder="{% if group.name %}change{% else %}add{% endif %} group name" id="change_group_name" {% if group.name %}data-name="{{ group.name }}"{% endif %} class="faux_button">
 
 				<input type="password" 	placeholder="{% if group.passcode %}change{% else %}add{% endif %} group passcode" id="change_group_passcode" class="faux_button">
-				
+
+				<!-- <button id="delete_group" class="text_button" >delete group</button> -->
 			</div>		
 		</div>
 		<div id="advertisement">
