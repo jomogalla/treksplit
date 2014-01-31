@@ -501,7 +501,7 @@ p{
 	margin:0px 8px;
 }
 
-@media only screen and (max-width: 735px){
+@media only screen and (max-width: 1120px){
   #right_info_bar {
     width: 100%;
     text-align: center;
@@ -572,7 +572,7 @@ p{
   	float: none;
   }
 }
-@media only screen and (min-width: 736px) and (max-width: 1163px){
+/*@media only screen and (min-width: 736px) and (max-width: 1163px){
 	.expense{
 		margin-right: auto;
 		margin-left: auto;
@@ -581,4 +581,4 @@ p{
 	#right_info_bar{
 		top:-15px;
 	}
-}
+}*/
