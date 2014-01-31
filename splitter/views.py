@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 
 from models import Group, Person, Item
 
-colors_for_now = ['8fd0ff', 'd28fff', 'ff8fce', 'ff8f8f', 'ffd68f', 'dfff8f', '8fffa3', '8ffff0', '988fff']
+colors_for_now = ['e5a7ab', 'ecc8bc', 'ffe1c7', 'fcedca', 'e8e1b0', 'c6d5b5', 'c2e5ee', 'dce0ef', 'ead8ff', 'e2bad4']
 
 # display the empty landing paged
 @ensure_csrf_cookie   
