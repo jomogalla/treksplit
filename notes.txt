@@ -85,6 +85,7 @@ X Add group name functionality
 > replicate the way change group name works for Person change password,email
 > switch group name editing to the group name at the top?
 > Get the start page to use scripts and styles files
+> Make mobile versions WAY BIGGER
 
 ||||||||||||||||||| BUGS |||||||||||||||||||
 X new person's colors are not updating in the sdiebar
