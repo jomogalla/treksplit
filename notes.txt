@@ -59,7 +59,7 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 > Fix the expenses query to just get the necessary expenses << NUMERO DOS
 > Delete Expenses related to a person when deleting the person
 > Delete Everything related to a group when you delete it
-> Fix CSRF on all views  << NUMERO TRES
+X Fix CSRF on all views  << NUMERO TRES
 > Update the expense functions to handle not having an id after being created
 > Add delete group functionality
 > Add share functionality << ADD SENDGRID
