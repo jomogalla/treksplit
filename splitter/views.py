@@ -1,6 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt  
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie 
+from django.core.context_processors import csrf
 from django.core.mail import send_mail
 
 from models import Group, Person, Item
@@ -8,13 +9,13 @@ from models import Group, Person, Item
 colors_for_now = ['8fd0ff', 'd28fff', 'ff8fce', 'ff8f8f', 'ffd68f', 'dfff8f', '8fffa3', '8ffff0', '988fff']
 
 # display the empty landing paged
-@csrf_exempt    
+@ensure_csrf_cookie   
 def no_group(request):
 	# return the empty landing page
 	return render_to_response('./test.html')
 
 # displays the main interface
-@csrf_exempt    
+@ensure_csrf_cookie    
 def group(request, group_id):
 	# grab all the people in the group
 	people = Person.objects.filter(group_ID__exact = group_id).order_by('id')
@@ -37,8 +38,8 @@ def group(request, group_id):
 
 	return render_to_response('./index.html', {'people':people, 'expenses':expenses, 'group':group})
 
+
 # handles all expense transactions
-@csrf_exempt   
 def expense_transaction(request, expense_id):
 	# if there are no expensez
 	if expense_id == '0':
@@ -71,7 +72,7 @@ def expense_transaction(request, expense_id):
 		return HttpResponse("uhhh something went wrong")
 
 
-@csrf_exempt   
+ # handles all person transactions
 def person_transaction(request, person_id):
 	# When the id = 0 we create a new person!
 	if person_id == '0':
@@ -109,7 +110,7 @@ def person_transaction(request, person_id):
 	return HttpResponse("changin peoples huh, specifically # %s" % person_id)
 
 
-@csrf_exempt
+# Handles all group transactions
 def group_transaction(request, group_id):
 	# if groupid=0 create a new group!
 	if group_id == '0':

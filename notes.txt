@@ -84,6 +84,7 @@ X Add group name functionality
 > remove tables out of the edit person div
 > replicate the way change group name works for Person change password,email
 > switch group name editing to the group name at the top?
+> Get the start page to use scripts and styles files
 
 ||||||||||||||||||| BUGS |||||||||||||||||||
 X new person's colors are not updating in the sdiebar
