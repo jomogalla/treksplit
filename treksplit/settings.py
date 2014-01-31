@@ -124,7 +124,7 @@ STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_PATH, 'static'),
+    os.path.join(PROJECT_PATH, '../static/'),
 )
 
 PROJECT_DIR = os.path.dirname(__file__) # this is not Django setting.

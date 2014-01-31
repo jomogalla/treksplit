@@ -1,5 +1,3 @@
-<style type="text/css">
-
 body{
 	margin: 0 0 0 0;
 	font-family: Verdana, Geneva, sans-serif;
@@ -19,11 +17,17 @@ height: 100%;
 #expense_area{
 	margin-right: 300px;
 }
+#group_name{
+	text-align: center;
+	font-size: 22px;
+	padding: 5px;
+}
 #totals{
 	float:right;
 }
 #payment{
 	float:right;
+	display: none;
 }
 #right_info_background{
 	width: 299px;
@@ -32,7 +36,7 @@ height: 100%;
 	bottom: 0px;
 	z-index: -10;
 	background-color:#fafafa;
-	border-left:1px #DCD2FA solid;
+	border-left:1px #EEE8FF solid;
 }
 #right_info_bar{
 	width:301px;
@@ -58,23 +62,33 @@ height: 100%;
 	bottom: 0px;
 	right: 0px;
 	width: 300px;
+	background-color: #fafafa;
+	border-top: 1px #eeeeee solid;
 }
 #logo{
 	font-size: 36px;
-	padding-left: 45px;
-	background-image: url('logo_background.png');
+	text-align: center;
 }
 .expense{
 	background-color: white;
 	float: left;
-	margin:15px;
-	border: 1px solid #e7e7e7;
+	margin:10px;
+	width: 400px;
+	/*border: 1px solid #e7e7e7;*/
+	/*border-radius: 3px;*/
+	-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
 
 }
 .expense_total{
 	float: right;
 	margin-right: 10px;
 	font-size: 16pt;
+	cursor:not-allowed;
 }
 .expense_header{
 	background-color:#8fd0ff; 
@@ -108,6 +122,7 @@ input{
 	padding-left: 3px;
 	font-family: Verdana, Geneva, sans-serif;
 	color: #555555;
+	cursor: pointer;
 }
 .expense_table input{
 	border: none;
@@ -135,10 +150,11 @@ input{
 }
 .expense_header button{
 	visibility: hidden;
-	margin-top: 4px;
-	margin-left: 4px;
+	/*margin-top: 4px;*/
+	margin-left: 6px;
 }
 .expense_header:hover button{
+
 	visibility: visible;
 }
 .expense_button{
@@ -153,37 +169,41 @@ input{
 	background-repeat: no-repeat;
 }
 .delete{
-	background-image:url("./delete.png");
+	color:#d2d2d2;
 }
 .delete:hover{
-	background-image:url("./delete_dark.png");
+	color:#ff6e6b;
 }
 .add{
-	background-image:url("./add.png");
+	color: #d2d2d2;
 	visibility: visible !important;
 	width: 100%;
 	background-position: center;
 }
 .add:hover{
-	background-image:url("./add_dark.png");
+	color: #9c9c9c;
 	visibility: visible;
 }
 .edit{
-	background-image:url("./edit.png");
+	color: #f3f3f3;
+
+	font-size: 18px;
+	background-position: left center;
 	height: 16px;
 	width: 16px;
-	background-position: left center;
+	padding: 0px;
 }
 .odd_row{
 	background-color: #fafafa;
 	border-top: 1px solid #dddddd;
 }
-.even_row{
+.row{
 	border-top: 1px solid #dddddd;
 	background-color: white;
 
 }
 #breakdown_header{
+	display: none;
 	font-size: 18pt;
 	margin: 3px;
 	margin-left: 10px;
@@ -196,13 +216,19 @@ table{
 	width: 300px;
 	background-color:white;
 	border-spacing: 0px;
+	border-bottom: #F5F5F5 1px solid;
+	border-top: #F7f7f7 1px solid;
 }
 #breakdown_table td{
 	padding: 3px;
 	padding-left: 10px;	
 }
+/*.sidebar_person_total td:first-child{
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#5b5b5b), color-stop(61%,#c4c4c4), color-stop(75%,#dddddd), color-stop(87%,#f2f2f2), color-stop(100%,#ffffff));
+}*/
 #total_header{
 	font-size: 20px;
+	background-color: #fcfcfc;
 }
 #total_header td{
 	border-bottom: 1px #dbdbdb solid;
@@ -210,33 +236,39 @@ table{
 #average_row td{
 	border-top: 1px #dbdbdb solid;
 	font-size: 17px;
+	background-color: #fcfcfc;
 }
 td{
 	border-top: 1px solid #F7F7F7;
 }
 #payment_header{
 	font-size: 18pt;
+	margin:3px;
 	margin-left: 10px;
 	padding-bottom: 3px;
+	display: none;
 }
 #payment_table{
 	width: 300px;
 	background-color:white;
 	border-spacing: 0px;
+	border-bottom: #F5F5F5 1px solid;
+	border-top: #F5F5F5 1px solid;
 }
 #payment_table td{
 	padding-left: 10px;
 }
 #payment{
 	margin-top: 40px;
-	padding-bottom: 315px;
+	padding-bottom: 103px;
 }
 #advertisement{
-	font-size: 10pt;
+	font-size: 8pt;
 /*	position: fixed;
 	bottom: 0px;*/
-	padding:25px;
-	padding-bottom:15px;
+	/*padding:25px;*/
+	padding:5px;
+	/*padding-bottom:15px;*/
 	background-color:white;
 	border-top: solid 1px #ededed;
 	z-index:10;
@@ -270,14 +302,42 @@ td{
 	cursor: pointer;
 }
 #settings_buttons{
-	padding-left: 95px;
-	padding-bottom:8px;
+	text-align: center;
 	background-color: #fafafa;
 }
 #settings_buttons button{
 	background: transparent;
 	border: none;
 	cursor: pointer;
+}
+.faux_button{
+	font-size: 15px;
+	padding: 3px;
+	cursor: pointer;
+}
+.faux_button::-webkit-input-placeholder { /* WebKit browsers */
+	color: #888888;
+}
+.faux_button:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #888888;
+}
+.faux_button::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #888888;
+}
+.faux_button:-ms-input-placeholder { /* Internet Explorer 10+ */
+	color: #888888;
+}
+.faux_button:hover::-webkit-input-placeholder { /* WebKit browsers */
+	color: #555555;
+}
+.faux_button:hover:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #555555;
+}
+.faux_button:hover::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #555555;
+}
+.faux_button:hover:-ms-input-placeholder { /* Internet Explorer 10+ */
+	color: #555555;
 }
 #add_new_person{
 	float: left;
@@ -312,23 +372,25 @@ td{
 	/*width: 100%;*/
 	display:none;
 	background-color: #fafafa;
-	padding-bottom:8px;
+	padding:8px 0;
+	text-align: center;
+	/*padding-left: 20px;*/
 	/*margin-bottom: 4px;*/
 /*	background-color: #fcfcfc;
 	border-bottom: 1px solid #e7e7e7;
 	border-top: 1px solid #dadada;*/
 }
+#extras input{
+	text-align: center;
+}
 #share{
-	padding-top: 4px;
-/*	width: 100%;*/
 	display:none;
-	/*margin-bottom:4px;*/
-	padding-bottom:8px;
+	padding:8px 0;
 	background-color: #fafafa;
-	padding-left: 15px;
-/*	background-color: #fcfcfc;
-	border-bottom: 1px solid #e7e7e7;
-	border-top: 1px solid #dadada;*/
+	text-align: center;
+}
+p{
+	margin: 8px 0;
 }
 #share input{
 	font-size:12pt;
@@ -343,12 +405,12 @@ td{
 }
 #settings button{
 	padding: 3px;
-	margin-left: 15px;
+	/*margin-left: 15px;*/
 	background: transparent;
 	border: none;
 	cursor: pointer;
-	display:block;
-	
+	/*display:block;*/
+	margin: 0;
 }
 .arrow_right{
 	width: 0; 
@@ -362,10 +424,7 @@ td{
 	background-color: #8fd0ff;
 }
 .negative_amount{
-	color: #F86C6C;
-}
-.updating{
-	font-style: italic;
+	color: #DA7F7F;
 }
 .delete_confirmation{
 
@@ -393,12 +452,121 @@ td{
 .clear_element{
 	clear:both;
 }
-
-/*SHIT FROM THE INTERNET*/
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+.updating{
+	font-style: italic;
+	color: #888888;
 }
-</style>
+.edit_open{
+	margin-bottom: 126px;
+}
+#update_display{
+	/*position: fixed;*/
+	/*bottom: 3px;*/
+	/*left: 3px;*/
+	color: #969696;
+	max-height: 200px;
+	font-family: "Courier New", Courier, monospace;
+	text-align: center;
+}
+.deleting{
+	/*background-color: rgba(255, 148, 148, 0.8);*/
+	text-decoration:line-through;
+}
+#empty_expense{
+	display: none;
+}
+#about{
+	display: none;
+	/*padding:5px;*/
+	font-size: 14px;
+	text-align: center;
+}
+#about a{
+	text-decoration: none;
+	color: #999999;
+}
+.selected_button{
+	border-bottom: 2px solid #999999 !important;
+}
+
+@media only screen and (max-width: 735px){
+  #right_info_bar {
+    width: 100%;
+    text-align: center;
+    right:0px;
+    position: relative;
+    background-color:#fafafa;
+	border-bottom:1px #DCD2FA solid;
+  }
+  #right_info_background{
+  	display: none;
+  }
+  #right_control_bar{
+  	width: 100%;
+  	position: absolute;
+  	bottom: auto;
+  	top:0px;
+
+  }
+  #right_control_bar a{
+	font-size: 16px;
+}
+  #payment, #totals{
+  	float: none;
+  }
+  #totals{
+  	margin-top: 10px;
+  }
+  #advertisement{
+  	display: none;
+  }
+  #add_user{
+  	margin:0px;
+  	margin-bottom: 18px;
+  	width: 100%;
+
+  }
+  #payment{
+  	padding-bottom: 20px;
+  	margin-top: 0px;
+  }
+  #breakdown_table, #payment_table{
+  	width: 100%
+  }
+  #breakdown_header, #payment_header{
+  	margin-left: 0px;
+  }
+  body{
+  	min-width: 100%;
+  }
+  .expense{
+  	float:none;
+  	width: inherit;
+  }
+  #expense_area{
+  	margin-right: 0px;
+  }
+  .expense_table{
+  	width: 100%;
+  }
+  #settings_buttons{
+  	margin-left:0px;
+  }
+  #share, #settings_buttons, #share, #logo{
+  	padding-left: 0px;
+  }
+  #group_name{
+  	padding-top: 80px;
+  	float: none;
+  }
+}
+@media only screen and (min-width: 736px) and (max-width: 1163px){
+	.expense{
+		margin-right: auto;
+		margin-left: auto;
+		float: none;
+	}
+	#right_info_bar{
+		top:-15px;
+	}
+}

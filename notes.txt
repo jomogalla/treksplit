@@ -48,6 +48,11 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 >Ian
 	A description at the top of what it is and maybe a simple how to might be good
 
+> Kenzie
+	Header on the top.
+	Maybe like a one inch header that goes across the top that just makes the site feel more defined.
+	Instead of so much white space.
+
 
 
 ||||||||||||||||||| FEATURES |||||||||||||||||||
@@ -64,26 +69,26 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 > Figure out payment plan algorithm  << NUMERO UNO
 > Add code to handle "touch" events
 > Add a how to? About? User guide?
-> Add a description to the main page?
-> Get CSS in a style sheet (fix static files)
-> Get jQuery in a script file?
+X Add a description to the main page?
+X Get CSS in a style sheet (fix static files)
+X Get jQuery in a script file?
 > Add a hashing algorithm for group urls?
-> Get rid of odd/even row classes
-> Add code to darken the background of light text names in sidebar?
+X Get rid of odd/even row classes
+> Add code to darken the background of light text names in sidebar? Or just choose better default colors
 > Clean up CSS
-> Add something to notify the user that a Person is being deleted
+> Add something to an expense to notify the user that a Person is being deleted
 > Add italics to inputs as an updating notifier
 X Sort All Elements in the queries
 X Add group name functionality
 > add currency + hash fields to Group Model
-> remove tables out of the edit person
+> remove tables out of the edit person div
 > replicate the way change group name works for Person change password,email
 > switch group name editing to the group name at the top?
 
 ||||||||||||||||||| BUGS |||||||||||||||||||
-> new person's colors are not updating in the sdiebar
+X new person's colors are not updating in the sdiebar
 X add group button broken
-> delete person not being removed from screen
+X delete person not being removed from screen
 
 >> Longer Term To Do <<
 > Add a help button, that basically puts post it notes on everything explaining what they do
