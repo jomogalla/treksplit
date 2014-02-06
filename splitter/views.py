@@ -86,10 +86,11 @@ def person_transaction(request, person_id):
 
 	# Deleting a Person
 	elif request.POST['operation'] == 'delete':
-		# delete all the expenses(items)
-		# ^^^ to be implemented ^^^
+		# delete their expenses
+		Item.objects.filter(person_ID = person_id).delete()
 		# delete the person
 		Person.objects.get(id__exact=person_id).delete()
+
 		return HttpResponse(person_id)
 
 	# Changing a Person's name
@@ -125,7 +126,6 @@ def group_transaction(request, group_id):
 		return HttpResponse(current_group.name)
 
 	elif request.POST['operation'] == "send_invitation":
-		print "1"
 		current_group = Group.objects.get(id__exact=group_id)
 		print current_group
 		email_to_invite = request.POST['email']
@@ -140,6 +140,10 @@ def group_transaction(request, group_id):
 		print "7"
 		return HttpResponse('email sent')
 
+	elif request.POST['operation'] == "delete":
+		current_group = Group.objects.get(id__exact=group_id)
+		current_group.delete()
+		return HttpResponse(group_id)
 
 
 	return HttpResponse("whoa making a group transaction on group %s" % group_id)

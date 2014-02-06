@@ -488,6 +488,29 @@ p{
 .selected_button{
 	border-bottom: 2px solid #999999 !important;
 }
+#blackout{
+	display: none;
+	background-color: rgba(0, 0, 0, 0.35);
+	position: fixed;
+	z-index: 15;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
+#centered{
+	height: 13em;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;	
+	font-size: 18px;
+	text-align: center;
+	z-index: 20;
+	color: #dddddd;
+}
 #warning{
 	position: fixed;
 	bottom: 0px;
@@ -502,6 +525,15 @@ p{
 }
 
 @media only screen and (max-width: 1120px){
+  body{
+  	font-size: 4em;
+  }
+  input{
+  	font-size: 4em;
+  }
+  button{
+  	font-size: 4em;
+  }
   #right_info_bar {
     width: 100%;
     text-align: center;

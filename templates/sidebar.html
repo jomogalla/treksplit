@@ -1,5 +1,5 @@
 <div id="right_info_bar">
-	<div id="group_name" data-group="{{ group.id }}">
+	<div id="group_name" data-group="{{ group.id }}" {% if group.name %}data-name="{{group.name}}"{% endif %}>
 		{% if group.name %}{{group.name}}{% else %}{{ group.id }}{% endif %}
 	</div>
 	<div id="totals">

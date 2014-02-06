@@ -57,7 +57,7 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 
 ||||||||||||||||||| FEATURES |||||||||||||||||||
 > Fix the expenses query to just get the necessary expenses << NUMERO DOS
-> Delete Expenses related to a person when deleting the person
+X Delete Expenses related to a person when deleting the person
 > Delete Everything related to a group when you delete it
 X Fix CSRF on all views  << NUMERO TRES
 > Update the expense functions to handle not having an id after being created
@@ -74,18 +74,20 @@ X Get CSS in a style sheet (fix static files)
 X Get jQuery in a script file?
 > Add a hashing algorithm for group urls?
 X Get rid of odd/even row classes
-> Add code to darken the background of light text names in sidebar? Or just choose better default colors
+X Add code to darken the background of light text names in sidebar? Or just choose better default colors
 > Clean up CSS
 > Add something to an expense to notify the user that a Person is being deleted
-> Add italics to inputs as an updating notifier
+X Add italics to inputs as an updating notifier
 X Sort All Elements in the queries
 X Add group name functionality
 > add currency + hash fields to Group Model
 > remove tables out of the edit person div
 > replicate the way change group name works for Person change password,email
 > switch group name editing to the group name at the top?
-> Get the start page to use scripts and styles files
+> Get the start page to use the scripts and styles files
 > Make mobile versions WAY BIGGER
+> add titles to everything
+> Change the Add group name text after adding a group name to change group name
 
 ||||||||||||||||||| BUGS |||||||||||||||||||
 X new person's colors are not updating in the sdiebar
@@ -94,5 +96,4 @@ X delete person not being removed from screen
 
 >> Longer Term To Do <<
 > Add a help button, that basically puts post it notes on everything explaining what they do
-> on a side note ^ add titles to everything
-> Make the Update Display more relevant
+> Make the Update Display more relevant (in process)

@@ -18,7 +18,7 @@ $(document).ready(function(){
 // > reason:
 // no clue
 
-
+$('body').addClass('animated fadeIn');
 //
 
 //   var $container = $('#expense_area');
@@ -133,8 +133,9 @@ $( "#expense_area" ).on( "click", ".expense_button.delete", function() {
 // Change Expense's Name
 $("#expense_area").on("change", ".item_name input",function(){
 	// if the expense id does not exist, set timeout and try again
+	var owner = $(this);
 	var expenses_id = $(this).closest("tr").data("expense");
-	
+	owner.addClass('updating');
 	$.ajax({
 	    url: '/expense/' + expenses_id + "/",
 	    type: 'POST',
@@ -143,7 +144,8 @@ $("#expense_area").on("change", ".item_name input",function(){
 	    	name: $(this).val(),
 	    },
 	    success: function(result) {
-	   	    display_update('expense ' + result + "\'s name successfully changed");			
+	   	    display_update('expense ' + result + "\'s name successfully changed");		
+	   	    owner.removeClass('updating');	
 	    }
 	});
 });
@@ -152,6 +154,8 @@ $("#expense_area").on("change", ".item_name input",function(){
 // Change Expense's Price
 $("#expense_area").on("change", ".cost input",function(){
 	// if the expense id does not exist, set timeout and try again
+	var owner = $(this);
+	owner.addClass('updating');
 	var expenses_id = $(this).closest("tr").data("expense");
 	
 	$.ajax({
@@ -162,7 +166,8 @@ $("#expense_area").on("change", ".cost input",function(){
 	    	price: $(this).val(),
 	    },
 	    success: function(result) {
-	   	    display_update('expense ' + result + "\'s price successfully changed");			
+	   	    display_update('expense ' + result + "\'s price successfully changed");	
+	   	    owner.removeClass('updating');		
 	    }
 	});
 });
@@ -458,7 +463,36 @@ $( "#expense_area" ).on( "click", "#add_group", function() {
 
 // Delete Group
 $("#right_info_bar").on("click", "#delete_group",function(){
-	display_update('functionality not implemented, sorry');
+
+	var group_id = $("#group_name").data('group');
+	var group_name = $('#group_name').data('name');
+          				
+
+	if(typeof group_name == "undefined"){
+		group_name = "group " + group_id;
+	}
+
+	var delete_confirmation = confirm("delete " + group_name + "?");
+	
+	if(delete_confirmation == true){
+			$("#centered").html("<i class='fa fa-cog fa-spin fa-5x'></i><p>deleting " + group_name + "</p>");
+			$("#blackout").css("display","block");
+			$.ajax({
+		    url: '/group/' + group_id + "/",
+		    type: 'POST',
+		    data: {
+		    	operation: "delete",
+		    },
+		    success: function(result) {
+		    	var time_to_redirect = 1000;
+		  		$('body').addClass('animated fadeOut');
+		  		setTimeout(function(){
+		  			window.location.replace("/");
+		  		}, time_to_redirect);
+		    }
+		});
+
+	}
 });
 
 
@@ -488,10 +522,21 @@ $('#change_group_name').change(function(){
 	    	name: their_new_name,
 	    },
 	    success: function(result) {
-	   	     display_update('group name changed to ' + result);
-	   	     $(document).attr('title', 'trek/split - ' +result);
-	   	     the_input_box.data("name",result);
-	   	     $("#group_name").text(result);
+	    	if(result != ""){
+		   	     display_update('group name changed to ' + result);
+		   	     $(document).attr('title', 'trek/split - ' +result);
+		   	     the_input_box.data("name", result);
+		   	     $("#group_name").text(result);
+		   	     $("#group_name").attr("data-name", result);
+
+		   	 }
+		   	 else{
+		   	 	display_update('group name changed to ' + group_id);
+				$(document).attr('title', 'trek/split - ' +group_id);
+				the_input_box.data("name", group_id);
+				$("#group_name").text(group_id);
+				$("#group_name").attr("data-name", "");	
+		   	 }
 	    }
 	});
 });
