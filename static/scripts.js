@@ -475,6 +475,7 @@ $("#right_info_bar").on("click", "#delete_group",function(){
 	var delete_confirmation = confirm("delete " + group_name + "?");
 	
 	if(delete_confirmation == true){
+			$("#centered").css("display","block");
 			$("#centered").html("<i class='fa fa-cog fa-spin fa-5x'></i><p>deleting " + group_name + "</p>");
 			$("#blackout").css("display","block");
 			$.ajax({

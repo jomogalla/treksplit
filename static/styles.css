@@ -499,6 +499,7 @@ p{
 	right: 0px;
 }
 #centered{
+	display: none;
 	height: 13em;
 	margin: auto;
 	position: absolute;
