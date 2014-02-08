@@ -505,7 +505,7 @@ p{
 }
 #blackout{
 	display: none;
-	background-color: rgba(0, 0, 0, 0.35);
+	background-color: rgba(0, 0, 0, 0.5);
 	position: fixed;
 	z-index: 15;
 	top: 0px;
@@ -513,7 +513,7 @@ p{
 	left: 0px;
 	right: 0px;
 }
-#centered{
+/*#centered{
 	display: none;
 	height: 13em;
 	margin: auto;
@@ -526,8 +526,17 @@ p{
 	text-align: center;
 	z-index: 20;
 	color: #dddddd;
+}*/
+#centered{
+	display: none;
+	margin-top: 25%;
+	font-size: 18px;
+	text-align: center;
+	z-index: 20;
+	color: #dddddd;
+	text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
 }
-#warning{
+/*#warning{
 	position: fixed;
 	bottom: 0px;
 	background-color: #ffe0b8;
@@ -535,6 +544,12 @@ p{
 	z-index: -10;
 	left: 50%;
 	margin-left: -25em;
+}*/
+#warning{
+	text-align: center;
+	background-color: #ffe0b8;
+	padding: 3px;
+	font-size: 11px;
 }
 #warning i{
 	margin:0px 8px;
@@ -542,6 +557,7 @@ p{
 .modal{
 	font-size: 16px;
 	color: #dddddd;
+	text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
 }
 .modal:hover{
 	color: #fcfcfc;

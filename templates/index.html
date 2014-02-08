@@ -21,34 +21,30 @@
 </script>
 </head>
 <body>
-{% include "sidebar.html" %}
-<div id="expense_area">
-	<!-- CALL EXPENSE.HTML HERE -->
-	<!-- for all the expenses... -->
-	{% for person in people %}
-		{% include "person.html" %}
-	{% endfor %}
+	{% include "sidebar.html" %}
+	<div id="expense_area">
+		<!-- CALL EXPENSE.HTML HERE -->
+		<!-- for all the expenses... -->
+		{% for person in people %}
+			{% include "person.html" %}
+		{% endfor %}
 
-	<div id="add_user" class="expense_wrapper">
-		{% if people %}
-			<button title="add a person">add another person</button>
-		{% else %}
-			<button title="add a person">add person</button>
-		{%  endif %}
+		<div id="add_user" class="expense_wrapper">
+			{% if people %}
+				<button title="add a person">add another person</button>
+			{% else %}
+				<button title="add a person">add person</button>
+			{%  endif %}
+		</div>
+		<div class="clear_element"></div>	
 	</div>
-	<div class="clear_element"></div>	
-</div>
-<div id="warning">
-	<i class="fa fa-exclamation-triangle"></i>this is not stable / data may be lost <i class="fa fa-exclamation-triangle"></i>
-</div>
-<div id="centered">
+	<div id="blackout">
+		<div id="centered">
+		</div>
+	</div>
 
-</div>
-<div id="blackout">
-</div>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}/static/scripts.js"></script>
-<!-- <script src="https://dl.dropboxusercontent.com/u/59139532/jquery.masonry.min.js"></script> -->
-<!-- YEA YEA ILL STRIP THIS OUT AND PUT IT IN ITS OWN FILE -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}/static/scripts.js"></script>
+	<!-- <script src="https://dl.dropboxusercontent.com/u/59139532/jquery.masonry.min.js"></script> -->
+	<!-- YEA YEA ILL STRIP THIS OUT AND PUT IT IN ITS OWN FILE -->
 </body>

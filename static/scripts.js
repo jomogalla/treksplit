@@ -662,10 +662,10 @@ $( "#expense_area" ).on( "change", "input", function(){
 	update_numbers();
 });
 
-$('blackout').click(function(){
-	$('#centered').css('display','none');
-	$('#blackout').css('display','none');
-});
+// $('#blackout').click(function(){
+// 	$('#centered').css('display','none');
+// 	$('#blackout').css('display','none');
+// });
 
 var blackout_prompt = function(prompt){
 	$('#centered').css("display", "block");
