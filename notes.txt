@@ -61,7 +61,7 @@ X Delete Expenses related to a person when deleting the person
 > Delete Everything related to a group when you delete it
 X Fix CSRF on all views  << NUMERO TRES
 > Update the expense functions to handle not having an id after being created
-> Add delete group functionality
+X Add delete group functionality
 > Add share functionality << ADD SENDGRID
 > Add passcode functionality
 > integrate masonry
@@ -81,18 +81,19 @@ X Add italics to inputs as an updating notifier
 X Sort All Elements in the queries
 X Add group name functionality
 > add currency + hash fields to Group Model
-> remove tables out of the edit person div
+X remove tables out of the edit person div
 > replicate the way change group name works for Person change password,email
 > switch group name editing to the group name at the top?
 > Get the start page to use the scripts and styles files
 > Make mobile versions WAY BIGGER
-> add titles to everything
-> Change the Add group name text after adding a group name to change group name
+X add titles to everything
+> Change the Add group name text after adding a group name to change group name(for the first time)
 
 ||||||||||||||||||| BUGS |||||||||||||||||||
 X new person's colors are not updating in the sdiebar
 X add group button broken
 X delete person not being removed from screen
+> New person's average is incorrect when added
 
 >> Longer Term To Do <<
 > Add a help button, that basically puts post it notes on everything explaining what they do

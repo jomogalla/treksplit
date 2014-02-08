@@ -1,39 +1,30 @@
 
 	<div class="expense" id="{{person.id}}" data-person="{{person.id}}" {% if person.name %}data-name="{{ person.name }}"{% endif %} {% if person.header_color %}data-color="{{ person.header_color }}"{% endif %}>
 		<div class="expense_header" style="background-color:#{{person.header_color}};">
-			<button class="expense_button edit" ><i class="fa fa-cog"></i></button>
+			<button class="expense_button edit" title="edit the person"><i class="fa fa-cog"></i></button>
 			<span class="expense_owner">
-				<input type="text"  placeholder="name" {% if person.name %}value="{{person.name}}"{% endif %}>
+				<input type="text" title="edit the person's name" placeholder="name" {% if person.name %}value="{{person.name}}"{% endif %}>
 			</span>
-			<span class="expense_total">
+			<span title="total for the person's expenses" class="expense_total">
 				0.00
 			</span>
 		</div>
 		<div class="edit_person_wrapper">
-			<table>
-				<tr>
-					<td class="align_right">passcode</td>
-					<td> <input class="password" type="password" placeholder="optional"></td>
-				</tr>
-				<tr>
-					<td class="align_right"></td>
-					<td> <input class="confirm_password" type="password" placeholder="confirm passcode"></td>
-				</tr>
-				<tr>
-					<td class="align_right">email</td>
-					<td> <input class="email" type="email" placeholder="optional" ></td>
-				</tr>
-				<tr>
-					<td class="align_right">color</td>					
-					<td> <input class="color" type="color" placeholder="optional" value="#{% if person.header_color %}{{person.header_color}}{% else %}8fd0ff{%endif%}"></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="align_center">
-						<button class="delete_person text_button">delete person</button>
-					</td>
-				</tr>
-			</table>
-
+			<div class="edit_row">
+				<input title="passcode protect this person" class="password faux_button" type="password" placeholder="enter a passcode">
+			</div>
+<!-- 			<div class="edit_row">
+				<input class="confirm_password" type="password" placeholder="confirm passcode">
+			</div> -->
+		<!-- 	<div class="edit_row">
+				<input class="email" type="email" placeholder="optional" >
+			</div> -->
+			<div class="edit_row">
+				<input class="color" title="change the person's color" type="color" placeholder="optional" value="#{% if person.header_color %}{{person.header_color}}{% else %}8fd0ff{%endif%}">
+			</div>
+			<div class="edit_row">
+				<button title="delete the person" class="delete_person text_button">delete person</button>
+			</div>
 		</div>
 		<table class="expense_table">
 				<!-- left for entertainment -->
@@ -47,7 +38,7 @@
 				{% endif %}
 			{% endfor %}
 			<tr class="odd_row">
-				<td colspan="3" class="align_center"> <button class="expense_button add"><i class="fa fa-plus"></i></button></td>
+				<td colspan="3" class="align_center"> <button class="expense_button add" title="add an expense"><i class="fa fa-plus"></i></button></td>
 			</tr>
 		</table>
 	</div>

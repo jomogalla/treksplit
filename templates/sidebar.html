@@ -1,24 +1,24 @@
 <div id="right_info_bar">
-	<div id="group_name" data-group="{{ group.id }}" {% if group.name %}data-name="{{group.name}}"{% endif %}>
+	<div id="group_name" title="the group's name" data-group="{{ group.id }}" {% if group.name %}data-name="{{group.name}}"{% endif %}>
 		{% if group.name %}{{group.name}}{% else %}{{ group.id }}{% endif %}
 	</div>
 	<div id="totals">
 		<div id="breakdown_header"> cost breakdown </div>
 		<table id="breakdown_table">
-			<tr class="row" id="total_header">
+			<tr class="row" id="total_header" title="group total">
 				<td> total </td>
 				<td>  </td>
 				<td class="align_right money_sign" id="total"> <i class="fa fa-usd"></i> 0.00 </td>
 			</tr>
 			{% for person in people %}
 			<tr class="sidebar_person_total" id="sidebar_person_total_{{person.id}}" data-person="{{person.id}}">
-				<td style="color:{{person.header_color}};" class="person_name"> {% if person.name %} {{person.name}} {% else %} ----- {% endif %}</td>
+				<td title="the person's name"style="color:{{person.header_color}};" class="person_name"> {% if person.name %} {{person.name}} {% else %} ----- {% endif %}</td>
 				
-				<td class="align_right average_offset"> 0.00 </td>
-				<td class="align_right person_total"> 0.00 </td>
+				<td class="align_right average_offset" title="the person's difference from average"> 0.00 </td>
+				<td class="align_right person_total" title="the person's total"> 0.00 </td>
 			</tr>
 			{% endfor %}
-			<tr  id="average_row">
+			<tr  id="average_row" title="group average">
 				<td> average </td>
 				<td>  </td>
 				<td class="align_right money_sign" id="average"> <i class="fa fa-usd"></i> 0.00</td>
@@ -42,9 +42,9 @@
 				trek/split
 			</div>
 			<div id="settings_buttons">
-				<button id="about_button" class="text_button">about</button>
-				<button id="share_button" class="text_button">share</button>
-				<button id="settings_button" class="text_button">settings</button>
+				<button id="about_button" class="text_button" title="more about trek/split">about</button>
+				<button id="share_button" class="text_button" title="share this trek/split group">share</button>
+				<button id="settings_button" class="text_button" title="edit this group's settings">settings</button>
 			</div>
 			<div id="about">
 				<p>
@@ -64,13 +64,13 @@
 				 <input type="email" id="invite_email" placeholder="share by email"><button id="send_email" class="text_button">send <i class="fa fa-arrow-right"></i></button>
 			</div>
 			<div id="settings">
-				<button id="delete_group" class="text_button" >delete group</button>
+				<button id="delete_group" title="delete this group" class="text_button" >delete group</button>
 
-				<button id="change_passcode_requirement" class="text_button">add passcode requirement</button>
+				<button id="change_passcode_requirement" title="require passcode protection for each person" class="text_button">add passcode requirement</button>
 				
-				<input type="text" 	placeholder="{% if group.name %}change{% else %}add{% endif %} group name" id="change_group_name" {% if group.name %}data-name="{{ group.name }}"{% endif %} class="faux_button">
+				<input type="text"	title="change the group's name" placeholder="{% if group.name %}change{% else %}add{% endif %} group name" id="change_group_name" {% if group.name %}data-name="{{ group.name }}"{% endif %} class="faux_button">
 
-				<input type="password" 	placeholder="{% if group.passcode %}change{% else %}add{% endif %} group passcode" id="change_group_passcode" class="faux_button">
+				<input type="password" 	title="change the passcode for the group" placeholder="{% if group.passcode %}change{% else %}add{% endif %} group passcode" id="change_group_passcode" class="faux_button">
 
 				<!-- <button id="delete_group" class="text_button" >delete group</button> -->
 			</div>		
@@ -81,7 +81,7 @@
 			<i class="fa fa-random fa-3x"></i>
 			<i class="fa fa-picture-o fa-5x"></i>
 			<button id="hide_ad" class="text_button align_right">hide</button> -->
-			<div id="update_display">
+			<div id="update_display" title="notifications from the server">
 				Get Started!
 			</div>
 		</div>

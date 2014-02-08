@@ -249,18 +249,6 @@ $('#add_user').click(function(){
 			// Let them know whats happening
 			display_update("person " + persons_id + " successfully created");
 
-			// SEEMS TO COMPLICATED?
-			// update the sidebar with the new person
-			// Grab the last row in the totals
-			// var totals_row = $('#average_row').prev().html();
-			// // Insert its html before
-			// $('#average_row').before(totals_row);
-			// var new_row = $('#average_row').prev();
-			// new_row.addClass("new_row");
-			// new_row.attr("id", "sidebar_person_total_" + persons_id);
-			// new_row.show("slow");
-			// new_row.removeClass('new_row');
-
 
 			$('#average_row').before('<tr class="sidebar_person_total new_row" id="sidebar_person_total_' + persons_id + '"><td style="color:' + persons_color +';">-----</td><td class="align_right"> 0.00 </td><td class="align_right">0.00</td></tr>');
 
@@ -301,46 +289,46 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 		persons_name = "person " + persons_id;
 	}
 
-	var delete_confirmation = confirm("delete " + persons_name + "?");
-	
-	if(delete_confirmation == true){
+	blackout_prompt("delete " + persons_name + "?").then(function(delete_confirmation){
+		if(delete_confirmation == true){
+			$("#centered").css("display","block");
+			$("#centered").html("<i class='fa fa-cog fa-spin fa-5x'></i><p>deleting " + persons_name + "</p>");
+			$("#blackout").css("display","block");
 	// $(".delete_person" ).dblclick(function() { <currently unused, swap brackets below
-		
-
-		$.ajax({
-		    url: '/person/' + persons_id + "/",
-		    type: 'POST',
-		    data: {
-		    	operation: "delete",
-		    },
-		    success: function(result) {
-   	     		//remove the person	
-		   	    display_update(persons_name + ' successfully deleted');	
-				// $(this).closest(".expense_wrapper").slideToggle('slow', function(){
-				// 	//DO AJAX CALL THEN REMOVE
+			$.ajax({
+			    url: '/person/' + persons_id + "/",
+			    type: 'POST',
+			    data: {
+			    	operation: "delete",
+			    },
+			    success: function(result) {
+	   	     		//remove the person	
+			   	    display_update(persons_name + ' successfully deleted');	
+					// $(this).closest(".expense_wrapper").slideToggle('slow', function(){
+					// 	//DO AJAX CALL THEN REMOVE
+						
+					// 	$(this).remove();
+					// });
 					
-				// 	$(this).remove();
-				// });
-				
-				// // Remove them from the sidebar
-				// var sidebar_person = $('#sidebar_person_total_'+ $(this).closest(".expense").attr("id"));
-				// sidebar_person.hide('slow', function(){
-				// 	$(this).remove();
-				// });
-				// remove clicked element
-				// msnry.remove( $('#'+result).closest('.expense'));
-			  	// layout remaining item elements
-				// msnry.reload();
-				$('#'+result).closest('.expense').remove();
-				$('#sidebar_person_total_'+ result).remove();
+					// // Remove them from the sidebar
+					// var sidebar_person = $('#sidebar_person_total_'+ $(this).closest(".expense").attr("id"));
+					// sidebar_person.hide('slow', function(){
+					// 	$(this).remove();
+					// });
+					// remove clicked element
+					// msnry.remove( $('#'+result).closest('.expense'));
+				  	// layout remaining item elements
+					// msnry.reload();
+					$('#'+result).closest('.expense').remove();
+					$('#sidebar_person_total_'+ result).remove();
+					$("#centered").css("display","none");
+					$("#blackout").css("display","none");
 
-		    }
-		});
-
-		
-	}
+			    }
+			});
+		}
 	// });
-	
+	});
 	
 	// not sure why this dont work
 	update_numbers();
@@ -364,7 +352,7 @@ $( "#expense_area" ).on( "click", ".expense_button.edit", function(){
 $( "#expense_area" ).on( "change", ".expense_owner input", function(){
 	var owner = $(this);
 	var persons_id = $(this).closest(".expense").data("person");
-	var persons_old_name = $(this).closest(".expense").data("name");
+	var persons_old_name = $(this).closest(".expense").attr("data-name");
 	var persons_new_name = $(this).val();
 	if(typeof persons__old_name == "undefined"){
 		persons_old_name = "person " + persons_id;
@@ -472,28 +460,30 @@ $("#right_info_bar").on("click", "#delete_group",function(){
 		group_name = "group " + group_id;
 	}
 
-	var delete_confirmation = confirm("delete " + group_name + "?");
-	
-	if(delete_confirmation == true){
+	// var delete_confirmation = blackout_prompt("delete " + group_name + "?");
+	blackout_prompt("delete " + group_name + "?").then(function(delete_confirmation){
+		if(delete_confirmation == true){
 			$("#centered").css("display","block");
 			$("#centered").html("<i class='fa fa-cog fa-spin fa-5x'></i><p>deleting " + group_name + "</p>");
 			$("#blackout").css("display","block");
 			$.ajax({
-		    url: '/group/' + group_id + "/",
-		    type: 'POST',
-		    data: {
-		    	operation: "delete",
-		    },
-		    success: function(result) {
-		    	var time_to_redirect = 1000;
-		  		$('body').addClass('animated fadeOut');
-		  		setTimeout(function(){
-		  			window.location.replace("/");
-		  		}, time_to_redirect);
-		    }
-		});
+			    url: '/group/' + group_id + "/",
+			    type: 'POST',
+			    data: {
+			    	operation: "delete",
+			    },
+			    success: function(result) {
+			    	var time_to_redirect = 1000;
+			  		$('body').addClass('animated fadeOut');
+			  		setTimeout(function(){
+			  			window.location.replace("/");
+			  		}, time_to_redirect);
+			    }
+			});
+		}
+	});
+	
 
-	}
 });
 
 
@@ -671,6 +661,31 @@ $("#hide_ad").click(function(){
 $( "#expense_area" ).on( "change", "input", function(){
 	update_numbers();
 });
+
+$('blackout').click(function(){
+	$('#centered').css('display','none');
+	$('#blackout').css('display','none');
+});
+
+var blackout_prompt = function(prompt){
+	$('#centered').css("display", "block");
+	$('#blackout').css("display","block");
+	$('#centered').html("<p>" + prompt + "</p><button id='yes' class='text_button modal'>yes</button> / <button id='no' class='text_button modal'>no</button>");
+	// var response = false;
+	var deferred = $.Deferred();
+	$('#yes').click(function(){
+		deferred.resolve(true);
+	});
+	$('#no').click(function(){
+		deferred.resolve(false);
+		$('#centered').css("display", "none");
+		$('#blackout').css("display","none");
+	});
+	return deferred.promise();
+};
+var confimation = function(){
+	
+};
 var border_swap = function(id_on, id_off){
 	if(id_on == id_off){
 		if($(id_on).hasClass('selected_button')){

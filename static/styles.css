@@ -99,9 +99,8 @@ height: 100%;
 	border-bottom: 1px solid #e7e7e7;
 	border-top: 1px solid #dadada;
 	display: none;
-}
-.edit_person_wrapper table{
-	margin: 0 auto;
+	text-align: center;
+	padding: 3px;
 }
 .delete_person{
 	background: transparent;
@@ -314,6 +313,7 @@ td{
 	font-size: 15px;
 	padding: 3px;
 	cursor: pointer;
+	text-align: center;
 }
 .faux_button::-webkit-input-placeholder { /* WebKit browsers */
 	color: #888888;
@@ -453,8 +453,23 @@ p{
 	clear:both;
 }
 .updating{
-	font-style: italic;
+	/*font-style: italic;*/
 	color: #888888;
+	@-webkit-keyframes blinker { from {opacity:1.0;} to {opacity:0.0;} }
+        @keyframes blinker { from {opacity:1.0;} to {opacity:0.0;} }
+
+.blink {
+   text-decoration:blink;
+
+  -webkit-animation-name:blinker;
+          animation-name:blinker;  
+  -webkit-animation-iteration-count:infinite;  
+          animation-iteration-count:infinite;  
+  -webkit-animation-timing-function:cubic-bezier(1.0,0,0,1.0);
+          animation-timing-function:cubic-bezier(1.0,0,0,1.0);
+  -webkit-animation-duration:1s; 
+          animation-duration:1s; 
+}
 }
 .edit_open{
 	margin-bottom: 126px;
@@ -524,7 +539,13 @@ p{
 #warning i{
 	margin:0px 8px;
 }
-
+.modal{
+	font-size: 16px;
+	color: #dddddd;
+}
+.modal:hover{
+	color: #fcfcfc;
+}
 @media only screen and (max-width: 1120px){
   body{
   	font-size: 4em;
