@@ -121,12 +121,13 @@ $( "#expense_area" ).on( "click", ".expense_button.delete", function() {
 				expense_button.closest("tr").remove();
 			});
 			display_update('expense ' + expense_id + ' successfully deleted');
+			update_numbers();
 	    }
 	});
 
 	
 	//this not working either
-	update_numbers();
+	
 });
 
 
@@ -250,7 +251,7 @@ $('#add_user').click(function(){
 			display_update("person " + persons_id + " successfully created");
 
 
-			$('#average_row').before('<tr class="sidebar_person_total new_row" id="sidebar_person_total_' + persons_id + '"><td style="color:' + persons_color +';">-----</td><td class="align_right"> 0.00 </td><td class="align_right">0.00</td></tr>');
+			$('#average_row').before('<tr class="sidebar_person_total new_row" id="sidebar_person_total_' + persons_id + '"><td class="person_name" style="color:' + persons_color +';">-----</td><td class="align_right"> 0.00 </td><td class="align_right">0.00</td></tr>');
 
 			$('#sidebar_person_total_' + persons_id).show("slow");
 			$('#sidebar_person_total_' + persons_id).removeClass('new_row');
@@ -259,12 +260,12 @@ $('#add_user').click(function(){
 
 			// // swap back the add user button text
 			$('#add_user button').text('add another person');
+			update_numbers();
 
 // $('#right_info_bar').css('height', $('body').height());
 
 	    }
 	});
-	update_numbers();
 });
 
 
@@ -294,7 +295,6 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 			$("#centered").css("display","block");
 			$("#centered").html("<i class='fa fa-cog fa-spin fa-5x'></i><p>deleting " + persons_name + "</p>");
 			$("#blackout").css("display","block");
-	// $(".delete_person" ).dblclick(function() { <currently unused, swap brackets below
 			$.ajax({
 			    url: '/person/' + persons_id + "/",
 			    type: 'POST',
@@ -304,17 +304,7 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 			    success: function(result) {
 	   	     		//remove the person	
 			   	    display_update(persons_name + ' successfully deleted');	
-					// $(this).closest(".expense_wrapper").slideToggle('slow', function(){
-					// 	//DO AJAX CALL THEN REMOVE
-						
-					// 	$(this).remove();
-					// });
-					
-					// // Remove them from the sidebar
-					// var sidebar_person = $('#sidebar_person_total_'+ $(this).closest(".expense").attr("id"));
-					// sidebar_person.hide('slow', function(){
-					// 	$(this).remove();
-					// });
+	
 					// remove clicked element
 					// msnry.remove( $('#'+result).closest('.expense'));
 				  	// layout remaining item elements
@@ -323,6 +313,7 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 					$('#sidebar_person_total_'+ result).remove();
 					$("#centered").css("display","none");
 					$("#blackout").css("display","none");
+					update_numbers();
 
 			    }
 			});
@@ -331,7 +322,7 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 	});
 	
 	// not sure why this dont work
-	update_numbers();
+	
 });
 
 
@@ -489,16 +480,16 @@ $("#right_info_bar").on("click", "#delete_group",function(){
 
 // No, Add/Change Group Name
 // Change the value to what the group name is on click
-$('#change_group_name').click(function(){
-	var group_name = $(this).data('name');
-	$(this).val(group_name);	
-});
-// switch back to the placeholder text on blur
-$('#change_group_name').blur(function(){
-	$(this).val("")
-});
+// $('#change_group_name').click(function(){
+// 	var group_name = $(this).data('name');
+// 	$(this).val(group_name);	
+// });
+// // switch back to the placeholder text on blur
+// $('#change_group_name').blur(function(){
+// 	$(this).val("")
+// });
 // actually do the work on change
-$('#change_group_name').change(function(){
+$('#group_title').change(function(){
 	var their_new_name = $(this).val();
 	// Using django to generate the below?
 	// bad/good?
@@ -517,7 +508,7 @@ $('#change_group_name').change(function(){
 		   	     display_update('group name changed to ' + result);
 		   	     $(document).attr('title', 'trek/split - ' +result);
 		   	     the_input_box.data("name", result);
-		   	     $("#group_name").text(result);
+		   	     // $("#group_name").text(result);
 		   	     $("#group_name").attr("data-name", result);
 
 		   	 }
@@ -525,7 +516,7 @@ $('#change_group_name').change(function(){
 		   	 	display_update('group name changed to ' + group_id);
 				$(document).attr('title', 'trek/split - ' +group_id);
 				the_input_box.data("name", group_id);
-				$("#group_name").text(group_id);
+				// $("#group_name").text(group_id);
 				$("#group_name").attr("data-name", "");	
 		   	 }
 	    }
@@ -533,16 +524,23 @@ $('#change_group_name').change(function(){
 });
 
 // Send Invitation Email
-$('#send_email').focus(function(){
-	$(this).attr("placeholder", "yolo");
+$('#invite_email').focus(function(){
+	$(this).attr("placeholder", "");
 });
-$('#send_email').blur(function(){
+$('#invite_email').blur(function(){
 	$(this).attr("placeholder", "share by email");
+});
+$('#invite_email').keypress(function(e) {
+    if(e.which == 13) {
+       $('#send_email').click();
+    }
 });
 $('#send_email').click(function(){
 	var email_to_invite = $('#invite_email').val();
-
+	var send_button = $(this);
 	var group_id = $("#group_name").data("group");
+	var button_text = send_button.html();
+	send_button.html("send <i class='fa fa-cog fa-spin'></i>");
 
 	$.ajax({
 	    url: '/group/' + group_id + '/',
@@ -552,10 +550,16 @@ $('#send_email').click(function(){
 	    	email: email_to_invite,
 	    },
 	    success: function(result) {
+	    	display_update(result);
+	    	$('#invite_email').val("");
+	    	send_button.html(button_text);
 
+	    },
+	    error: function(){
+	    	display_update('email failed to send');
+	    	send_button.html(button_text);
 	    }
 	});
-	display_update('functionality not implemented');
 });
 
 // Toggle Settings Tab
@@ -600,7 +604,7 @@ $('#share_button').click(function(){
 		$( "#share" ).slideToggle( "fast");
 	}
 	// Below focuses on the email input
-	$("#invite_email").focus();
+	// $("#invite_email").focus();
 });
 // Toggle About Tab
 $('#about_button').click(function(){
@@ -656,6 +660,19 @@ $("#hide_ad").click(function(){
 
 
 //******************************** General Functions ********************************//
+// Faux button actions
+// $('.faux_button').focus(function(){
+// 	var button_value = $(this).data('name');
+// 	// Grab the button value
+
+// 	// Put it in the te
+// 	$(this).val(button_value);	
+// });
+// // switch back to the placeholder text on blur
+// $('.faux_button').blur(function(){
+// 	$(this).val("")
+// });
+
 
 // Update All Numbers on input change
 $( "#expense_area" ).on( "change", "input", function(){

@@ -127,18 +127,15 @@ def group_transaction(request, group_id):
 
 	elif request.POST['operation'] == "send_invitation":
 		current_group = Group.objects.get(id__exact=group_id)
-		print current_group
 		email_to_invite = request.POST['email']
-		print email_to_invite
-		subject = 'Join us in splitting up the expenses for ' + current_group.name
-		print subject
-		body = 'Here is the url:<br>http://www.treksplit.com/' + group_id + '/'
-		print body
-		sender = 'jason@treksplit.com'
-		print sender
-		send_mail(subject, body, sender, email_to_invite, fail_silently=False)
-		print "7"
-		return HttpResponse('email sent')
+		if current_group.name is None:
+			subject = 'Help split up expenses for group ' + group_id
+		else:	
+			subject = 'Help split up expenses for ' + current_group.name
+		body = 'Join your friends here - http://www.treksplit.com/' + group_id + '/'
+		sender = 'treksplit@gmail.com'
+		send_mail(subject, body, sender, [email_to_invite], fail_silently=False)
+		return HttpResponse('email sent to ' + email_to_invite)
 
 	elif request.POST['operation'] == "delete":
 		current_group = Group.objects.get(id__exact=group_id)

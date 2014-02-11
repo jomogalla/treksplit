@@ -60,9 +60,9 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 X Delete Expenses related to a person when deleting the person
 > Delete Everything related to a group when you delete it
 X Fix CSRF on all views  << NUMERO TRES
-> Update the expense functions to handle not having an id after being created
+> Update the expense functions to handle not having an id immediately after being created
 X Add delete group functionality
-> Add share functionality << ADD SENDGRID
+X Add share functionality << ADD SENDGRID<nvm
 > Add passcode functionality
 > integrate masonry
 > update tables to divs with display table? (for jquery animations) NO
@@ -87,15 +87,18 @@ X remove tables out of the edit person div
 > Get the start page to use the scripts and styles files
 > Make mobile versions WAY BIGGER
 X add titles to everything
-> Change the Add group name text after adding a group name to change group name(for the first time)
+X Change the Add group name text after adding a group name to change group name(for the first time)
 > add jquery to handle all the faux button class inputs so they behave the same
 
 ||||||||||||||||||| BUGS |||||||||||||||||||
 X new person's colors are not updating in the sdiebar
 X add group button broken
 X delete person not being removed from screen
-> New person's average is incorrect when added
-> Persons sidebar color not updating on change
+X New person's average is incorrect when added
+X Persons sidebar color not updating on change
+> Rows added by jquery not up to date
+> Not updating totals after an expense delete
+
 
 >> Longer Term To Do <<
 > get firefox up to date

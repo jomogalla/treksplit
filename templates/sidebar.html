@@ -1,6 +1,7 @@
 <div id="right_info_bar">
 	<div id="group_name" title="the group's name" data-group="{{ group.id }}" {% if group.name %}data-name="{{group.name}}"{% endif %}>
-		{% if group.name %}{{group.name}}{% else %}{{ group.id }}{% endif %}
+		
+		<input id="group_title" class="faux_button" value="{% if group.name %}{{group.name}}{% else %}{{ group.id }}{% endif %}">
 	</div>
 	<div id="totals">
 		<div id="breakdown_header"> cost breakdown </div>
@@ -60,22 +61,25 @@
 					Enjoy!
 				</p>
 				<p>
-					<a href="mailto:jason@treksplit.com">Contact Me</a>
+					<a href="mailto:treksplit@gmail.com">Contact Me</a>
 				</p>
 			</div>
 			<div id="share">
 				 <input type="email" id="invite_email" placeholder="share by email"><button id="send_email" class="text_button">send <i class="fa fa-arrow-right"></i></button>
 			</div>
 			<div id="settings">
-				<button id="delete_group" title="delete this group" class="text_button" >delete group</button>
-
-				<button id="change_passcode_requirement" title="require passcode protection for each person" class="text_button">add passcode requirement</button>
-				
-				<input type="text"	title="change the group's name" placeholder="{% if group.name %}change{% else %}add{% endif %} group name" id="change_group_name" {% if group.name %}data-name="{{ group.name }}"{% endif %} class="faux_button">
-
-				<input type="password" 	title="change the passcode for the group" placeholder="{% if group.passcode %}change{% else %}add{% endif %} group passcode" id="change_group_passcode" class="faux_button">
-
-				<!-- <button id="delete_group" class="text_button" >delete group</button> -->
+<!-- 				<div class="settings_row">
+					<button id="change_passcode_requirement" title="require passcode protection for each person" class="text_button">add passcode requirement</button>
+				</div>
+				<div class="settings_row">
+					<input type="text"	title="change the group's name" placeholder="{% if group.name %}change{% else %}add{% endif %} group name" id="change_group_name" {% if group.name %}data-name="{{ group.name }}"{% endif %} class="faux_button">
+				</div> -->
+				<div class="settings_row">
+					<input type="password" 	title="change the passcode for the group" placeholder="{% if group.passcode %}change{% else %}add{% endif %} group passcode" id="change_group_passcode" class="faux_button">
+				</div>
+				<div class="settings_row">
+					<button id="delete_group" title="delete this group" class="text_button" >delete group</button>
+				</div>
 			</div>		
 		</div>
 		<div id="advertisement">

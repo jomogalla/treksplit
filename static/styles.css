@@ -22,6 +22,9 @@ height: 100%;
 	font-size: 22px;
 	padding: 5px;
 }
+#group_title{
+	font-size: 22px;
+}
 #totals{
 	float:right;
 }
@@ -163,6 +166,10 @@ input{
 	height: 12px;
 	background-repeat: no-repeat;
 
+}
+.color{
+	width: 10em;
+	padding: 0px;
 }
 .expense_button:hover{
 	background-repeat: no-repeat;
@@ -561,6 +568,9 @@ p{
 }
 .modal:hover{
 	color: #fcfcfc;
+}
+.delete_person:hover{
+	color:#ff6e6b;
 }
 @media only screen and (max-width: 1120px){
   body{
