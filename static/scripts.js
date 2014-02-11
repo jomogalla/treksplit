@@ -119,9 +119,10 @@ $( "#expense_area" ).on( "click", ".expense_button.delete", function() {
 	    success: function(result) {
 	   	  	expense_button.closest("tr").hide('fast', function(){
 				expense_button.closest("tr").remove();
+				update_numbers();
 			});
 			display_update('expense ' + expense_id + ' successfully deleted');
-			update_numbers();
+			
 	    }
 	});
 
@@ -787,18 +788,21 @@ var update_numbers = function(){
 
 		var difference = parseFloat(total_td.text())-average;
 
+		difference_td.text(difference.toFixed(2));
+
+		// lol this is all screwy but im going to bed
 		if(difference<0){
 			if(!difference_td.hasClass('negative_amount')){
 				difference_td.addClass('negative_amount');
+				difference_td.removeClass('positive_amount');
 			}
 		}
 		else{
+			difference_td.addClass('positive_amount');
 			if(difference_td.hasClass('negative_amount')){
 				difference_td.removeClass('negative_amount');
 			}			
 		}
-
-		difference_td.text(difference.toFixed(2));
 	});
 
 	// UPDATES THE NAMES

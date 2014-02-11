@@ -1,7 +1,7 @@
 <div id="right_info_bar">
 	<div id="group_name" title="the group's name" data-group="{{ group.id }}" {% if group.name %}data-name="{{group.name}}"{% endif %}>
 		
-		<input id="group_title" class="faux_button" value="{% if group.name %}{{group.name}}{% else %}{{ group.id }}{% endif %}">
+		<input id="group_title" title="edit group name" class="faux_button" value="{% if group.name %}{{group.name}}{% else %}{{ group.id }}{% endif %}">
 	</div>
 	<div id="totals">
 		<div id="breakdown_header"> cost breakdown </div>

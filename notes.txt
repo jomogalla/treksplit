@@ -96,8 +96,9 @@ X add group button broken
 X delete person not being removed from screen
 X New person's average is incorrect when added
 X Persons sidebar color not updating on change
-> Rows added by jquery not up to date
-> Not updating totals after an expense delete
+> sidebar Rows added by jquery not up to date
+X Not updating totals after an expense delete (updates if two expenses are deleted)
+
 
 
 >> Longer Term To Do <<
