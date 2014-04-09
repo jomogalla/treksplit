@@ -31,7 +31,7 @@
 		<table id="payment_table">
 			<tr class="row">
 				<td style="color:#8fd0ff"> Nothing </td>
-				<td> here </td>
+				<td class="owes"> here </td>
 				<td   style="color:#ffa58f"> yet </td>
 				<td class="align_center money_sign"> <i class="fa fa-usd"></i></td>
 			</tr>
@@ -65,7 +65,10 @@
 				</p>
 			</div>
 			<div id="share">
-				 <input type="email" id="invite_email" placeholder="share by email"><button id="send_email" class="text_button">send <i class="fa fa-arrow-right"></i></button>
+				<p>
+					share the url<br> or
+				</p>
+				<input type="email" id="invite_email" placeholder="share by email"><button id="send_email" class="text_button">send <i class="fa fa-arrow-right"></i></button>
 			</div>
 			<div id="settings">
 <!-- 				<div class="settings_row">
@@ -75,10 +78,13 @@
 					<input type="text"	title="change the group's name" placeholder="{% if group.name %}change{% else %}add{% endif %} group name" id="change_group_name" {% if group.name %}data-name="{{ group.name }}"{% endif %} class="faux_button">
 				</div> -->
 				<div class="settings_row">
-					<input type="password" 	title="change the passcode for the group" placeholder="{% if group.passcode %}change{% else %}add{% endif %} group passcode" id="change_group_passcode" class="faux_button">
+					<input type="password" 	title="change the passcode for the group" {% if group.passcode %}data-passcode="yes"{% endif %} placeholder="{% if group.passcode %}change{% else %}add{% endif %} group passcode" id="change_group_passcode" class="faux_button">
 				</div>
 				<div class="settings_row">
-					<button id="delete_group" title="delete this group" class="text_button" >delete group</button>
+					<input type="password" style="display:none;" title="change the passcode for the group" placeholder="confirm passcode" id="change_group_passcode_confirm" class="faux_button">
+				</div>
+				<div class="settings_row">
+					<button id="delete_group" title="delete this group" class="text_button delete_person" >delete group</button>
 				</div>
 			</div>		
 		</div>

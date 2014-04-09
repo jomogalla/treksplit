@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie 
 from django.core.context_processors import csrf
 from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required # <<<< added for authenticaton 
+from django.contrib.auth import authenticate, login
 
 from models import Group, Person, Item
 
@@ -14,30 +16,37 @@ def no_group(request):
 	# return the empty landing page
 	return render_to_response('./test.html')
 
+def passcode(request):
+	return render_to_response('./passcode.html')
+
 # displays the main interface
+# @login_required
 @ensure_csrf_cookie    
 def group(request, group_id):
-	# grab all the people in the group
-	people = Person.objects.filter(group_ID__exact = group_id).order_by('id')
-
-	# If the group does not exist return 404
-	# group = get_object_or_404(Group, pk=group_id)
-
 	# Or the alternate, redirect to create group page
 	try:
 		group = Group.objects.get(pk=group_id)
 	except Group.DoesNotExist:
 		return redirect('/')
 
+	if request.user.is_authenticated() or group.passcode == None:
+		# If the group does not exist return 404
+		# group = get_object_or_404(Group, pk=group_id)
 
-	# grab all the expenses with owners in the above list
-	# expenses = 
 
-	# TIRED OF THINKING, GRABBING ALL EXPENSES FOR NOW
-	expenses = Item.objects.all().order_by('id')
+		# grab all the people in the group
+		people = Person.objects.filter(group_ID__exact = group_id).order_by('id')
 
-	return render_to_response('./index.html', {'people':people, 'expenses':expenses, 'group':group})
+		# grab all the expenses with owners in the above list
+		# expenses = 
 
+		# TIRED OF THINKING, GRABBING ALL EXPENSES FOR NOW
+		# expenses = Person.item_set
+		expenses = Item.objects.all().order_by('id')
+
+		return render_to_response('./index.html', {'people':people, 'expenses':expenses, 'group':group})
+	else:
+		return render_to_response('./passcode.html', {'group':group})
 
 # handles all expense transactions
 def expense_transaction(request, expense_id):
@@ -137,10 +146,28 @@ def group_transaction(request, group_id):
 		send_mail(subject, body, sender, [email_to_invite], fail_silently=False)
 		return HttpResponse('email sent to ' + email_to_invite)
 
+	elif request.POST['operation'] == "change_passcode":
+		current_group = Group.objects.get(id__exact=group_id)
+		current_group.passcode = request.POST['passcode']
+		current_group.save()
+		return HttpResponse('passcode changed')
+
 	elif request.POST['operation'] == "delete":
 		current_group = Group.objects.get(id__exact=group_id)
+		current_people = Person.objects.filter(group_ID__exact = group_id)
+		# Grab all the relevant expenses... so we can throw them in the fire
+		current_people.delete()
 		current_group.delete()
 		return HttpResponse(group_id)
+	elif request.POST['operation'] == "authenticate":
+		passcode = request.POST['passcode']
+		group = authenticate(username = group_id, password = passcode)
+		print group
+		if group is not None:
+			login(request,group)
+			return HttpResponse(group_id)
+		else:
+			return HttpResponse(group_id)
 
 
 	return HttpResponse("whoa making a group transaction on group %s" % group_id)

@@ -4,46 +4,7 @@
 <link rel="icon" type="image/png" href="{{ STATIC_URL }}/static/mtns.png">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.0.0/animate.min.css">
-<style>
-#add_group{
-	cursor:pointer;
-}
-#centered{
-	height: 13em;
-	margin: auto;
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;	font-size: 18px;
-	text-align: center;
-}
-
-body{
-	/*background-image: url(https://dl.dropboxusercontent.com/u/59139532/rando%20pics/IMG_4310.jpg);*/
-	font-family: Verdana, Geneva, sans-serif;
-}
-.text_button{
-	background: transparent;
-	border: none;
-	cursor: pointer;
-	color: #888888;
-	font-size: 20px;
-	text-align: center;
-}
-.text_button:hover{
-	color: #555555;
-}
-
-p:first-child{
-	font-size: 24px;
-}
-/*@media only screen and (max-width: 735px){
-	#add_group{
-		font-size: 18px;
-	}
-}*/
-</style>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/static/styles.css">
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -56,7 +17,7 @@ p:first-child{
 </script>
 </head>
 <body>
-<div id="centered">
+<div id="intro">
 	<p>trek/split</p>
 	<p> take the busy work out of splitting up expenses between your friends.</p>
 	<p>no registration.</p>
@@ -100,7 +61,7 @@ $(document).ready(function(){
 	$( "body" ).on( "click", "#add_group", function() {
 
 		// Dump this person from the tables VIA AJAX
-		$("#centered").html("<i class='fa fa-cog fa-spin fa-5x'></i><p>one moment please</p>");
+		$("#intro").html("<i class='fa fa-cog fa-spin fa-5x'></i><p>one moment please</p>");
 
 		$.ajax({
 		    url: '/group/0/',

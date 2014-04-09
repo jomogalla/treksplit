@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-from splitter.views import no_group, group, expense_transaction, person_transaction, group_transaction
+from splitter.views import no_group, group, expense_transaction, person_transaction, group_transaction, passcode
 
 urlpatterns = patterns('',
     # Examples:
@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     url(r'^$', no_group),
     url(r'^(?P<group_id>\d+)/$', group),
+    # passcode below
+	url(r'^passcode/$', passcode),
     #AJAX update functions/urls below
     url(r'^expense/(?P<expense_id>\d+)/$', expense_transaction),
     url(r'^person/(?P<person_id>\d+)/$', person_transaction),

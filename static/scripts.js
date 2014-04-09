@@ -63,6 +63,10 @@ $.ajaxSetup({
 //******************************** Expense Functions ********************************//
 
 // Add Expense
+// On Focus wasnt working in Safari - added this this click event to focus it
+$( "#expense_area" ).on( "click", ".expense_button.add", function(){
+	$(this).focus();
+});
 // triggered by focusing on the Add Button
 $( "#expense_area" ).on( "focus", ".expense_button.add", function(){
 	var persons_id = $(this).closest(".expense").data("person");
@@ -121,14 +125,10 @@ $( "#expense_area" ).on( "click", ".expense_button.delete", function() {
 				expense_button.closest("tr").remove();
 				update_numbers();
 			});
-			display_update('expense ' + expense_id + ' successfully deleted');
-			
+			display_update('expense ' + expense_id + ' successfully deleted');			
 	    }
 	});
-
-	
 	//this not working either
-	
 });
 
 
@@ -249,7 +249,7 @@ $('#add_user').click(function(){
 			// $('#' + persons_id).css('color', 'new_row');
 
 			// Let them know whats happening
-			display_update("person " + persons_id + " successfully created");
+			display_update("person " + persons_id + " created");
 
 
 			$('#average_row').before('<tr class="sidebar_person_total new_row" id="sidebar_person_total_' + persons_id + '"><td class="person_name" style="color:' + persons_color +';">-----</td><td class="align_right"> 0.00 </td><td class="align_right">0.00</td></tr>');
@@ -304,7 +304,7 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 			    },
 			    success: function(result) {
 	   	     		//remove the person	
-			   	    display_update(persons_name + ' successfully deleted');	
+			   	    display_update(persons_name + ' deleted');	
 	
 					// remove clicked element
 					// msnry.remove( $('#'+result).closest('.expense'));
@@ -396,7 +396,7 @@ $( "#expense_area" ).on( "change", ".color", function(){
 	    	color: $(this).val(),
 	    },
 	    success: function(result) {
-	   	    display_update(persons_name + "\'s color successfully changed");			
+	   	    display_update(persons_name + "\'s color changed");			
 	    }
 	});
 });
@@ -404,16 +404,16 @@ $( "#expense_area" ).on( "change", ".color", function(){
 
 // Change Person's Email
 $("#expense_area").on("change", ".email",function(){
-	display_update('functionality not implemented, sorry');
+	display_update('functionality not implemented');
 });
 
 
 // Change Person's Passcode
 $("#expense_area").on("change", ".password",function(){
-	display_update('functionality not implemented, sorry');
+	display_update('functionality not implemented');
 });
 $("#expense_area").on("change", ".confirm_password",function(){
-	display_update('functionality not implemented, sorry');
+	display_update('functionality not implemented');
 });
 
 
@@ -538,6 +538,11 @@ $('#invite_email').keypress(function(e) {
 });
 $('#send_email').click(function(){
 	var email_to_invite = $('#invite_email').val();
+	// check to see if they even put anything
+	if (email_to_invite == ''){
+		display_update("that isn\'t an email address");
+		return false;
+	}
 	var send_button = $(this);
 	var group_id = $("#group_name").data("group");
 	var button_text = send_button.html();
@@ -634,18 +639,128 @@ $('#about_button').click(function(){
 
 
 // Add Group Passcode
-$("#right_info_bar").on("click", "#change_group_passcode",function(){
-	display_update('functionality not implemented, sorry');
-});
+// $('#change_group_passcode').focus(function(){
+// 	$(this).attr("placeholder", "");
+// });
+// $('#change_group_passcode').blur(function(){
+// 	$(this).attr("placeholder", "add group passcode");
+// });
 
+
+// need a way to store the first passcode to compare it to the second
+
+// $('#change_group_passcode').keypress(function(e) {
+//     if(e.which == 13 && $(this).attr("data-pass") != "confirm") {
+//     	$(this).val("");
+//     	$(this).attr("placeholder", "confirm passcode");
+// 		$(this).attr("data-pass", "confirm");
+//     	display_update('step 1');
+
+//     }else if(e.which == 13){
+//     	// var passcode = $(this).val();
+//     	// $(this).val = "";
+//     	display_update('step 2');
+//     }
+// });
+$('#change_group_passcode_confirm').keypress(function(e) {
+	// IF data-passcode == yes, require them to input the current passcode < potentially insecure
+	var group_id = $("#group_name").data("group");
+	if(e.which == 13 || e.which == 9){
+		var first_passcode = $('#change_group_passcode').val();
+		var second_passcode = $('#change_group_passcode_confirm').val();
+		if(first_passcode == second_passcode){
+				$(this).val("");
+				$('#change_group_passcode').val("");
+				$(this).attr("placeholder", "updating passcode");		
+				$.ajax({
+				    url: '/group/' + group_id + '/',
+				    type: 'POST',
+				    data: {
+				    	operation: 'change_passcode',
+				    	passcode: first_passcode,
+				    },
+				    success: function(result) {
+				    	$('#change_group_passcode_confirm').css('display', 'none');
+				    	$('#change_group_passcode').css('display', 'inline-block');
+				    	$('#change_group_passcode_confirm').attr("placeholder","confirm passcode");
+				    	$('#change_group_passcode').attr("placeholder","change group passcode");
+				    	$('#change_group_passcode').blur();
+				    	display_update(result);
+				    },
+				});
+		}
+		else{
+			$(this).css('display', 'none');
+			$(this).val("");
+			$('#change_group_passcode').val("");
+			$('#change_group_passcode').attr("placeholder", "try again...");
+			$('#change_group_passcode').css('display', 'inline-block');
+			$('#change_group_passcode').focus();
+		}
+	}
+});
+$('#change_group_passcode').keypress(function(e) {
+	if(e.which == 13 || e.which == 9){
+		$(this).css('display', 'none');
+		$('#change_group_passcode_confirm').css('display', 'inline-block');
+		$('#change_group_passcode_confirm').focus();
+			
+	}
+	
+
+	// var first_passcode, second_passcode;
+	// var group_id = $("#group_name").data("group");
+	// var passcode_input = $(this);
+	// if(e.which == 13 && passcode_input.attr("data-block") != 'yes'){
+	// 	first_passcode = passcode_input.val();
+	// 	passcode_input.val("");
+	// 	passcode_input.attr("data-block", "yes");
+	// 	passcode_input.attr("placeholder", "confirm passcode");
+	// 	display_update('stage 1');
+	// 	$('#change_group_passcode').keypress(function(e) {
+	// 		if(e.which == 13 && passcode_input.attr("data-block") == 'yes'){
+	// 			display_update('stage 2');
+	// 			second_passcode = passcode_input.val();
+	// 			passcode_input.attr("data-block", "no");
+	// 			if(first_passcode == second_passcode){
+	// 				passcode_input.val("");
+	// 				passcode_input.attr("placeholder", "updating passcode");		
+	// 				$.ajax({
+	// 				    url: '/group/' + group_id + '/',
+	// 				    type: 'POST',
+	// 				    data: {
+	// 				    	operation: 'change_passcode',
+	// 				    	passcode: first_passcode,
+	// 				    },
+	// 				    success: function(result) {
+	// 				    	display_update(result);
+	// 				    	passcode_input.val("");
+	// 				    	passcode_input.attr("placeholder","change group passcode");
+	// 				    	passcode_input.blur();
+	// 				    },
+	// 				});
+	// 			}else{
+	// 				passcode_input.val("");
+	// 				passcode_input.attr("placeholder", "try again");
+
+	// 				// setTimeout(passcode_input.attr("placeholder", "start over"), 1000);
+	// 				passcode_input.attr("data-block", "no");
+	// 				return false;
+	// 			}
+	// 		}
+	// 	});
+	// }else{
+	// 	passcode_input.attr("data-block", "no");
+	// }
+});
 
 
 // Toggle Requirement for individual Passcodes
 $("#right_info_bar").on("click", "#change_passcode_requirement",function(){
-	display_update('functionality not implemented, sorry');
+	display_update('functionality not implemented');
 });
 
-// Share Group
+// Share Groupd
 // $("#right_info_bar").on("click", "#send_email",function(){
 // 	display_update('functionality not implemented, sorry');
 // });
@@ -797,12 +912,17 @@ var update_numbers = function(){
 				difference_td.removeClass('positive_amount');
 			}
 		}
-		else{
+		else if(difference>0){
 			difference_td.addClass('positive_amount');
 			if(difference_td.hasClass('negative_amount')){
 				difference_td.removeClass('negative_amount');
 			}			
 		}
+		else{
+			difference_td.removeClass('positive_amount');
+			difference_td.removeClass('negative_amount');
+		}
+
 	});
 
 	// UPDATES THE NAMES
@@ -818,6 +938,104 @@ var update_numbers = function(){
 
 		
 	});
+
+	// Calculate the payment plan
+	var people = [];
+	// Person = [Name, Amount, Color]
+	var person = [];
+	$('.expense').each(function(){
+
+		var name = $(this).attr('data-name');
+		if(typeof name == "undefined"){
+			name = '-----';
+		}
+		var expenses = $(this).children('.expense_header').children('.expense_total').text();
+		var color = $(this).attr('data-color');
+		person = [name, expenses, color];
+		people.push(person);
+	});
+
+	var number_of_people = people.length;
+	// alert(people[1][0]);
+
+	// Name = ARRAY[X][0]
+	// Value = ARRAY[X][1]
+
+	var lenders = [];
+	var debtors = [];
+	// Transaction = [debtor, lender, amount, debtor color, lender color]
+	var transaction = [];
+	var transactions = [];
+
+	while(people.length > 0){
+		person = people.pop();
+		// grabbing the debtors
+		if (parseFloat(person[1]) < average){
+			person[1] = average - parseFloat(person[1]);
+			debtors.push(person);
+		}
+		// grabbing the lenders
+		else if(parseFloat(person[1]) > average){
+			person[1] = parseFloat(person[1]) - average;
+			lenders.push(person);
+		}
+		// If they paid the average, they disappear here :O
+	}
+
+
+
+	while(lenders.length > 0 && debtors.length > 0){
+		for(var i = 0; i < debtors.length; i++){
+			for(var j = 0; j < lenders.length; j++){
+				if(debtors[i][1] == lenders[j][1]){
+					transaction = [debtors[i][0], lenders[j][0], debtors[i][1], debtors[i][2], lenders[j][2]];
+					transactions.push(transaction);
+					lenders.splice(i, 1);
+					debtors.splice(j, 1);
+					continue;
+				}
+			}
+		}
+		if(debtors.length > 0 && lenders.length > 0){
+			var debtor = debtors.pop();
+			var lender = lenders.pop();
+			if(debtor[1] < lender[1]){
+				transaction = [debtor[0], lender[0], debtor[1], debtor[2], lender[2]];
+				transactions.push(transaction);
+				lender[1] = lender[1] - debtor[1];
+				lenders.push(lender);
+			}
+			else{
+				transaction = [debtor[0], lender[0], lender[1], debtor[2], lender[2]];
+				transactions.push(transaction);
+				debtor[1] = debtor[1] - lender[1];
+				debtors.push(debtor);
+			}
+		}
+
+		// if(debtors[0][1] < lenders[0][1]){
+		// 	transaction = [debtors[0][0], lenders[0][0], debtors[0][1]];
+		// 	transactions.push(transaction);parseFloat(
+		// 	lenders[0][1] = parseFloat(lenders[0][1]) - parseFloat(debtors[0][1]);
+		// 	debtors.splice(0, 1);
+		// }
+		// else{
+		// 	transaction = [debtors[0][0], lenders[0][0], lenders[0][1]];
+		// 	transactions.push(transaction);
+		// 	debtors[0][1] = parseFloat(debtors[0][1]) - parseFloat(lenders[0][1]);
+		// 	lenders.splice(0, 1);
+		// }
+	}
+	transactions.reverse();
+	$('#payment_table').html('');
+	while(transactions.length > 0){
+		transaction = transactions.pop();
+		var pretty_payment = '<tr><td style="color:'+ transaction[3]+';">' + transaction[0] +'</td><td class="owes">owes</td><td style="color:'+ transaction[4]+';">'+ transaction[1] +'</td><td class="align_center money_sign">$ ' + transaction[2].toFixed(2) + '</td></tr>';
+		$('#payment_table').append(pretty_payment);
+	}
+	
+	// Name = ARRAY[X][0]
+	// Value = ARRAY[X][1]
 
 
 	// UPDATES THE PAYMENT PLAN FIELDS

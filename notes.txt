@@ -53,6 +53,18 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 	Maybe like a one inch header that goes across the top that just makes the site feel more defined.
 	Instead of so much white space.
 
+||||||||||||||||||| TO DO FOR BASIC DONENESS |||
+> Fix the expenses query to just get the necessary expenses
+> Delete Everything related to a group when you delete it
+> Add code to handle "touch" events
+> Mobile CSS
+> Clean up CSS
+> Get the start page to use the scripts and styles files
+> Finish add passcode
+> Check IE
+> Check Firefox
+> Check Safari
+
 
 
 ||||||||||||||||||| FEATURES |||||||||||||||||||
@@ -65,8 +77,8 @@ X Add delete group functionality
 X Add share functionality << ADD SENDGRID<nvm
 > Add passcode functionality
 > integrate masonry
-> update tables to divs with display table? (for jquery animations) NO
-> Figure out payment plan algorithm  << NUMERO UNO
+X update tables to divs with display table? (for jquery animations) NO
+X Figure out payment plan algorithm  << NUMERO UNO
 > Add code to handle "touch" events
 > Add a how to? About? User guide?
 X Add a description to the main page?
@@ -76,19 +88,25 @@ X Get jQuery in a script file?
 X Get rid of odd/even row classes
 X Add code to darken the background of light text names in sidebar? Or just choose better default colors
 > Clean up CSS
-> Add something to an expense to notify the user that a Person is being deleted
+X Add something to an expense to notify the user that a Person is being deleted
 X Add italics to inputs as an updating notifier
 X Sort All Elements in the queries
 X Add group name functionality
 > add currency + hash fields to Group Model
 X remove tables out of the edit person div
 > replicate the way change group name works for Person change password,email
-> switch group name editing to the group name at the top?
+X switch group name editing to the group name at the top?
 > Get the start page to use the scripts and styles files
 > Make mobile versions WAY BIGGER
 X add titles to everything
 X Change the Add group name text after adding a group name to change group name(for the first time)
 > add jquery to handle all the faux button class inputs so they behave the same
+> add code to regex the email input to see if its a valid email address
+> upgrade DJANGO for the migrate DB function
+> remove _ID from the ends of those dum models
+> remove '+' from 0 values in the totals sidebar section
+> require password input to change password if there is one
+
 
 ||||||||||||||||||| BUGS |||||||||||||||||||
 X new person's colors are not updating in the sdiebar
@@ -98,6 +116,9 @@ X New person's average is incorrect when added
 X Persons sidebar color not updating on change
 > sidebar Rows added by jquery not up to date
 X Not updating totals after an expense delete (updates if two expenses are deleted)
+> Payment plan sections aint updatin
+> passcode placeholder returning to add passcode is thanks to jquery right above! fix?
+> Adding a person on mobile adds it to the list and it shouldnt.
 
 
 
@@ -105,3 +126,63 @@ X Not updating totals after an expense delete (updates if two expenses are delet
 > get firefox up to date
 > Add a help button, that basically puts post it notes on everything explaining what they do
 > Make the Update Display more relevant (in process)
+
+
+test shit styles -
+<style>
+#add_group{
+	cursor:pointer;
+}
+#centered{
+	height: 13em;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;	font-size: 18px;
+	text-align: center;
+}
+
+body{
+	/*background-image: url(https://dl.dropboxusercontent.com/u/59139532/rando%20pics/IMG_4310.jpg);*/
+	font-family: Verdana, Geneva, sans-serif;
+}
+.text_button{
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: #888888;
+	font-size: 20px;
+	text-align: center;
+}
+.text_button:hover{
+	color: #555555;
+}
+
+p:first-child{
+	font-size: 24px;
+}
+/*@media only screen and (max-width: 735px){
+	#add_group{
+		font-size: 18px;
+	}
+}*/
+@media only screen and (max-width: 480px){
+	p:first-child{
+		font-size: 4em;
+
+	}
+	p{
+		font-size: 4em;
+	}
+	#centered{
+		top:auto;
+		bottom: auto;
+		right: auto;
+		left: auto;
+		position: static;
+		height: auto;
+	}
+}
+</style>

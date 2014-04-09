@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>trek/split - passcode?</title>
+<link rel="icon" type="image/png" href="{{ STATIC_URL }}/static/mtns.png">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<style>
+#add_group{
+	cursor:pointer;
+}
+#centered{
+	height: 13em;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;	font-size: 18px;
+	text-align: center;
+}
+
+body{
+	/*background-image: url(https://dl.dropboxusercontent.com/u/59139532/rando%20pics/IMG_4310.jpg);*/
+	font-family: Verdana, Geneva, sans-serif;
+}
+.text_button{
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: #888888;
+	font-size: 20px;
+	text-align: center;
+}
+.text_button:hover{
+	color: #555555;
+}
+.faux_button{
+	font-size: 15px;
+	padding: 3px;
+	cursor: pointer;
+	text-align: center;
+	border: none;
+	font-size: 18px;
+}
+
+p:first-child{
+	font-size: 24px;
+}
+a{
+	color: inherit;
+	text-decoration: none;
+}
+</style>
+</head>
+<body data-group="{{ group.id }}">
+<div id="centered">
+	<p><a href="/">trek/split</a></p>
+	<p> {% if group.name %} {{group.name}} {% else %} Group {{ group.id}} {% endif %}is passcode protected.</p>
+	
+	<input id="passcode_input" type="password" class="faux_button" placeholder="Enter it here."> 
+	<button style="display:none;" id="submit" class="text_button"><i class="fa fa-arrow-right"></i></button>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	//******************************** CSRF Stuff ********************************//
+	function getCookie(name) {
+	    var cookieValue = null;
+	    if (document.cookie && document.cookie != '') {
+	        var cookies = document.cookie.split(';');
+	        for (var i = 0; i < cookies.length; i++) {
+	            var cookie = jQuery.trim(cookies[i]);
+	            // Does this cookie string begin with the name we want?
+	            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                break;
+	            }
+	        }
+	    }
+	    return cookieValue;
+	}
+	var csrftoken = getCookie('csrftoken');
+	function csrfSafeMethod(method) {
+	    // these HTTP methods do not require CSRF protection
+	    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+	}
+	$.ajaxSetup({
+	    crossDomain: false, // obviates need for sameOrigin test
+	    beforeSend: function(xhr, settings) {
+	        if (!csrfSafeMethod(settings.type)) {
+	            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+	        }
+	    }
+	});
+
+	$('#submit').click(function(e){
+		var group_id = $('body').attr("data-group");
+		$.ajax({
+		    url: '/group/' + group_id + "/",
+		    type: 'POST',
+		    data: {
+		    	operation: 'authenticate',
+		    	passcode: $('#passcode_input').val(),
+		    },
+		    success: function(result) {
+		    	location.reload();
+		    }
+		});
+	});
+	$('#passcode_input').keypress(function(e){
+		if(e.which == 13 || e.which == 9){
+			$('#submit').click();
+		}
+	});
+});
+</script>
+</body>
+</html>

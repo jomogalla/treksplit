@@ -1,11 +1,13 @@
 body{
 	margin: 0 0 0 0;
-	font-family: Verdana, Geneva, sans-serif;
+	font-family: "proxima-nova", sans-serif;
+	/*font-family: Verdana, Geneva, sans-serif;*/
 	color: #555555;
 	min-width: 735px;
 	background-color:#f3f3f3;
 	position: relative;
 	min-height: 100%;
+	text-shadow:  0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 html{
@@ -33,7 +35,7 @@ height: 100%;
 }
 #payment{
 	float:right;
-	display: none;
+	/*display: none;*/
 }
 #right_info_background{
 	width: 299px;
@@ -108,11 +110,6 @@ height: 100%;
 	text-align: center;
 	padding: 3px;
 }
-.delete_person{
-	background: transparent;
-	border: none;
-	cursor: pointer;
-}
 .expense_header button{
 	margin-bottom: 5px;
 }
@@ -128,6 +125,7 @@ input{
 	font-family: Verdana, Geneva, sans-serif;
 	color: #555555;
 	cursor: pointer;
+	text-shadow:  0 1px 0 rgba(255, 255, 255, 0.4);
 }
 .expense_table input{
 	border: none;
@@ -575,15 +573,39 @@ p{
 .delete_person:hover{
 	color:#ff6e6b;
 }
-@media only screen and (max-width: 1120px){
+#intro{
+	margin-top: 15%;
+	text-align: center;
+	padding: 10px;
+}
+#intro p{
+	font-size: 1.5em;
+	margin: 25px 0;
+}
+#intro p:first-child{
+	font-size: 4em;
+}
+#intro button{
+	font-size: 2em;
+}
+@media only screen and (max-width: 1024px){
   body{
-  	font-size: 4em;
+  	font-size: 3em;
+  }
+  #warning{
+  	display: none;
   }
   input{
-  	font-size: 4em;
+  	font-size: 1.5em;
+  	/*text-align: center;*/
+  	width: 80%;
   }
+  .expense_total{
+  	font-size: 3em;
+  }
+  table{font-size: 1.5em;}
   button{
-  	font-size: 4em;
+  	font-size: 3em;
   }
   #right_info_bar {
     width: 100%;
@@ -603,9 +625,12 @@ p{
   	top:0px;
 
   }
+  .expense_button{
+  	height: auto;
+  }
   #right_control_bar a{
 	font-size: 16px;
-}
+  }
   #payment, #totals{
   	float: none;
   }
@@ -622,7 +647,7 @@ p{
 
   }
   #payment{
-  	padding-bottom: 20px;
+  	/*margin-bottom: 35px;*/
   	margin-top: 0px;
   }
   #breakdown_table, #payment_table{
@@ -654,14 +679,163 @@ p{
   	padding-top: 80px;
   	float: none;
   }
+  .expense_owner input{
+  	font-size: inherit;
+  }
 }
-/*@media only screen and (min-width: 736px) and (max-width: 1163px){
+@media only screen and (max-width: 980px){
+	#intro{
+		margin-top: 25%
+	}
 	.expense{
-		margin-right: auto;
-		margin-left: auto;
-		float: none;
+		border-bottom: 2px #D2d2d2 solid;
+		border-top: 2px #979797 solid;
 	}
-	#right_info_bar{
-		top:-15px;
+	.color{
+		text-align: center;
 	}
-}*/
+	.negative_amount{
+		color: #D29C9C;
+	}
+	#intro p{
+		margin: 30px 0;
+		font-size: 1.2em;
+	}
+	#intro p:first-child{
+		font-size: 4em;
+	}
+	#add_user{
+		margin-bottom: 6em;
+	}
+	#add_user button{
+		margin-top: 1em;
+		font-size: 2em;
+	}
+	#group_title{
+		font-size: 5em;
+		/*padding-top: 5em;*/
+	}
+	#breakdown_table td{
+		font-size: 1em;
+	}
+	#payment{
+		margin-top: 1.5em;
+	}
+	.money_sign:first-letter{
+		font-size:0.5em;
+	}
+	#group_name{
+		margin-top: 1em;
+		padding-top: 1em;
+	}
+	#total_header{
+		font-size: 1em;
+		color: #747474;
+	}
+	#total_header td{
+		border: none;
+	}
+	#average_row td{
+		font-size: 0.8em;
+		color: #7E7E7E;
+		border: none;
+	}
+	#logo{
+		font-size:1.5em;
+	}
+	#settings_buttons button{
+		font-size:1em;
+	}
+	#about{
+		font-size: 1.3em;
+	}
+	.sidebar_person_total{
+		font-size: 0.8em;
+		color: #999999;
+		display: none !important;
+	}
+	#about a{
+		font-size: 1em;
+	}
+	#share{
+		font-size: 1.5em;
+	}
+	#share input{
+		font-size: 0.9em;
+	}
+	#share button{
+		font-size: 1em;
+	}
+	#settings button{
+		font-size: 1.4em;
+	}
+	#settings input{
+		font-size: 1.3em;
+	}
+	.selected_button{
+		border-bottom: 5px solid #999999 !important;
+	}
+	.expense{
+		margin: 1.5em 0;
+	}
+	.expense_owner input{
+		font-size: 2em;
+		width: 4em;
+	}
+	.owes{
+		font-size: 0.8em;
+	}
+	.expense_total{
+		font-size: 1.5em;
+		line-height: 2.2em;
+		padding-right: 20px;
+	}
+	.edit{
+		font-size: 1.5em;
+		width: auto;
+	}
+	.item_name input{
+		font-size: 1em;
+	}
+	.cost input{
+		font-size: 1em;
+		width: 4em;
+		padding-right: 20px;
+	}
+	#payment_table td{
+		color: #7e7e7e;
+	}
+	.row td button{
+		padding: 0px;
+	}
+	.delete_person{
+		font-size: 1.7em;
+	}
+	button{
+		font-size:1.4em;
+	}
+	body{
+		background-color: #ece9e9;
+	}
+	#right_control_bar{
+		position: fixed;
+		bottom: 0px;
+		top: auto;
+		padding-bottom: 0.5em;
+	}
+	input{
+		color: #5E5E5E;
+		padding-right: 8px;
+	}
+	.expense_table input{
+		color: #5E5E5E;
+	}
+	#centered{
+		font-size: 3em;
+
+	}
+	#centered button{
+		font-size: 0.8em;
+	}
+
+}

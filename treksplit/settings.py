@@ -102,6 +102,10 @@ USE_TZ = True
 
 MEDIA_ROOT = 'media'
 
+# AUTHENTICATION_BACKENDS = ('group_backend')
+# LOGIN_URL = '/passcode/'
+# AUTH_USER_MODEL = 'splitter.Group'
+
 
 # BELOW ADDED FROM HEROKU GUIDE
 # Parse database configuration from $DATABASE_URL
