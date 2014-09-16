@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie 
@@ -5,6 +7,7 @@ from django.core.context_processors import csrf
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required # <<<< added for authenticaton 
 from django.contrib.auth import authenticate, login
+
 
 from models import Group, Person, Item
 
@@ -109,7 +112,7 @@ def person_transaction(request, person_id):
 		current_person.save()
 		return HttpResponse(person_id)
 
-	# Changing a Person's
+	# Changing a Person's Color
 	elif request.POST['operation'] == 'change_color':
 		stripped_color = request.POST['color'][1:]
 		current_person = Person.objects.get(id__exact=person_id)
@@ -117,6 +120,77 @@ def person_transaction(request, person_id):
 		current_person.save()
 		return HttpResponse(person_id)
 
+	# Changing a Person's Email
+	elif request.POST['operation'] == 'change_email':
+
+		email = request.POST['email']
+
+		current_person = Person.objects.get(id__exact=person_id)
+		current_group = current_person.group_ID
+		current_person.email = email
+		current_person.save()
+
+		# using the group's name if there is one
+		if current_group.name is None:
+			group_title = str(current_group.id)
+		else:
+			group_title = current_group.name
+
+		# body = 'Your email ( %s )  has been added to the Trek/Split group %s.\n \n Here is the link - http://www.treksplit.com/%s/' % (email,group_title,current_group.id)
+		body = 'Your email ( ' + email + ')  has been added to the Trek/Split group - ' + group_title + '.\n \n Here is the link - http://www.treksplit.com/' + str(current_group.id) + '/'
+		subject = 'You have been added to a Trek/Split group - ' + group_title
+		sender = 'treksplit@gmail.com'
+		send_mail(subject, body, sender, [email], fail_silently=False)
+
+		return HttpResponse(person_id)
+
+
+	#finalizing a person's expenses
+	elif request.POST['operation'] == 'finalize':
+		current_person = Person.objects.get(id__exact=person_id)
+		current_person.finalized = True
+		current_person.save()
+		current_group = current_person.group_ID
+
+		print current_group.id
+		# check if everyone in the group is finalized, then send an email
+		group_members = Person.objects.filter(group_ID__exact = current_group.id)
+
+		whole_group_finalized = True
+		for person in group_members:
+			if not person.finalized:
+				whole_group_finalized = False
+
+
+		# Everyone is finalized - send an email out
+		if whole_group_finalized:
+			print "whole group finalized"
+			if current_group.name is None:
+				group_title = str(current_group.id)
+			else:
+				group_title = current_group.name
+
+		# grab everyone's emails
+		member_emails = []
+		for person in group_members:
+			member_emails.append(person.email)
+
+
+		body = 'Everyone has finished inputting their expenses. \n \n Follow the link to find out who you owe (or who owes you). \n http://www.treksplit.com/' + str(current_group.id) + '/'
+		subject = 'Trek/Split - ' + group_title + ' - Finished!'
+		sender = 'treksplit@gmail.com'
+		send_mail(subject, body, sender, member_emails, fail_silently=False)
+
+
+		return HttpResponse(person_id)
+		
+	#unfinalizing a person's expenses
+	elif request.POST['operation'] == 'unfinalize':
+		current_person = Person.objects.get(id__exact=person_id)
+		current_person.finalized = False
+		current_person.save()
+		return HttpResponse(person_id)
+		
 	return HttpResponse("changin peoples huh, specifically # %s" % person_id)
 
 
@@ -162,12 +236,18 @@ def group_transaction(request, group_id):
 	elif request.POST['operation'] == "authenticate":
 		passcode = request.POST['passcode']
 		group = authenticate(username = group_id, password = passcode)
-		print group
 		if group is not None:
 			login(request,group)
 			return HttpResponse(group_id)
 		else:
 			return HttpResponse(group_id)
+	elif request.POST['operation'] == "change_deadline":
+		new_deadline = request.POST['deadline']
+		print new_deadline
+		current_group = Group.objects.get(id__exact=group_id)
+		current_group.deadline = new_deadline
+		current_group.save()
+		return HttpResponse(group_id)
 
 
 	return HttpResponse("whoa making a group transaction on group %s" % group_id)

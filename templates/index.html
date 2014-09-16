@@ -29,14 +29,14 @@
 			{% include "person.html" %}
 		{% endfor %}
 
-		<div id="add_user" class="expense_wrapper">
+		<div class="clear_element"></div>	
+	</div>
+	<div id="add_user" class="expense_wrapper">
 			{% if people %}
 				<button title="add a person">add another person</button>
 			{% else %}
 				<button title="add a person">add person</button>
 			{%  endif %}
-		</div>
-		<div class="clear_element"></div>	
 	</div>
 	<div id="blackout">
 		<div id="centered">
@@ -45,6 +45,9 @@
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}/static/scripts.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/masonry/3.1.5/masonry.pkgd.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.min.js"></script>
+	
 	<!-- <script src="https://dl.dropboxusercontent.com/u/59139532/jquery.masonry.min.js"></script> -->
 	<!-- YEA YEA ILL STRIP THIS OUT AND PUT IT IN ITS OWN FILE -->
 </body>

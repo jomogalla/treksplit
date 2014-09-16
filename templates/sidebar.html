@@ -38,9 +38,13 @@
 		</table>
 	</div>
 	<div id="right_control_bar">
+		{% if group.deadline %}
 		<div id="warning">
-			<i class="fa fa-exclamation-triangle"></i> this data may be deleted / use <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank">Chrome</a> <i class="fa fa-exclamation-triangle"></i>
+			<!-- <i class="fa fa-exclamation-triangle"></i> this data may be deleted / use <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank">Chrome</a> <i class="fa fa-exclamation-triangle"></i> -->
+				all expenses are due by {{ group.deadline }}
+				<button id="close_warning" class="text_button"> <i class="fa fa-times"></i></button>
 		</div>
+		{% endif %}
 		<div id="extras">
 			<div id="logo">
 				trek/split
@@ -78,6 +82,10 @@
 					<input type="text"	title="change the group's name" placeholder="{% if group.name %}change{% else %}add{% endif %} group name" id="change_group_name" {% if group.name %}data-name="{{ group.name }}"{% endif %} class="faux_button">
 				</div> -->
 				<div class="settings_row">
+					<button id="deadline_toggle" class="text_button">{% if group.deadline %}change{% else %}add{% endif %} deadline</button>
+					<input type="date" style="display:none;" 	title="change the deadline for expenses" placeholder="" value="{% if group.deadline %}{{group.deadline|date:"Y-m-d"}}{% endif %}" id="change_group_deadline" class="faux_button">
+				</div>
+				<div class="settings_row">
 					<input type="password" 	title="change the passcode for the group" {% if group.passcode %}data-passcode="yes"{% endif %} placeholder="{% if group.passcode %}change{% else %}add{% endif %} group passcode" id="change_group_passcode" class="faux_button">
 				</div>
 				<div class="settings_row">
@@ -95,7 +103,7 @@
 			<i class="fa fa-picture-o fa-5x"></i>
 			<button id="hide_ad" class="text_button align_right">hide</button> -->
 			<div id="update_display" title="notifications from the server">
-				Get Started!
+				{% if group.deadline %} all expenses are due by {{group.deadline}}{% else %} get started! {% endif %}
 			</div>
 		</div>
 	</div>

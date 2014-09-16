@@ -73,6 +73,9 @@ height: 100%;
 	background-color: #fafafa;
 	border-top: 1px #eeeeee solid;
 }
+.maximum_z_index{
+	z-index: 100;
+}
 #logo{
 	font-size: 36px;
 	text-align: center;
@@ -92,10 +95,14 @@ height: 100%;
 	border-bottom-left-radius: 5px;
 
 }
+.email{
+	text-align: center;
+}
 .expense_total{
 	float: right;
 	margin-right: 10px;
-	font-size: 16pt;
+	font-size: 1.3em;
+	line-height: 1.3em;
 	cursor:not-allowed;
 }
 .expense_header{
@@ -181,10 +188,33 @@ input{
 .delete:hover{
 	color:#ff6e6b;
 }
+.comment{
+	color: #d2d2d2;
+}
+.bottom_buttons{
+	width: 4.4em;
+	width: 10.9em;
+	margin-left: auto;
+	margin-right: auto;
+}
+.finalize{
+	color: #d2d2d2;
+}
+.finalize:hover{
+	color: #9c9c9c;
+}
+.finalized{
+	color: #9ACA65;
+}
+.bottom_buttons button{
+	font-size: 1em;
+	/*font-size: 1.1em;*/
+	height: auto;
+}
 .add{
 	color: #d2d2d2;
 	visibility: visible !important;
-	width: 100%;
+	/*width: 100%;*/
 	background-position: center;
 }
 .add:hover{
@@ -206,7 +236,7 @@ input{
 }
 .row{
 	border-top: 1px solid #dddddd;
-	background-color: white;
+	/*background-color: white;*/
 
 }
 #breakdown_header{
@@ -238,10 +268,10 @@ table{
 	background-color: #fcfcfc;
 }
 #total_header td{
-	border-bottom: 1px #dbdbdb solid;
+	/*border-bottom: 1px #dbdbdb solid;*/
 }
 #average_row td{
-	border-top: 1px #dbdbdb solid;
+	/*border-top: 1px #dbdbdb solid;*/
 	font-size: 17px;
 	background-color: #fcfcfc;
 }
@@ -297,6 +327,7 @@ td{
 	margin: 15px;
 	width:400px;
 	text-align: center;
+	margin-top: 45px;
 }
 #add_user button{
 	border:0;
@@ -557,7 +588,16 @@ p{
 	text-align: center;
 	background-color: #ffe0b8;
 	padding: 3px;
-	font-size: 11px;
+	font-size: 0.8em;
+	
+
+	/*display: none;*/
+}
+#close_warning{
+	float: right;
+	margin-right: 10px;
+	padding: 0px;
+	margin: 0px;
 }
 #warning i{
 	margin:0px 8px;
@@ -725,7 +765,7 @@ p{
 		font-size:0.5em;
 	}
 	#group_name{
-		margin-top: 1em;
+		/*margin-top: 1em;*/
 		padding-top: 1em;
 	}
 	#total_header{

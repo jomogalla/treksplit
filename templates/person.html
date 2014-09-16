@@ -16,9 +16,9 @@
 <!-- 			<div class="edit_row">
 				<input class="confirm_password" type="password" placeholder="confirm passcode">
 			</div> -->
-		<!-- 	<div class="edit_row">
-				<input class="email" type="email" placeholder="optional" >
-			</div> -->
+			<div class="edit_row">
+				<input class="email text_button" type="email" placeholder="email" value="{% if person.email %}{{person.email}}{%endif%}" >
+			</div>
 			<div class="edit_row">
 				<input class="color" title="edit the person's color" type="color" placeholder="optional" value="#{% if person.header_color %}{{person.header_color}}{% else %}8fd0ff{%endif%}">
 			</div>
@@ -37,8 +37,17 @@
 					{% include "expense.html"%}
 				{% endif %}
 			{% endfor %}
-			<tr class="odd_row">
-				<td colspan="3" class="align_center"> <button class="expense_button add" title="add an expense"><i class="fa fa-plus"></i></button></td>
-			</tr>
+<!-- 			<tr class="odd_row">
+				<td colspan="3" class="align_center"> 
+					<button class="expense_button add" title="add an expense"><i class="fa fa-plus"></i></button>
+					<button class="expense_button finalize" title="finalize your expenses"><i class="fa fa-check"></i></button>
+				</td>
+			</tr> -->
 		</table>
+		<div class="bottom_buttons">
+			<!-- <button class="expense_button add" title="add an expense"><i class="fa fa-plus"></i></button>
+			<button class="expense_button finalize {% if person.finalized %}finalized{% endif %}" title="finalize your expenses"><i class="fa fa-check"></i></button> -->
+			<button class="expense_button add" title="add an expense">add expense</button>
+			<button class="expense_button finalize {% if person.finalized %}finalized{% endif %}" title="finalize your expenses">done</button>
+		</div>
 	</div>

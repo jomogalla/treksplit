@@ -97,7 +97,7 @@ X remove tables out of the edit person div
 > replicate the way change group name works for Person change password,email
 X switch group name editing to the group name at the top?
 > Get the start page to use the scripts and styles files
-> Make mobile versions WAY BIGGER
+X Make mobile versions WAY BIGGER
 X add titles to everything
 X Change the Add group name text after adding a group name to change group name(for the first time)
 > add jquery to handle all the faux button class inputs so they behave the same
@@ -106,6 +106,8 @@ X Change the Add group name text after adding a group name to change group name(
 > remove _ID from the ends of those dum models
 > remove '+' from 0 values in the totals sidebar section
 > require password input to change password if there is one
+> Add a 'Finished' check box on an individuals expense
+> Add an "all paid up" check box on payments
 
 
 ||||||||||||||||||| BUGS |||||||||||||||||||
@@ -118,71 +120,32 @@ X Persons sidebar color not updating on change
 X Not updating totals after an expense delete (updates if two expenses are deleted)
 > Payment plan sections aint updatin
 > passcode placeholder returning to add passcode is thanks to jquery right above! fix?
-> Adding a person on mobile adds it to the list and it shouldnt.
+X Adding a person on mobile adds it to the list and it shouldnt.
 
 
 
 >> Longer Term To Do <<
-> get firefox up to date
+> get fuckin firefox up to date
 > Add a help button, that basically puts post it notes on everything explaining what they do
 > Make the Update Display more relevant (in process)
+> Add info to the home screen (recently used treks/explanation/etc)
+> Add a group description/notification/announcement to the group
+> Personalize emails a bit more to make them seem less spammy
+> change the update display to be more terminal like and in the bottom left?
 
 
-test shit styles -
-<style>
-#add_group{
-	cursor:pointer;
-}
-#centered{
-	height: 13em;
-	margin: auto;
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;	font-size: 18px;
-	text-align: center;
-}
+>> Pretty Big Update to do <<
+X fix masonry adding new person below add person button
+X come up with a more visible finalized color for a person
+deferred > add finalized to the right breakdown
+> [question] either display payments after all are finalized or after deadline
+X figure out somewhere to display the deadline
+X update newly added expense items to match what django templates render
+> add scheduled emails for the deadline in django (use celery?)
+> overwrite masonry css for mobile
+deferred > fix IE, firefox, safari
+deferred > add jquery ui datepicker for IE, firefox and safari
+deferred > add jquery color picker for IE, firefox and safari
 
-body{
-	/*background-image: url(https://dl.dropboxusercontent.com/u/59139532/rando%20pics/IMG_4310.jpg);*/
-	font-family: Verdana, Geneva, sans-serif;
-}
-.text_button{
-	background: transparent;
-	border: none;
-	cursor: pointer;
-	color: #888888;
-	font-size: 20px;
-	text-align: center;
-}
-.text_button:hover{
-	color: #555555;
-}
 
-p:first-child{
-	font-size: 24px;
-}
-/*@media only screen and (max-width: 735px){
-	#add_group{
-		font-size: 18px;
-	}
-}*/
-@media only screen and (max-width: 480px){
-	p:first-child{
-		font-size: 4em;
 
-	}
-	p{
-		font-size: 4em;
-	}
-	#centered{
-		top:auto;
-		bottom: auto;
-		right: auto;
-		left: auto;
-		position: static;
-		height: auto;
-	}
-}
-</style>

@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'treksplit@gmail.com'
-EMAIL_HOST_PASSWORD = 'Hike0reg0n'
+EMAIL_HOST_PASSWORD = 'H1ke0reg0n'
 EMAIL_PORT = 587
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'splitter',
+    'south',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -19,6 +19,15 @@ $(document).ready(function(){
 // no clue
 
 $('body').addClass('animated fadeIn');
+
+var $container = $('#expense_area');
+$container.masonry();
+// initialize Masonry after all images have loaded  
+// $container.imagesLoaded( function() {
+//   $container.masonry({
+//   	// itemSelector: '.expense'
+//   });
+// });
 //
 
 //   var $container = $('#expense_area');
@@ -71,13 +80,16 @@ $( "#expense_area" ).on( "click", ".expense_button.add", function(){
 $( "#expense_area" ).on( "focus", ".expense_button.add", function(){
 	var persons_id = $(this).closest(".expense").data("person");
 
-	var new_row = $('<tr class="row"><td><button class="expense_button delete"><i class="fa fa-times"></i></button></td><td class="item_name"><input type="text" placeholder="item" ></td><td class="cost"><input type="text" placeholder="price" ></td></tr>');
+	var new_row = $('<tr class="row"{% if expense.id %} data-expense="{{expense.id}}"{% endif %}{% if person.id %} data-owner="{{person.id}}"{% endif %}><td><button class="expense_button delete" title="delete the expense"><i class="fa fa-times"></i></button></td><td class="item_name"><input type="text" placeholder="item" title="edit the expense\'s name"{% if expense.name %}value="{{expense.name}}"{% endif %}></td><td class="cost"><input type="number" title="edit the expense\'s price"placeholder="price" {% if expense.price %}value="{{expense.price}}"{% endif %}></td><!-- <td><button class="expense_button comment" title="comment on this expense"><i class="fa fa-comment"></i></button></td> --></tr>');
 
 
-	$('#' + persons_id +' table tr:last').before(new_row);
+	$('#' + persons_id +' table tr:last').after(new_row);
 	new_row.attr('data-owner', persons_id);
 	new_row.addClass("new_row");
-	$('.new_row').show("slow");
+	// $(this).closest(".expense").toggleClass('maximum_z_index');
+	$('.new_row').show("slow", function(){$container.masonry();});
+	setTimeout(function(){$(this).closest(".expense").toggleClass('maximum_z_index');}, 500);
+
 
 	$('.new_row').removeClass("new_row");
 
@@ -123,6 +135,7 @@ $( "#expense_area" ).on( "click", ".expense_button.delete", function() {
 	    success: function(result) {
 	   	  	expense_button.closest("tr").hide('fast', function(){
 				expense_button.closest("tr").remove();
+				$container.masonry();
 				update_numbers();
 			});
 			display_update('expense ' + expense_id + ' successfully deleted');			
@@ -258,6 +271,9 @@ $('#add_user').click(function(){
 			$('#sidebar_person_total_' + persons_id).removeClass('new_row');
 			$('#sidebar_person_total_' + persons_id + ':first-child').css('color', '#' + persons_color);
 
+			var new_expense = $('#' + persons_id);
+			$container.append( new_expense ).masonry( 'appended', new_expense );
+			$container.masonry();
 
 			// // swap back the add user button text
 			$('#add_user button').text('add another person');
@@ -314,6 +330,7 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 					$('#sidebar_person_total_'+ result).remove();
 					$("#centered").css("display","none");
 					$("#blackout").css("display","none");
+					$container.masonry()
 					update_numbers();
 
 			    }
@@ -331,7 +348,9 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 $( "#expense_area" ).on( "click", ".expense_button.edit", function(){
 // $( ".expense_button.edit" ).click(function() {
 	// passcode required if it exists...
-	$(this).parent().next('.edit_person_wrapper').slideToggle( "fast");
+	// $(this).closest(".expense").toggleClass('maximum_z_index');
+	$(this).parent().next('.edit_person_wrapper').slideToggle( "fast", function(){$container.masonry()});
+	// setTimeout(function(){$(this).closest(".expense").toggleClass('maximum_z_index');}, 500);
 	// setTimeout(msnry.reload(),500);
 	// container.style.display = 'block';
 	// $container.masonry();
@@ -401,10 +420,63 @@ $( "#expense_area" ).on( "change", ".color", function(){
 	});
 });
 
+// finalize persons expenses
+$( "#expense_area" ).on( "click", ".finalize", function(){
+	// Grab the owners ID
+	var button = $(this);
+	var persons_id = $(this).closest(".expense").data("person");
+	var persons_name = $(this).closest(".expense").data("name");
+
+	// If were finalized, unfinalize
+	if (button.hasClass('finalized')){
+		$.ajax({
+		    url: '/person/' + persons_id + "/",
+		    type: 'POST',
+		    data: {
+		    	operation: "unfinalize",
+		    },
+		    success: function(result) {
+		   	    display_update(persons_name + "\'s expenses are not done");
+		   	    button.toggleClass('finalized');			
+		    }
+		});
+	}
+	// Else finalize that shit
+	else{
+		$.ajax({
+		    url: '/person/' + persons_id + "/",
+		    type: 'POST',
+		    data: {
+		    	operation: "finalize",
+		    },
+		    success: function(result) {
+		   	    display_update(persons_name + "\'s expenses are all done");
+		   	    button.toggleClass('finalized');			
+		    }
+		});
+	}
+});
+
 
 // Change Person's Email
 $("#expense_area").on("change", ".email",function(){
-	display_update('functionality not implemented');
+
+	var persons_id = $(this).closest(".expense").data("person");
+	var persons_name = $(this).closest(".expense").data("name");
+	$.ajax({
+	    url: '/person/' + persons_id + "/",
+	    type: 'POST',
+	    data: {
+	    	operation: "change_email",
+	    	email: $(this).val(),
+	    },
+	    success: function(result) {
+	   	    display_update(persons_name + "\'s email changed");			
+	    },
+	    error: function(){
+	    	display_update('is that a real email?');
+	    }
+	});
 });
 
 
@@ -636,6 +708,38 @@ $('#about_button').click(function(){
 
 // Change the Group's expense options
 
+// Toggle Editable Deadline
+$('#deadline_toggle').click(function(){
+	$(this).hide();
+	$('#change_group_deadline').show();
+	$('#change_group_deadline').focus();
+});
+
+//get that button back ^
+$('#change_group_deadline').blur(function(){
+	$(this).hide();
+	$('#deadline_toggle').show();
+});
+
+// Change Group Deadline
+$('#change_group_deadline').change(function(){
+	var new_deadline = $(this).val(); 
+	var group_id = $("#group_name").data("group");
+
+	$.ajax({
+	    url: '/group/' + group_id + '/',
+	    type: 'POST',
+	    data: {
+	    	operation: 'change_deadline',
+	    	deadline: new_deadline,
+	    },
+	    success: function(result) {
+	    	display_update("deadline changed to " + new_deadline);
+	    	$('#deadline_toggle').text('change deadline');
+	    },
+	});
+
+});
 
 
 // Add Group Passcode
@@ -789,6 +893,19 @@ $("#hide_ad").click(function(){
 // 	$(this).val("")
 // });
 
+// Bind and unbind masonry for mobile interfaces (below 1024 width)
+// var masonry_is_active = true;
+// $(window).resize(function() {
+// 	// If it's smaller than 1024px then turn off masonry
+// 	if(parseInt($(window).width()) < 1024 && masonry_is_active){
+// 		$container.masonry('destroy')
+// 		masonry_is_active == false;
+// 	}
+// 	else if(parseInt($(window).width()) > 1024 && !masonry_is_active){
+// 		$container.masonry();
+// 		masonry_is_active == true;
+// 	}
+// });
 
 // Update All Numbers on input change
 $( "#expense_area" ).on( "change", "input", function(){
@@ -800,6 +917,9 @@ $( "#expense_area" ).on( "change", "input", function(){
 // 	$('#blackout').css('display','none');
 // });
 
+$('#close_warning').click(function(){
+	$('#warning').hide();
+});
 var blackout_prompt = function(prompt){
 	$('#centered').css("display", "block");
 	$('#blackout').css("display","block");
@@ -892,7 +1012,12 @@ var update_numbers = function(){
 	    sum += parseFloat($(this).text());  
 	    num_expenses++;
 	});
-	var average = (sum/num_expenses).toFixed(2);
+	if(num_expenses != 0){
+		var average = (sum/num_expenses).toFixed(2);
+	}
+	else{
+		var average = "--.--";
+	}
 	$("#total").text("$" + sum.toFixed(2));
 	$("#average").text("$" + average);
 
