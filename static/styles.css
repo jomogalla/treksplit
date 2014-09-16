@@ -752,7 +752,7 @@ p{
 		font-size: 2em;
 	}
 	#group_title{
-		font-size: 5em;
+		font-size: 3em;
 		/*padding-top: 5em;*/
 	}
 	#breakdown_table td{
@@ -817,6 +817,7 @@ p{
 	}
 	.expense{
 		margin: 1.5em 0;
+		width: 100%;
 	}
 	.expense_owner input{
 		font-size: 2em;

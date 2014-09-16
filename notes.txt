@@ -92,21 +92,21 @@ X Add something to an expense to notify the user that a Person is being deleted
 X Add italics to inputs as an updating notifier
 X Sort All Elements in the queries
 X Add group name functionality
-> add currency + hash fields to Group Model
+X add currency + hash fields to Group Model
 X remove tables out of the edit person div
-> replicate the way change group name works for Person change password,email
+X replicate the way change group name works for Person change password,email
 X switch group name editing to the group name at the top?
-> Get the start page to use the scripts and styles files
+X Get the start page to use the scripts and styles files
 X Make mobile versions WAY BIGGER
 X add titles to everything
 X Change the Add group name text after adding a group name to change group name(for the first time)
 > add jquery to handle all the faux button class inputs so they behave the same
 > add code to regex the email input to see if its a valid email address
-> upgrade DJANGO for the migrate DB function
+X upgrade DJANGO for the migrate DB function
 > remove _ID from the ends of those dum models
-> remove '+' from 0 values in the totals sidebar section
+X remove '+' from 0 values in the totals sidebar section
 > require password input to change password if there is one
-> Add a 'Finished' check box on an individuals expense
+X Add a 'Finished' check box on an individuals expense
 > Add an "all paid up" check box on payments
 
 
