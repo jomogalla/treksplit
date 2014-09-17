@@ -20,7 +20,7 @@
 > Creating some sort of display:none area that holds all the data, that Django will populate 
 	and then jQuery will be responsible for updating the data elsewhere
 
-> Eventually translate all the tables to divs with display:table for using jQuery animations?
+X Eventually translate all the tables to divs with display:table for using jQuery animations?
 	would result in a lot of jQuery work but meh, animations are pretty.
 
 > Currently the ajax calls certain urls to add/delete/modify all the shit
@@ -56,10 +56,10 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 ||||||||||||||||||| TO DO FOR BASIC DONENESS |||
 > Fix the expenses query to just get the necessary expenses
 > Delete Everything related to a group when you delete it
-> Add code to handle "touch" events
-> Mobile CSS
+X Add code to handle "touch" events
+X Mobile CSS
 > Clean up CSS
-> Get the start page to use the scripts and styles files
+X Get the start page to use the scripts and styles files
 > Finish add passcode
 > Check IE
 > Check Firefox
@@ -70,13 +70,13 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 ||||||||||||||||||| FEATURES |||||||||||||||||||
 > Fix the expenses query to just get the necessary expenses << NUMERO DOS
 X Delete Expenses related to a person when deleting the person
-> Delete Everything related to a group when you delete it
+> Delete expenses related to a group when you delete it
 X Fix CSRF on all views  << NUMERO TRES
 > Update the expense functions to handle not having an id immediately after being created
 X Add delete group functionality
 X Add share functionality << ADD SENDGRID<nvm
 > Add passcode functionality
-> integrate masonry
+X integrate masonry
 X update tables to divs with display table? (for jquery animations) NO
 X Figure out payment plan algorithm  << NUMERO UNO
 > Add code to handle "touch" events
@@ -118,7 +118,7 @@ X New person's average is incorrect when added
 X Persons sidebar color not updating on change
 > sidebar Rows added by jquery not up to date
 X Not updating totals after an expense delete (updates if two expenses are deleted)
-> Payment plan sections aint updatin
+X Payment plan sections aint updatin
 > passcode placeholder returning to add passcode is thanks to jquery right above! fix?
 X Adding a person on mobile adds it to the list and it shouldnt.
 
@@ -132,6 +132,7 @@ X Adding a person on mobile adds it to the list and it shouldnt.
 > Add a group description/notification/announcement to the group
 > Personalize emails a bit more to make them seem less spammy
 > change the update display to be more terminal like and in the bottom left?
+> ADD A MOTHERFUCKING PASSCODE TO THE SITE
 
 
 >> Pretty Big Update to do <<

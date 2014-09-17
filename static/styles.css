@@ -18,6 +18,7 @@ height: 100%;
 }
 #expense_area{
 	margin-right: 300px;
+	padding-bottom: 50px;
 }
 #group_name{
 	text-align: center;

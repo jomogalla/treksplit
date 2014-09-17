@@ -82,13 +82,14 @@ $( "#expense_area" ).on( "focus", ".expense_button.add", function(){
 
 	var new_row = $('<tr class="row"{% if expense.id %} data-expense="{{expense.id}}"{% endif %}{% if person.id %} data-owner="{{person.id}}"{% endif %}><td><button class="expense_button delete" title="delete the expense"><i class="fa fa-times"></i></button></td><td class="item_name"><input type="text" placeholder="item" title="edit the expense\'s name"{% if expense.name %}value="{{expense.name}}"{% endif %}></td><td class="cost"><input type="number" title="edit the expense\'s price"placeholder="price" {% if expense.price %}value="{{expense.price}}"{% endif %}></td><!-- <td><button class="expense_button comment" title="comment on this expense"><i class="fa fa-comment"></i></button></td> --></tr>');
 
-
-	$('#' + persons_id +' table tr:last').after(new_row);
+	// first expense added has no row to grab
+	// $('#' + persons_id +' table tr:last').after(new_row);
+	$('#' + persons_id +' table tbody').append(new_row);
 	new_row.attr('data-owner', persons_id);
 	new_row.addClass("new_row");
 	// $(this).closest(".expense").toggleClass('maximum_z_index');
 	$('.new_row').show("slow", function(){$container.masonry();});
-	setTimeout(function(){$(this).closest(".expense").toggleClass('maximum_z_index');}, 500);
+	// setTimeout(function(){$(this).closest(".expense").toggleClass('maximum_z_index');}, 500);
 
 
 	$('.new_row').removeClass("new_row");
@@ -426,6 +427,9 @@ $( "#expense_area" ).on( "click", ".finalize", function(){
 	var button = $(this);
 	var persons_id = $(this).closest(".expense").data("person");
 	var persons_name = $(this).closest(".expense").data("name");
+	if(typeof persons_name == "undefined"){
+		persons_name = "Person " + persons_id;
+	}
 
 	// If were finalized, unfinalize
 	if (button.hasClass('finalized')){

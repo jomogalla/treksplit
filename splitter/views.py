@@ -151,8 +151,6 @@ def person_transaction(request, person_id):
 		current_person.finalized = True
 		current_person.save()
 		current_group = current_person.group_ID
-
-		print current_group.id
 		# check if everyone in the group is finalized, then send an email
 		group_members = Person.objects.filter(group_ID__exact = current_group.id)
 
@@ -161,25 +159,24 @@ def person_transaction(request, person_id):
 			if not person.finalized:
 				whole_group_finalized = False
 
-
 		# Everyone is finalized - send an email out
 		if whole_group_finalized:
-			print "whole group finalized"
 			if current_group.name is None:
 				group_title = str(current_group.id)
 			else:
 				group_title = current_group.name
 
-		# grab everyone's emails
-		member_emails = []
-		for person in group_members:
-			member_emails.append(person.email)
+			# grab everyone's emails
+			member_emails = []
+			for person in group_members:
+				if person.email is not None:
+					member_emails.append(person.email)
 
-
-		body = 'Everyone has finished inputting their expenses. \n \n Follow the link to find out who you owe (or who owes you). \n http://www.treksplit.com/' + str(current_group.id) + '/'
-		subject = 'Trek/Split - ' + group_title + ' - Finished!'
-		sender = 'treksplit@gmail.com'
-		send_mail(subject, body, sender, member_emails, fail_silently=False)
+			if member_emails is not None:
+				body = 'Everyone has finished inputting their expenses. \n \n Follow the link to find out who you owe (or who owes you). \n http://www.treksplit.com/' + str(current_group.id) + '/'
+				subject = 'Trek/Split - ' + group_title + ' - Finished!'
+				sender = 'treksplit@gmail.com'
+				send_mail(subject, body, sender, member_emails, fail_silently=False)
 
 
 		return HttpResponse(person_id)
