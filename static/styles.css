@@ -785,6 +785,11 @@ p{
 		color: #7E7E7E;
 		border: none;
 	}
+	.bottom_buttons{
+		width: 13em;
+		font-size: 1.6em;
+		margin-top: 10px;
+	}
 	#logo{
 		font-size:1.5em;
 	}
