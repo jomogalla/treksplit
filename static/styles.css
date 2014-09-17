@@ -633,8 +633,12 @@ p{
   body{
   	font-size: 3em;
   }
-  #warning{
-  	display: none;
+  #close_warning{
+  	font-size: 1.1em;
+
+  }
+  .email{
+  	font-size: 1.2em;
   }
   input{
   	font-size: 1.5em;
@@ -723,8 +727,8 @@ p{
   .expense_owner input{
   	font-size: inherit;
   }
-}
-@media only screen and (max-width: 980px){
+/*}
+@media only screen and (max-width: 980px){*/
 	#intro{
 		margin-top: 25%
 	}
@@ -760,7 +764,7 @@ p{
 		font-size: 1em;
 	}
 	#payment{
-		margin-top: 1.5em;
+		margin-top: 3.1em;
 	}
 	.money_sign:first-letter{
 		font-size:0.5em;

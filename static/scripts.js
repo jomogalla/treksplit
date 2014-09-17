@@ -911,6 +911,36 @@ $("#hide_ad").click(function(){
 // 	}
 // });
 
+// set up the the right control bar data for mobile scrolling
+$(function(){
+  $('#right_control_bar').data('size','big');
+});
+
+// actually use that data
+$(window).scroll(function(){	
+	if($(window).width() < 1024){
+		if($(window).scrollTop() > 20){
+			if($('#right_control_bar').data('size') == 'big'){
+				$('#right_control_bar').data('size','small');
+				$('#right_control_bar').stop().animate({bottom: "-225px"});
+			}
+		}
+		else{
+			if($('#right_control_bar').data('size') == 'small'){
+				$('#right_control_bar').data('size','big');
+				$('#right_control_bar').stop().animate({bottom: "0px"});
+			}
+
+		}
+	}
+	else{
+		if($('#right_control_bar').data('size') == 'small'){
+				$('#right_control_bar').data('size','big');
+				$('#right_control_bar').stop().animate({bottom: "0px"});
+		}
+	}
+});
+
 // Update All Numbers on input change
 $( "#expense_area" ).on( "change", "input", function(){
 	update_numbers();
