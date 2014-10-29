@@ -1,12 +1,8 @@
 <head>
-<title> trek/split - 	{% if group.name %}
-							{{ group.name }}
-						{% else %}
-							{{ group.id }}
-						{% endif %} 
+<title> trek/split	{% if group.name %} - {{ group.name }}	{% endif %} 
 </title>
 <link rel="icon" type="image/png" href="{{ STATIC_URL }}/static/mtns.png">
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.0.0/animate.min.css">
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/static/styles.css">
 <script>
@@ -31,18 +27,39 @@
 
 		<div class="clear_element"></div>	
 	</div>
-	<div id="add_user" class="expense_wrapper">
+	<div id="add_user">
 			{% if people %}
 				<button title="add a person">add another person</button>
 			{% else %}
 				<button title="add a person">add person</button>
 			{%  endif %}
 	</div>
+	<div id="update_display" title="notifications from the server">
+		{% if group.deadline %}<div class='update_line'> all expenses are due by {{group.deadline}}</div>{% endif %}
+	</div>
+	<div id="front_page_help">
+		<div class="help_box" id="help_save">
+			<i class="fa fa-floppy-o"></i><br>
+			All your data is saved automatically, to share or save for later use, simply copy the URL(or Web Address) in the Address Bar. 
+		</div>
+		<div class="help_box" id="help_address">
+			<i class="fa fa-exclamation-triangle"></i><br>
+			The number after www.treksplit.com/ is your group's number. Beware, if the group is not passcode protected, anyone can access or modify your data. 
+		</div>
+		<div class="help_box" id="help_comments">
+			<i class="fa fa-question"></i><br>
+			Submit all comments and questions to treksplit@gmail.com 
+		</div>
+		<div class="help_box" id="help_add_everyone">
+			<i class="fa fa-money"></i><br>
+			To correctly calculate payments, you must enter everyone involved, even if they had no expenses
+		</div>
+	</div>
 	<div id="blackout">
 		<div id="centered">
 		</div>
 	</div>
-
+	<div class="clear_element"></div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}/static/scripts.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/masonry/3.1.5/masonry.pkgd.min.js"></script>

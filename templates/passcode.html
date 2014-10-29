@@ -49,68 +49,91 @@ a{
 	color: inherit;
 	text-decoration: none;
 }
+@media only screen and (max-width: 1024px){
+	body{}
+	#centered{
+		font-size: 4em;
+	}
+	p:first-child{
+		font-size: 2em;
+	}
+	.faux_button{
+		font-size: 1.2em;
+	}
+	.text_button{
+		font-size: 1em;
+	}
+}
 </style>
 </head>
 <body data-group="{{ group.id }}">
 <div id="centered">
 	<p><a href="/">trek/split</a></p>
-	<p> {% if group.name %} {{group.name}} {% else %} Group {{ group.id}} {% endif %}is passcode protected.</p>
+	<p> {% if group.name %} {{group.name}} {% else %} This group {% endif %}is passcode protected.</p>
 	
-	<input id="passcode_input" type="password" class="faux_button" placeholder="Enter it here."> 
-	<button style="display:none;" id="submit" class="text_button"><i class="fa fa-arrow-right"></i></button>
+	<!-- <input id="passcode_input" type="password" class="faux_button" placeholder="Enter it here."> 
+	<button style="" id="submit" class="text_button"><i class="fa fa-arrow-right"></i></button> -->
+
+
+	<form name="passcode" action="./" method="post">
+		{% csrf_token %}
+		<input id="passcode_input" name="passcode" type="password" class="faux_button" placeholder="Enter it here.">
+		<button style="" id="submit" class="text_button"><i class="fa fa-arrow-right"></i></button> 
+
+	</form>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-	//******************************** CSRF Stuff ********************************//
-	function getCookie(name) {
-	    var cookieValue = null;
-	    if (document.cookie && document.cookie != '') {
-	        var cookies = document.cookie.split(';');
-	        for (var i = 0; i < cookies.length; i++) {
-	            var cookie = jQuery.trim(cookies[i]);
-	            // Does this cookie string begin with the name we want?
-	            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-	                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-	                break;
-	            }
-	        }
-	    }
-	    return cookieValue;
-	}
-	var csrftoken = getCookie('csrftoken');
-	function csrfSafeMethod(method) {
-	    // these HTTP methods do not require CSRF protection
-	    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-	}
-	$.ajaxSetup({
-	    crossDomain: false, // obviates need for sameOrigin test
-	    beforeSend: function(xhr, settings) {
-	        if (!csrfSafeMethod(settings.type)) {
-	            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-	        }
-	    }
-	});
+	// //******************************** CSRF Stuff ********************************//
+	// function getCookie(name) {
+	//     var cookieValue = null;
+	//     if (document.cookie && document.cookie != '') {
+	//         var cookies = document.cookie.split(';');
+	//         for (var i = 0; i < cookies.length; i++) {
+	//             var cookie = jQuery.trim(cookies[i]);
+	//             // Does this cookie string begin with the name we want?
+	//             if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	//                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	//                 break;
+	//             }
+	//         }
+	//     }
+	//     return cookieValue;
+	// }
+	// var csrftoken = getCookie('csrftoken');
+	// function csrfSafeMethod(method) {
+	//     // these HTTP methods do not require CSRF protection
+	//     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+	// }
+	// $.ajaxSetup({
+	//     crossDomain: false, // obviates need for sameOrigin test
+	//     beforeSend: function(xhr, settings) {
+	//         if (!csrfSafeMethod(settings.type)) {
+	//             xhr.setRequestHeader("X-CSRFToken", csrftoken);
+	//         }
+	//     }
+	// });
 
-	$('#submit').click(function(e){
-		var group_id = $('body').attr("data-group");
-		$.ajax({
-		    url: '/group/' + group_id + "/",
-		    type: 'POST',
-		    data: {
-		    	operation: 'authenticate',
-		    	passcode: $('#passcode_input').val(),
-		    },
-		    success: function(result) {
-		    	location.reload();
-		    }
-		});
-	});
-	$('#passcode_input').keypress(function(e){
-		if(e.which == 13 || e.which == 9){
-			$('#submit').click();
-		}
-	});
+	// $('#submit').click(function(e){
+	// 	var group_id = $('body').attr("data-group");
+	// 	$.ajax({
+	// 	    url: '/' + group_id + "/",
+	// 	    type: 'POST',
+	// 	    data: {
+	// 	    	operation: 'authenticate',
+	// 	    	passcode: $('#passcode_input').val(),
+	// 	    },
+	// 	    success: function(result) {
+	// 	    	location.reload();
+	// 	    }
+	// 	});
+	// });
+	// $('#passcode_input').keypress(function(e){
+	// 	if(e.which == 13 || e.which == 9){
+	// 		$('#submit').click();
+	// 	}
+	// });
 });
 </script>
 </body>

@@ -1,15 +1,19 @@
 <div id="right_info_bar">
 	<div id="group_name" title="the group's name" data-group="{{ group.id }}" {% if group.name %}data-name="{{group.name}}"{% endif %}>
 		
-		<input id="group_title" title="edit group name" class="faux_button" value="{% if group.name %}{{group.name}}{% else %}{{ group.id }}{% endif %}">
+		<input id="group_title" title="edit group name" class="faux_button" value="{% if group.name %}{{group.name}}{% endif %}" placeholder="add group name">
+		<div class="help_box" id="help_group_name">
+			<i class="fa fa-arrow-up"></i><br>
+			to change the group name click above
+		</div>
 	</div>
-	<div id="totals">
+	<div id="totals" class="non_editable">
 		<div id="breakdown_header"> cost breakdown </div>
 		<table id="breakdown_table">
 			<tr class="row" id="total_header" title="group total">
 				<td> total </td>
 				<td>  </td>
-				<td class="align_right money_sign" id="total"> <i class="fa fa-usd"></i> 0.00 </td>
+				<td class="align_right" id="total"> <i class="fa fa-usd"></i> 0.00 </td>
 			</tr>
 			{% for person in people %}
 			<tr class="sidebar_person_total" id="sidebar_person_total_{{person.id}}" data-person="{{person.id}}">
@@ -22,11 +26,15 @@
 			<tr  id="average_row" title="group average">
 				<td> average </td>
 				<td>  </td>
-				<td class="align_right money_sign" id="average"> <i class="fa fa-usd"></i> 0.00</td>
+				<td class="align_right" id="average"> <i class="fa fa-usd"></i> 0.00</td>
 			</tr>
 		</table>
+		<div class="help_box" id="help_group_total">
+			<i class="fa fa-arrow-up"></i><br>
+			this is a summary of everyone's expenses
+		</div>
 	</div>
-	<div id="payment">
+	<div id="payment" class="non_editable">
 		<div id="payment_header"> payment plan </div>
 		<table id="payment_table">
 			<tr class="row">
@@ -36,6 +44,10 @@
 				<td class="align_center money_sign"> <i class="fa fa-usd"></i></td>
 			</tr>
 		</table>
+		<div class="help_box" id="help_group_payments">
+			<i class="fa fa-arrow-up"></i><br>
+			this is how everyone needs to pay
+		</div>
 	</div>
 	<div id="right_control_bar">
 		{% if group.deadline %}
@@ -46,15 +58,18 @@
 		</div>
 		{% endif %}
 		<div id="extras">
-			<div id="logo">
+			<div id="logo" class="non_editable">
 				trek/split
 			</div>
 			<div id="settings_buttons">
-				<button id="about_button" class="text_button" title="more about trek/split">about</button>
+				<button id="help_button" class="text_button" title="more about trek/split">help</button>
 				<button id="share_button" class="text_button" title="share this trek/split group">share</button>
 				<button id="settings_button" class="text_button" title="edit this group's settings">settings</button>
 			</div>
-			<div id="about">
+<!-- 			<div id="about">
+				<p>
+					<button id="help_button" class="text_button"> help </button>
+				</p>
 				<p>
 					Split up your group's expenses. Spend the extra time having fun.
 				</p>
@@ -67,10 +82,16 @@
 				<p>
 					<a href="mailto:treksplit@gmail.com">Contact Me</a>
 				</p>
+			</div> -->
+			<div id="help">
+				<div class="help_box" id="help_settings">
+					<i class="fa fa-arrow-up"></i><br>
+					click settings above to: <br><i class="fa fa-calendar"></i> add a group deadline<br> <i class="fa fa-lock"></i> add a group passcode<br><i class="fa fa-trash"></i> delete the group
+				</div>
 			</div>
 			<div id="share">
 				<p>
-					share the url<br> or
+					copy &amp; paste the URL in the address bar<br> or
 				</p>
 				<input type="email" id="invite_email" placeholder="share by email"><button id="send_email" class="text_button">send <i class="fa fa-arrow-right"></i></button>
 			</div>
@@ -94,18 +115,15 @@
 				<div class="settings_row">
 					<button id="delete_group" title="delete this group" class="text_button delete_person" >delete group</button>
 				</div>
-			</div>		
+			</div>					
 		</div>
-		<div id="advertisement">
+		<!-- <div id="advertisement"> -->
 			<!-- <img src="./goat.jpg"> -->
 <!-- 			<i class="fa fa-money fa-4x"></i>
 			<i class="fa fa-random fa-3x"></i>
 			<i class="fa fa-picture-o fa-5x"></i>
 			<button id="hide_ad" class="text_button align_right">hide</button> -->
-			<div id="update_display" title="notifications from the server">
-				{% if group.deadline %} all expenses are due by {{group.deadline}}{% else %} get started! {% endif %}
-			</div>
-		</div>
+		<!-- </div> -->
 	</div>
 	<div id="right_info_background"></div>
 </div>

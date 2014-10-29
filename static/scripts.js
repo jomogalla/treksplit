@@ -1,43 +1,10 @@
 $(document).ready(function(){
-// RUNNING QUESTION
-// on the edit/settings boxes, do I have an edit toggle then do the updates in there?
-// or what? that doesnt make sense...have headache
-// ok...each button/functionality has a function...
-
-
-// also wondering about using all these tds, and tree traversals
-// seems like a very fragile system, where one small html change will fuck everything
-// 
-// ****BUGS****
-// > problem:
-// Create new user form is not editable
-// > reason:
-// the buttons are not bound to events as they are added after jquery initializes all its bindings
-// > problem:
-// expense totals are not updating on row delete, only after second row delete
-// > reason:
-// no clue
-
 $('body').addClass('animated fadeIn');
 
+//initialize Masonry
 var $container = $('#expense_area');
 $container.masonry();
-// initialize Masonry after all images have loaded  
-// $container.imagesLoaded( function() {
-//   $container.masonry({
-//   	// itemSelector: '.expense'
-//   });
-// });
-//
 
-//   var $container = $('#expense_area');
-// // initialize
-// $container.masonry({
-// 	columnWidth: 440,
-// 	itemSelector: '.expense_wrapper',
-// 	isAnimated: true,
-// });
-// var msnry = $container.data('masonry');
 //******************************** CSRF Stuff ********************************//
 function getCookie(name) {
     var cookieValue = null;
@@ -72,7 +39,7 @@ $.ajaxSetup({
 //******************************** Expense Functions ********************************//
 
 // Add Expense
-// On Focus wasnt working in Safari - added this this click event to focus it
+// Should this be solely on a click event?
 $( "#expense_area" ).on( "click", ".expense_button.add", function(){
 	$(this).focus();
 });
@@ -80,6 +47,9 @@ $( "#expense_area" ).on( "click", ".expense_button.add", function(){
 $( "#expense_area" ).on( "focus", ".expense_button.add", function(){
 	var persons_id = $(this).closest(".expense").data("person");
 
+
+	// I would like to get this from the server so I don't have two parallel sets of Expense Rows
+	//  that always need updating, it just isnt quick enough for the interface to do that..
 	var new_row = $('<tr class="row"{% if expense.id %} data-expense="{{expense.id}}"{% endif %}{% if person.id %} data-owner="{{person.id}}"{% endif %}><td><button class="expense_button delete" title="delete the expense"><i class="fa fa-times"></i></button></td><td class="item_name"><input type="text" placeholder="item" title="edit the expense\'s name"{% if expense.name %}value="{{expense.name}}"{% endif %}></td><td class="cost"><input type="number" title="edit the expense\'s price"placeholder="price" {% if expense.price %}value="{{expense.price}}"{% endif %}></td><!-- <td><button class="expense_button comment" title="comment on this expense"><i class="fa fa-comment"></i></button></td> --></tr>');
 
 	// first expense added has no row to grab
@@ -95,7 +65,7 @@ $( "#expense_area" ).on( "focus", ".expense_button.add", function(){
 	$('.new_row').removeClass("new_row");
 
 	// focus the cursor in the created input box
-	$(this).closest('tr').prev().find('td input:first').focus();
+	$(this).parent().siblings(".expense_table").find('tr:last-child .item_name input').focus();
 
 	
 	// alert(persons_id);
@@ -142,7 +112,6 @@ $( "#expense_area" ).on( "click", ".expense_button.delete", function() {
 			display_update('expense ' + expense_id + ' successfully deleted');			
 	    }
 	});
-	//this not working either
 });
 
 
@@ -188,57 +157,17 @@ $("#expense_area").on("change", ".cost input",function(){
 	});
 });
 
-
-// THE BELOW CODE IS NOT GETTING CALLED, ON PURPOSE
-// adding row to person
-// $( "#expense_area" ).on( "click", ".expense_button.add", function(){
-// 	// add the row to the html first, so they can edit with no delays
-// 	// alert('blolo');
-// 	new_row = add_row($(this).closest('div.expense').data('person'));
-
-// 	// then add it to the DB
-// 	$.ajax({
-// 	    url: '/expense/0/',
-// 	    type: 'POST',
-// 	    data: {
-// 	    	owner: $(this).closest('.expense').data('person'),
-// 	    },
-// 	    success: function(result) {
-// 	   	     display_update('expense ' + result + ' successfully added');
-// 	   	     // ALSO, UPDATE THE above added html's id!!!
-// 	    }
-// 	});
-// 	// ADD TO HTML
-	
-// });
-
-// // ADD ROW FUNCTION
-// var add_row = function(person_id){
-// 	// ADD ROW IN AJAX UPON SUCCESS DO THE FOLLOWING
-// 	var new_row = '<tr class="row new_row"><td><button class="expense_button delete"><i class="fa fa-times"></i></button></td><td><input type="text" placeholder="item"></td><td class="cost"><input type="text" placeholder="price"></td></tr>'
-// 	$('#' + person_id +' table tr:last').before(new_row);
-// 	$('.new_row').show("slow");
-
-// 	$('.new_row').removeClass("new_row");
-// 	return new_row;
-// };
-// END UNCALLED CODE
-
-
-
-
-
-
 //******************************** Person Functions ********************************//
 
 // Add Person
 $('#add_user').click(function(){
 	$('#add_user button').text('adding person...');
+	var group_id = $('#group_name').data("group");
 	$.ajax({
 	    url: '/person/0/',
 	    type: 'POST',
 	    data: {
-	    	group: $(location).attr('pathname').replace("/","").replace("/",""),
+	    	group: group_id,
 	    },
 	    success: function(result) {
    	     	$('#add_user').before(result);
@@ -265,23 +194,22 @@ $('#add_user').click(function(){
 			// Let them know whats happening
 			display_update("person " + persons_id + " created");
 
-
+			// Add them to the sidebar
 			$('#average_row').before('<tr class="sidebar_person_total new_row" id="sidebar_person_total_' + persons_id + '"><td class="person_name" style="color:' + persons_color +';">-----</td><td class="align_right"> 0.00 </td><td class="align_right">0.00</td></tr>');
 
 			$('#sidebar_person_total_' + persons_id).show("slow");
 			$('#sidebar_person_total_' + persons_id).removeClass('new_row');
 			$('#sidebar_person_total_' + persons_id + ':first-child').css('color', '#' + persons_color);
 
+			// add them into masonry
 			var new_expense = $('#' + persons_id);
 			$container.append( new_expense ).masonry( 'appended', new_expense );
 			$container.masonry();
+			setTimeout(function(){$container.masonry();}, 500);
 
 			// // swap back the add user button text
 			$('#add_user button').text('add another person');
 			update_numbers();
-
-// $('#right_info_bar').css('height', $('body').height());
-
 	    }
 	});
 });
@@ -289,18 +217,6 @@ $('#add_user').click(function(){
 
 // Delete Person
 $( "#expense_area" ).on( "click", ".delete_person", function(){
-	
-	// //double click animation, currently unused
-	// $(this).text('double click to delete');
-	// $(this).addClass('delete_confirmation');
-	
-	// // Reset if the button loses focus
-	// $(this).blur(function(){
-	// 	$(this).click();
-	// 	$(this).text("delete person");
-	// 	$(this).removeClass('delete_confirmation');
-	// });
-	
 	var persons_name = $(this).closest(".expense").data("name");
 	var persons_id = $(this).closest(".expense").data("person");
 
@@ -321,7 +237,7 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 			    },
 			    success: function(result) {
 	   	     		//remove the person	
-			   	    display_update(persons_name + ' deleted');	
+			   	    display_update(persons_name + ' successfully deleted');	
 	
 					// remove clicked element
 					// msnry.remove( $('#'+result).closest('.expense'));
@@ -337,26 +253,13 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 			    }
 			});
 		}
-	// });
 	});
-	
-	// not sure why this dont work
-	
 });
 
 
 // Toggle Edit Person slider
 $( "#expense_area" ).on( "click", ".expense_button.edit", function(){
-// $( ".expense_button.edit" ).click(function() {
-	// passcode required if it exists...
-	// $(this).closest(".expense").toggleClass('maximum_z_index');
 	$(this).parent().next('.edit_person_wrapper').slideToggle( "fast", function(){$container.masonry()});
-	// setTimeout(function(){$(this).closest(".expense").toggleClass('maximum_z_index');}, 500);
-	// setTimeout(msnry.reload(),500);
-	// container.style.display = 'block';
-	// $container.masonry();
-	// $(this).closest(".expense_wrapper").toggleClass('edit_open');
-	// msrny.reload();
 });
 
 
@@ -482,9 +385,17 @@ $("#expense_area").on("change", ".email",function(){
 	    }
 	});
 });
+// Make the placeholder disappear when focused on
+$("#expense_area").on("focus", ".email",function(){
+	$(this).attr("placeholder", "");
+});
+
+$("#expense_area").on("blur", ".email",function(){
+	$(this).attr("placeholder", "add person's email");
+});
 
 
-// Change Person's Passcode
+// Change Person's Passcode - UNUSED
 $("#expense_area").on("change", ".password",function(){
 	display_update('functionality not implemented');
 });
@@ -528,7 +439,7 @@ $("#right_info_bar").on("click", "#delete_group",function(){
 		group_name = "group " + group_id;
 	}
 
-	// var delete_confirmation = blackout_prompt("delete " + group_name + "?");
+	//prompt them to make sure they wanna do it
 	blackout_prompt("delete " + group_name + "?").then(function(delete_confirmation){
 		if(delete_confirmation == true){
 			$("#centered").css("display","block");
@@ -554,18 +465,7 @@ $("#right_info_bar").on("click", "#delete_group",function(){
 
 });
 
-
-// No, Add/Change Group Name
-// Change the value to what the group name is on click
-// $('#change_group_name').click(function(){
-// 	var group_name = $(this).data('name');
-// 	$(this).val(group_name);	
-// });
-// // switch back to the placeholder text on blur
-// $('#change_group_name').blur(function(){
-// 	$(this).val("")
-// });
-// actually do the work on change
+// Change group title
 $('#group_title').change(function(){
 	var their_new_name = $(this).val();
 	// Using django to generate the below?
@@ -590,28 +490,41 @@ $('#group_title').change(function(){
 
 		   	 }
 		   	 else{
-		   	 	display_update('group name changed to ' + group_id);
-				$(document).attr('title', 'trek/split - ' +group_id);
-				the_input_box.data("name", group_id);
+		   	 	display_update('group name removed');
+				$(document).attr('title', 'trek/split');
+				the_input_box.data("name", "");
 				// $("#group_name").text(group_id);
 				$("#group_name").attr("data-name", "");	
 		   	 }
 	    }
 	});
 });
+$('#group_title').focus(function(){
+	$(this).attr("placeholder", "");
+});
+
+$('#group_title').blur(function(){
+	$(this).attr("placeholder", "add group name");
+});
 
 // Send Invitation Email
+
+// code for making the email input pretty/seamless
 $('#invite_email').focus(function(){
 	$(this).attr("placeholder", "");
 });
+
 $('#invite_email').blur(function(){
 	$(this).attr("placeholder", "share by email");
 });
+
 $('#invite_email').keypress(function(e) {
     if(e.which == 13) {
        $('#send_email').click();
     }
 });
+
+// actually send the email now
 $('#send_email').click(function(){
 	var email_to_invite = $('#invite_email').val();
 	// check to see if they even put anything
@@ -653,9 +566,10 @@ $('#settings_button').click( function(){
 		$( "#settings" ).slideToggle( "fast");
 	}
 	// If the about tab is open, close it first
-	else if($('#about').css('display') == 'block'){
-		border_swap('#settings_button', '#about_button');
-		$( "#about" ).slideToggle( "fast");
+	else if($('#help_button').hasClass('selected_button')){
+		border_swap('#settings_button', '#help_button');
+		$( ".help_box" ).slideToggle( "fast");
+		$('#add_user').toggleClass('adduser_help_offset');
 		$( "#settings" ).slideToggle( "fast");
 	}
 	else{
@@ -675,10 +589,12 @@ $('#share_button').click(function(){
 		$( "#settings" ).slideToggle( "fast");
 		$( "#share" ).slideToggle( "fast");
 	}
-	//if about is open, we gotta close it
-	else if ($('#about').css('display') == 'block'){
-		border_swap('#share_button', '#about_button');
-		$( "#about" ).slideToggle( "fast");
+	//if help is open, we gotta close it
+	else if ($('#help_button').hasClass('selected_button')){
+		border_swap('#share_button', '#help_button');
+		$('.help_box').slideToggle("fast", function(){$container.masonry()});
+		$('#add_user').toggleClass('adduser_help_offset');
+		$('#expense_area').toggleClass('expense_area_help_offset');
 		$( "#share" ).slideToggle( "fast");
 	}
 	else{
@@ -688,29 +604,60 @@ $('#share_button').click(function(){
 	// Below focuses on the email input
 	// $("#invite_email").focus();
 });
+
+// Still in here because it has been recently removed/changed
 // Toggle About Tab
-$('#about_button').click(function(){
+// $('#about_button').click(function(){
+// 	//if settings is open, we gotta fade it out too
+// 	if($('#settings').css('display') == 'block'){
+// 		border_swap('#about_button', '#settings_button');
+// 		$( "#settings" ).slideToggle( "fast");
+// 		$( "#about" ).slideToggle( "fast");
+		
+// 	}
+// 	//if share is open, we gotta close it
+// 	else if($('#share').css('display') == 'block'){
+// 		border_swap('#about_button', '#share_button');
+// 		$( "#share" ).slideToggle( "fast");
+// 		$( "#about" ).slideToggle( "fast");
+// 	}
+// 	else{
+// 		border_swap('#about_button', '#about_button');
+// 		$( '#about' ).slideToggle( "fast");
+
+// 	}
+// });
+// Toggle Help
+$('#help_button').click(function(){
 	//if settings is open, we gotta fade it out too
 	if($('#settings').css('display') == 'block'){
-		border_swap('#about_button', '#settings_button');
+		border_swap('#help_button', '#settings_button');
 		$( "#settings" ).slideToggle( "fast");
-		$( "#about" ).slideToggle( "fast");
+		$('.help_box').slideToggle("fast", function(){$container.masonry()});
+		$('#add_user').toggleClass('adduser_help_offset');
+		$('#expense_area').toggleClass('expense_area_help_offset');
 		
 	}
 	//if share is open, we gotta close it
 	else if($('#share').css('display') == 'block'){
-		border_swap('#about_button', '#share_button');
+		border_swap('#help_button', '#share_button');
 		$( "#share" ).slideToggle( "fast");
-		$( "#about" ).slideToggle( "fast");
+		$('.help_box').slideToggle("fast", function(){$container.masonry()});
+		$('#add_user').toggleClass('adduser_help_offset');
+		$('#expense_area').toggleClass('expense_area_help_offset');
 	}
 	else{
-		border_swap('#about_button', '#about_button');
-		$( '#about' ).slideToggle( "fast");
+		border_swap('#help_button', '#help_button');
+		$('.help_box').slideToggle("fast", function(){$container.masonry()});
+		$('#add_user').toggleClass('adduser_help_offset');
+		$('#expense_area').toggleClass('expense_area_help_offset');
+
 
 	}
 });
 
 // Change the Group's expense options
+// NOT IMPLEMENTED
 
 // Toggle Editable Deadline
 $('#deadline_toggle').click(function(){
@@ -745,31 +692,7 @@ $('#change_group_deadline').change(function(){
 
 });
 
-
-// Add Group Passcode
-// $('#change_group_passcode').focus(function(){
-// 	$(this).attr("placeholder", "");
-// });
-// $('#change_group_passcode').blur(function(){
-// 	$(this).attr("placeholder", "add group passcode");
-// });
-
-
-// need a way to store the first passcode to compare it to the second
-
-// $('#change_group_passcode').keypress(function(e) {
-//     if(e.which == 13 && $(this).attr("data-pass") != "confirm") {
-//     	$(this).val("");
-//     	$(this).attr("placeholder", "confirm passcode");
-// 		$(this).attr("data-pass", "confirm");
-//     	display_update('step 1');
-
-//     }else if(e.which == 13){
-//     	// var passcode = $(this).val();
-//     	// $(this).val = "";
-//     	display_update('step 2');
-//     }
-// });
+// Change Group Passcode
 $('#change_group_passcode_confirm').keypress(function(e) {
 	// IF data-passcode == yes, require them to input the current passcode < potentially insecure
 	var group_id = $("#group_name").data("group");
@@ -807,6 +730,9 @@ $('#change_group_passcode_confirm').keypress(function(e) {
 		}
 	}
 });
+
+// If the user presses enter or tab while using the group passcode block,
+// hide the current passcode input, and display the confirmation
 $('#change_group_passcode').keypress(function(e) {
 	if(e.which == 13 || e.which == 9){
 		$(this).css('display', 'none');
@@ -814,64 +740,22 @@ $('#change_group_passcode').keypress(function(e) {
 		$('#change_group_passcode_confirm').focus();
 			
 	}
-	
+});
+// Make the placeholder disappear when focused on
+$('#change_group_passcode').focus(function(){
+	$(this).attr("placeholder", "");
+});
 
-	// var first_passcode, second_passcode;
-	// var group_id = $("#group_name").data("group");
-	// var passcode_input = $(this);
-	// if(e.which == 13 && passcode_input.attr("data-block") != 'yes'){
-	// 	first_passcode = passcode_input.val();
-	// 	passcode_input.val("");
-	// 	passcode_input.attr("data-block", "yes");
-	// 	passcode_input.attr("placeholder", "confirm passcode");
-	// 	display_update('stage 1');
-	// 	$('#change_group_passcode').keypress(function(e) {
-	// 		if(e.which == 13 && passcode_input.attr("data-block") == 'yes'){
-	// 			display_update('stage 2');
-	// 			second_passcode = passcode_input.val();
-	// 			passcode_input.attr("data-block", "no");
-	// 			if(first_passcode == second_passcode){
-	// 				passcode_input.val("");
-	// 				passcode_input.attr("placeholder", "updating passcode");		
-	// 				$.ajax({
-	// 				    url: '/group/' + group_id + '/',
-	// 				    type: 'POST',
-	// 				    data: {
-	// 				    	operation: 'change_passcode',
-	// 				    	passcode: first_passcode,
-	// 				    },
-	// 				    success: function(result) {
-	// 				    	display_update(result);
-	// 				    	passcode_input.val("");
-	// 				    	passcode_input.attr("placeholder","change group passcode");
-	// 				    	passcode_input.blur();
-	// 				    },
-	// 				});
-	// 			}else{
-	// 				passcode_input.val("");
-	// 				passcode_input.attr("placeholder", "try again");
-
-	// 				// setTimeout(passcode_input.attr("placeholder", "start over"), 1000);
-	// 				passcode_input.attr("data-block", "no");
-	// 				return false;
-	// 			}
-	// 		}
-	// 	});
-	// }else{
-	// 	passcode_input.attr("data-block", "no");
-	// }
+$('#change_group_passcode').blur(function(){
+	$(this).attr("placeholder", "change group passcode");
 });
 
 
-// Toggle Requirement for individual Passcodes
-$("#right_info_bar").on("click", "#change_passcode_requirement",function(){
-	display_update('functionality not implemented');
-});
-
-// Share Groupd
-// $("#right_info_bar").on("click", "#send_email",function(){
-// 	display_update('functionality not implemented, sorry');
+// // Toggle Requirement for individual Passcodes
+// $("#right_info_bar").on("click", "#change_passcode_requirement",function(){
+// 	display_update('functionality not implemented');
 // });
+
 
 // Hide the advertisement... display update for now, and the buttons not even here
 $("#hide_ad").click(function(){
@@ -879,44 +763,15 @@ $("#hide_ad").click(function(){
 });
 
 
-// includes spreadsheet export?
 
 
 
 //******************************** General Functions ********************************//
-// Faux button actions
-// $('.faux_button').focus(function(){
-// 	var button_value = $(this).data('name');
-// 	// Grab the button value
 
-// 	// Put it in the te
-// 	$(this).val(button_value);	
-// });
-// // switch back to the placeholder text on blur
-// $('.faux_button').blur(function(){
-// 	$(this).val("")
-// });
-
-// Bind and unbind masonry for mobile interfaces (below 1024 width)
-// var masonry_is_active = true;
-// $(window).resize(function() {
-// 	// If it's smaller than 1024px then turn off masonry
-// 	if(parseInt($(window).width()) < 1024 && masonry_is_active){
-// 		$container.masonry('destroy')
-// 		masonry_is_active == false;
-// 	}
-// 	else if(parseInt($(window).width()) > 1024 && !masonry_is_active){
-// 		$container.masonry();
-// 		masonry_is_active == true;
-// 	}
-// });
-
-// set up the the right control bar data for mobile scrolling
+// hide or display the control bar for mobile users
 $(function(){
   $('#right_control_bar').data('size','big');
-});
-
-// actually use that data
+}); 
 $(window).scroll(function(){	
 	if($(window).width() < 1024){
 		if($(window).scrollTop() > 20){
@@ -941,19 +796,17 @@ $(window).scroll(function(){
 	}
 });
 
-// Update All Numbers on input change
+// Update all the information on input change
 $( "#expense_area" ).on( "change", "input", function(){
 	update_numbers();
 });
 
-// $('#blackout').click(function(){
-// 	$('#centered').css('display','none');
-// 	$('#blackout').css('display','none');
-// });
-
+// Close the warning dialog 
 $('#close_warning').click(function(){
 	$('#warning').hide();
 });
+
+// The Yes/No Prompt code for deleting things
 var blackout_prompt = function(prompt){
 	$('#centered').css("display", "block");
 	$('#blackout').css("display","block");
@@ -970,9 +823,12 @@ var blackout_prompt = function(prompt){
 	});
 	return deferred.promise();
 };
+// >> ?? <<
 var confimation = function(){
 	
 };
+
+// Code used to underline the current control bar button (help/share/settings)
 var border_swap = function(id_on, id_off){
 	if(id_on == id_off){
 		if($(id_on).hasClass('selected_button')){
@@ -988,32 +844,30 @@ var border_swap = function(id_on, id_off){
 	}
 };
 
-// Returns random ID, used for testing with no backend
-var create_pseudo_id = function(){
-	return Math.floor( (Math.random()*1000)+1);
-};
-
-// Changes the notification bar
+// dumb name... code for updating the update_display 
 var display_update = function( message ){
-	
-	$('#update_display').addClass('animated flash');
-	setTimeout(function(){
-		$('#update_display').text(message);
-	},175);
-	setTimeout(function(){
-		$('#update_display').removeClass('animated flash');
-	},1000);
-	
+	var old_text = $('#update_display').html();
 
+	// add the text sent to the div
+	$('#update_display').html(old_text + "<div class='update_line'>" + message + "</div>");
+
+	// if we have more lines than max_update_length, remove the top lines
+	var max_update_length = 5;
+	if($('.update_line').length > max_update_length){
+		var num_to_remove = $('.update_line').length - max_update_length;
+		$('.update_line:lt(' + num_to_remove +')').remove();
+	}
 
 };
 
-// Updates number across the screen
+// THE BREAD & BUTTER - this updates everything on screen 
+// & calculates payments 
 var update_numbers = function(){
 	// running question:
 	// Do I do this in jquery? Is that more vulnerable to people fucking around?
 	// it will mean less data transfer, maybe quicker UI?
 	// or do I do it server side and just return everything?
+	// do it server side so i can email ppl the tables
 
 	// UPDATES EACH PERSONS TOTAL
 	var numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
@@ -1052,8 +906,8 @@ var update_numbers = function(){
 	else{
 		var average = "--.--";
 	}
-	$("#total").text("$" + sum.toFixed(2));
-	$("#average").text("$" + average);
+	$("#total").text("$ " + sum.toFixed(2));
+	$("#average").text(average);
 
 
 	$('.expense').each(function(){
@@ -1064,7 +918,7 @@ var update_numbers = function(){
 
 		difference_td.text(difference.toFixed(2));
 
-		// lol this is all screwy but im going to bed
+		// making the difference prettier (red/black/negatives/positives/etc)
 		if(difference<0){
 			if(!difference_td.hasClass('negative_amount')){
 				difference_td.addClass('negative_amount');
@@ -1080,6 +934,7 @@ var update_numbers = function(){
 		else{
 			difference_td.removeClass('positive_amount');
 			difference_td.removeClass('negative_amount');
+			difference_td.text('-----');
 		}
 
 	});
@@ -1115,13 +970,10 @@ var update_numbers = function(){
 	});
 
 	var number_of_people = people.length;
-	// alert(people[1][0]);
-
-	// Name = ARRAY[X][0]
-	// Value = ARRAY[X][1]
 
 	var lenders = [];
 	var debtors = [];
+
 	// Transaction = [debtor, lender, amount, debtor color, lender color]
 	var transaction = [];
 	var transactions = [];
@@ -1141,16 +993,14 @@ var update_numbers = function(){
 		// If they paid the average, they disappear here :O
 	}
 
-
-
 	while(lenders.length > 0 && debtors.length > 0){
 		for(var i = 0; i < debtors.length; i++){
 			for(var j = 0; j < lenders.length; j++){
 				if(debtors[i][1] == lenders[j][1]){
 					transaction = [debtors[i][0], lenders[j][0], debtors[i][1], debtors[i][2], lenders[j][2]];
 					transactions.push(transaction);
-					lenders.splice(i, 1);
-					debtors.splice(j, 1);
+					lenders.splice(j, 1);
+					debtors.splice(i, 1);
 					continue;
 				}
 			}
@@ -1171,35 +1021,17 @@ var update_numbers = function(){
 				debtors.push(debtor);
 			}
 		}
-
-		// if(debtors[0][1] < lenders[0][1]){
-		// 	transaction = [debtors[0][0], lenders[0][0], debtors[0][1]];
-		// 	transactions.push(transaction);parseFloat(
-		// 	lenders[0][1] = parseFloat(lenders[0][1]) - parseFloat(debtors[0][1]);
-		// 	debtors.splice(0, 1);
-		// }
-		// else{
-		// 	transaction = [debtors[0][0], lenders[0][0], lenders[0][1]];
-		// 	transactions.push(transaction);
-		// 	debtors[0][1] = parseFloat(debtors[0][1]) - parseFloat(lenders[0][1]);
-		// 	lenders.splice(0, 1);
-		// }
 	}
+	// reversing transactions for some easy popping action
 	transactions.reverse();
+
+	// Go through and populate the payment table with what we just calculated
 	$('#payment_table').html('');
 	while(transactions.length > 0){
 		transaction = transactions.pop();
-		var pretty_payment = '<tr><td style="color:'+ transaction[3]+';">' + transaction[0] +'</td><td class="owes">owes</td><td style="color:'+ transaction[4]+';">'+ transaction[1] +'</td><td class="align_center money_sign">$ ' + transaction[2].toFixed(2) + '</td></tr>';
+		var pretty_payment = '<tr><td style="color:'+ transaction[3]+';">' + transaction[0] +'</td><td class="owes">owes</td><td style="color:'+ transaction[4]+';">'+ transaction[1] +'</td><td class="align_center">' + transaction[2].toFixed(2) + '</td></tr>';
 		$('#payment_table').append(pretty_payment);
 	}
-	
-	// Name = ARRAY[X][0]
-	// Value = ARRAY[X][1]
-
-
-	// UPDATES THE PAYMENT PLAN FIELDS
-	// Basically, people in the red need to pay the people in the black money.
-
 };
 update_numbers();
 });

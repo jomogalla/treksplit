@@ -125,14 +125,81 @@ X Adding a person on mobile adds it to the list and it shouldnt.
 
 
 >> Longer Term To Do <<
+> IF THERE ARE MORE THAN 413,318 GROUPS HASH COLLISION WILL OCCUR...
 > get fuckin firefox up to date
-> Add a help button, that basically puts post it notes on everything explaining what they do
-> Make the Update Display more relevant (in process)
-> Add info to the home screen (recently used treks/explanation/etc)
+> Add a jquery color picker
+> change the payment calculations to be done server side
 > Add a group description/notification/announcement to the group
 > Personalize emails a bit more to make them seem less spammy
-> change the update display to be more terminal like and in the bottom left?
-> ADD A MOTHERFUCKING PASSCODE TO THE SITE
+> homescreen - add an example link that generates a new demo page, which also has help on or asks the 				user if they want help on?
+> add cookies to store recently visited urls and possibly to auto authenticate
+> Move passcode.html styling to stylesheet
+> Move add group jquery on welcome page to scripts.js
+
+
+>> Stable & fully functional Update <<
+> Submit to producthunt.com
+X fix firefox & safari css
+X fix mobile for new features (help, update_display, add another peson)
+X Add info to the home screen (recently used treks/explanation/etc)
+	add an example link that generates a new demo page, which also has help on or asks the user if they want help on?
+> Make example page be at the URL ./example/
+    make it not editable
+X make the expenses name be wider
+> Clean css
+	consolidate mobile versions
+	put into categories
+	 - General
+	 - Group
+	 - Person
+	 - Expense
+	 - Mobile
+X copy the functionality from share to change email and change group passcode
+> take steps to secure the site - turn debugging off, create a 404/error page
+    https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
+X get url hashes on the address
+    disable id urls for newer groups? what to do with old ones? disable id urls at all?
+X don't have the default name be the id
+> Remove group id from emails and replace with the hash
+
+> TODO BEFORE PUSHING TO PRODUCTION 
+ - switch allowed hosts
+ - get secret info (secret_key, email password, db password, etc) out of settings
+
+
+X ADD A MOTHERFUCKING PASSCODE TO THE SITE
+X if a person's balance is 0.00, replace it with even, or nothing? just something otherr than 0.00
+X Make the Update Display more relevant (in process)
+	change the update display to be more terminal like and in the bottom left?
+	remove update_display from sidebar.html and place in index.html
+	get update text below everything, hopefully solved from the above fix
+
+
+X BUG EDIT PERSON SLIDER IS NOT WORKING
+X BUG - Add Expense on a new person is not workings
+X MAJOR BUG - http://localhost:8000/zz33t0/ the payment is not being calculated right....
+X BUG - If a person removes the data from an expense's price it throws the server for a loop
+
+
+X HELP BUTTON <<
+X Added to 'about'?
+
+X just turn elements on or off that have help text in them? 
+X or placed inside and absolutely positioned the element that the help message is relevant to
+X possilby add a margin bottom to expense area when items are out
+Xsubjects for help <
+	- Use the gear icon to the left of a persons name to add their email/change their color or delete them
+	- Click "done" when you are finished inputting expenses
+	- To change the group name, simply click on the name or number in the upper right
+	- To add a group deadline, add a group passcode or delete the group - Click settings in the bottom right
+	- All your data is saved automatically, to share or save for later use, simply copy the URL(or Web Address) in the Address Bar. 
+	- The number after www.treksplit.com/ is your group's number. Beware, if the group is not passcode protected anyone can access or modify your data. 
+	- Submit all comments to treksplit@gmail.com
+	- the help button is reached by clicking on "about" in the lower right and then clicking "help"
+	- To correctly calculate payments, you must enter everyone involved, even if they had no expenses
+
+
+
 
 
 >> Pretty Big Update to do <<
@@ -147,6 +214,24 @@ X update newly added expense items to match what django templates render
 deferred > fix IE, firefox, safari
 deferred > add jquery ui datepicker for IE, firefox and safari
 deferred > add jquery color picker for IE, firefox and safari
+
+
+
+Facebook Announcement -
+
+Hey all, 
+I've been working on a little site in my spare time, I call it trek/split. 
+
+Everyone enters how much they paid for event or group purchases and it tells you who owes who money. It's free and there is no registration so, check it out! 
+
+www.treksplit.com
+
+Thanks,
+Jason
+
+Trek/Split is an expense splitting website used when you do anything that involves group expenses that are to be shared
+
+Trek/Split is used to easily and quickly determine who owes who money in a group setting. People enter what group items they paid and it tells you how to divide up the money afterwards. 
 
 
 

@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title> trek/split - uh oh </title>
+	<link rel="icon" type="image/png" href="{{ STATIC_URL }}/static/mtns.png">
+	<style>
+		body{
+			text-align: center;
+			font-family: Verdana, Geneva, sans-serif;
+			color: #555555;
+			background-color:#f3f3f3;
+		}
+		h1{
+			margin-top: 20%;
+			font-weight: normal;
+		}
+		p{
+			line-height: 1.5em;
+			color: #888888;
+		}
+		a{
+			font-size: 1.1em;
+			text-decoration: none;
+			color: #3c3c3c;
+			font-style: italic;
+		}
+
+	</style>
+</head>
+<body>
+<h1> trek/split </h1>
+<p> something went wrong... sorry </p>
+<p> redirecting to <a href="/">treksplit.com</a> in <span id="counter">5</span> seconds </p>
+
+<script type="text/javascript">
+	var seconds_before_redirect = 5
+
+	var intervalID = window.setInterval(countdown, 1000);
+	function countdown(){
+		var current_text = document.getElementById('counter').innerHTML;
+		document.getElementById('counter').innerHTML = current_text - 1;
+	}
+	window.setTimeout(function() {
+		clearInterval(intervalID)
+		window.location.href = "./"
+	}, seconds_before_redirect*1000);
+</script>
+	
+</body>
+</html>

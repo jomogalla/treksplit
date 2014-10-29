@@ -17,21 +17,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', '')
+SECRET_KEY = '_wv6w-1!j@)se6)r12ygb@x_j=!!$stocd80w&uiq7iz6$e##c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ADMINS = ('Jason', 'treksplit@gmail.com')
-MANAGERS = ('Jason', 'treksplit@gmail.com')
+# ALLOWED_HOSTS = []
 
 # Email
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_HOST_USER = 'treksplit@gmail.com'
+EMAIL_HOST_PASSWORD = 'H1ke0reg0n'
 EMAIL_PORT = 587
 
 # Application definition
@@ -77,15 +76,16 @@ DATABASES = {
     # gold database on heroku
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.environ.get('DATABASE_NAME', ''),                      # Or path to database file if using sqlite3.
-        'USER': os.environ.get('DATABASE_USER', ''),                      # Not used with sqlite3.
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),                  # Not used with sqlite3.
-        'HOST': os.environ.get('DATABASE_HOST', ''),                      # Set to empty string for localhost. Not used with sqlite3.
+        'NAME': 'd116sk88i3pfev',                      # Or path to database file if using sqlite3.
+        'USER': 'ojxpubpdbnpvhm',                      # Not used with sqlite3.
+        'PASSWORD': 'w8qFxXwjVq-6hIC0kyRsaNQulS',                  # Not used with sqlite3.
+        'HOST': 'ec2-54-204-43-138.compute-1.amazonaws.com',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
-CON_MAX_AGE = 60
+# Internationalization
+# https://docs.djangoproject.com/en/1.6/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -117,7 +117,6 @@ import dj_database_url
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
-# ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS = ['.treksplit.com']
 
 # Static asset configuration
@@ -147,10 +146,4 @@ TEMPLATE_DIRS = (
     # "/Users/j/Dropbox/treksplit_mac/templates/"
     # "C:/Users/Jason/Dropbox/pyWeather/templates"
     os.path.join(PROJECT_DIR, "../templates/"),
-)
-TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )),
 )

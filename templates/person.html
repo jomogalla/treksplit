@@ -1,7 +1,8 @@
 
 	<div class="expense" id="{{person.id}}" data-person="{{person.id}}" {% if person.name %}data-name="{{ person.name }}"{% endif %} {% if person.header_color %}data-color="{{ person.header_color }}"{% endif %}>
 		<div class="expense_header" style="background-color:#{{person.header_color}};">
-			<button class="expense_button edit" title="edit the person"><i class="fa fa-cog"></i></button>
+			<button class="expense_button edit" title="edit the person"><i class="fa fa-bars"></i></button>
+			<!-- <button class="expense_button edit" title="edit the person"><i class="fa fa-cog"></i></button> -->
 			<span class="expense_owner">
 				<input type="text" title="edit the person's name" placeholder="name" {% if person.name %}value="{{person.name}}"{% endif %}>
 			</span>
@@ -17,7 +18,7 @@
 				<input class="confirm_password" type="password" placeholder="confirm passcode">
 			</div> -->
 			<div class="edit_row">
-				<input class="email text_button" type="email" placeholder="email" value="{% if person.email %}{{person.email}}{%endif%}" >
+				<input class="email text_button" type="email" placeholder="add person's email" value="{% if person.email %}{{person.email}}{%endif%}" >
 			</div>
 			<div class="edit_row">
 				<input class="color" title="edit the person's color" type="color" placeholder="optional" value="#{% if person.header_color %}{{person.header_color}}{% else %}8fd0ff{%endif%}">
@@ -26,7 +27,10 @@
 				<button title="delete the person" class="delete_person text_button">delete person</button>
 			</div>
 		</div>
-		<table class="expense_table">
+		<div class="help_box" id="help_edit_person">
+			<i class="fa fa-arrow-up"></i><br> click the gear icon above to: <br><i class="fa fa-envelope"></i> add a person's email <br><i class="fa fa-eyedropper"></i> change a person's color <br> <i class="fa fa-trash"></i> delete a person<br>
+		</div>
+		<table class="expense_table editable">
 			<tbody>
 				<!-- left for entertainment -->
 				<!-- hmmm this needs to load all the expenses... -->
@@ -46,10 +50,17 @@
 			</tr> -->
 			</tbody>
 		</table>
+		<div class="help_box" id="help_edit_person">
+				<i class="fa fa-arrow-up"></i><br> click the <i class="fa fa-times"></i> left &amp; above to delete an expense
+		</div>
 		<div class="bottom_buttons">
 			<!-- <button class="expense_button add" title="add an expense"><i class="fa fa-plus"></i></button>
 			<button class="expense_button finalize {% if person.finalized %}finalized{% endif %}" title="finalize your expenses"><i class="fa fa-check"></i></button> -->
 			<button class="expense_button add" title="add an expense">add expense</button>
 			<button class="expense_button finalize {% if person.finalized %}finalized{% endif %}" title="finalize your expenses">done</button>
+		</div>
+		<div class="help_box" id="help_finalize">
+		<i class="fa fa-arrow-up"></i><br>
+			click done when you are finished inputting expenses
 		</div>
 	</div>
