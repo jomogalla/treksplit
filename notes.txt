@@ -1,12 +1,6 @@
 ************ NOTES *************
 ** a place to store me notes ***
 ********************************
-> python code to generate random hex color
-	[
-	import random
-	r = lambda: random.randint(0,255)
-	print('#%02X%02X%02X' % (r(),r(),r()))
-	]
 
 > Stack overflows about creating hashes for Django Models (for Group URL)
 	http://stackoverflow.com/questions/16853815/how-to-generate-hash-for-django-model
@@ -17,17 +11,12 @@
 	Looking at my current structure having it in a subfolder
 	just doesnt really make sense
 
-> Creating some sort of display:none area that holds all the data, that Django will populate 
-	and then jQuery will be responsible for updating the data elsewhere
-
 X Eventually translate all the tables to divs with display:table for using jQuery animations?
 	would result in a lot of jQuery work but meh, animations are pretty.
 
 > Currently the ajax calls certain urls to add/delete/modify all the shit
 	huge potential security flaw!? it might be wise to transfer the data being transfered to data
 	in the ajax call instead of calling a specific URL
-
-> INSTEAD OF PUTTING THE ID OF THE OBJECT IN THE HTML ID, USE A FUCKIN ATTRIBUTE DUMDUM
 
 > Interesting article on security
 http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-using
@@ -54,37 +43,53 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 	Instead of so much white space.
 
 ||||||||||||||||||| TO DO FOR BASIC DONENESS |||
-> Fix the expenses query to just get the necessary expenses
-> Delete Everything related to a group when you delete it
-X Add code to handle "touch" events
-X Mobile CSS
-> Clean up CSS
-X Get the start page to use the scripts and styles files
-> Finish add passcode
-> Check IE
-> Check Firefox
-> Check Safari
 
 
 
-||||||||||||||||||| FEATURES |||||||||||||||||||
-> Fix the expenses query to just get the necessary expenses << NUMERO DOS
+
+
+
+********************************************
+>>>>>>>>>>>>>>>>>> To Do <<<<<<<<<<<<<<<<<<<
+********************************************
+________________________________________
+|||||||||||||| LONG TERM |||||||||||||||
+
+> IF THERE ARE MORE THAN 413,318 GROUPS HASH COLLISION WILL OCCUR...
+> get fuckin firefox up to date
+> Add a jquery color picker
+> change the payment calculations to be done server side
+> Add a group description/notification/announcement to the group
+> Personalize emails a bit more to make them seem less spammy
+> homescreen - add an example link that generates a new demo page, which also has help on or asks the 				user if they want help on?
+> add cookies to store recently visited urls and possibly to auto authenticate
+> Move passcode.html styling to stylesheet
+> Move add group jquery on welcome page to scripts.js
+> add scheduled emails for the deadline in django (use celery?)
+> Submit to producthunt.com
+> Add HTML Emails
+> Write script to swap production and development settings
+
+_____________________________________
+||||||||||||| FEATURES ||||||||||||||
+
+X Fix the expenses query to just get the necessary expenses << NUMERO DOS
 X Delete Expenses related to a person when deleting the person
 > Delete expenses related to a group when you delete it
 X Fix CSRF on all views  << NUMERO TRES
 > Update the expense functions to handle not having an id immediately after being created
 X Add delete group functionality
 X Add share functionality << ADD SENDGRID<nvm
-> Add passcode functionality
+X Add passcode functionality
 X integrate masonry
 X update tables to divs with display table? (for jquery animations) NO
 X Figure out payment plan algorithm  << NUMERO UNO
-> Add code to handle "touch" events
-> Add a how to? About? User guide?
+X Add code to handle "touch" events
+X Add a how to? About? User guide?
 X Add a description to the main page?
 X Get CSS in a style sheet (fix static files)
 X Get jQuery in a script file?
-> Add a hashing algorithm for group urls?
+X Add a hashing algorithm for group urls?
 X Get rid of odd/even row classes
 X Add code to darken the background of light text names in sidebar? Or just choose better default colors
 > Clean up CSS
@@ -116,29 +121,14 @@ X add group button broken
 X delete person not being removed from screen
 X New person's average is incorrect when added
 X Persons sidebar color not updating on change
-> sidebar Rows added by jquery not up to date
+X sidebar Rows added by jquery not up to date
 X Not updating totals after an expense delete (updates if two expenses are deleted)
 X Payment plan sections aint updatin
-> passcode placeholder returning to add passcode is thanks to jquery right above! fix?
+X passcode placeholder returning to add passcode is thanks to jquery right above! fix?
 X Adding a person on mobile adds it to the list and it shouldnt.
 
 
-
->> Longer Term To Do <<
-> IF THERE ARE MORE THAN 413,318 GROUPS HASH COLLISION WILL OCCUR...
-> get fuckin firefox up to date
-> Add a jquery color picker
-> change the payment calculations to be done server side
-> Add a group description/notification/announcement to the group
-> Personalize emails a bit more to make them seem less spammy
-> homescreen - add an example link that generates a new demo page, which also has help on or asks the 				user if they want help on?
-> add cookies to store recently visited urls and possibly to auto authenticate
-> Move passcode.html styling to stylesheet
-> Move add group jquery on welcome page to scripts.js
-
-
->> Stable & fully functional Update <<
-> Submit to producthunt.com
+////////////// Stable & fully functional Update \\\\\\\\\\\\\
 X fix firefox & safari css
 X fix mobile for new features (help, update_display, add another peson)
 X Add info to the home screen (recently used treks/explanation/etc)
@@ -155,16 +145,24 @@ X make the expenses name be wider
 	 - Expense
 	 - Mobile
 X copy the functionality from share to change email and change group passcode
-> take steps to secure the site - turn debugging off, create a 404/error page
+X take steps to secure the site - turn debugging off, create a 404/error page
     https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 X get url hashes on the address
     disable id urls for newer groups? what to do with old ones? disable id urls at all?
 X don't have the default name be the id
-> Remove group id from emails and replace with the hash
 
-> TODO BEFORE PUSHING TO PRODUCTION 
- - switch allowed hosts
- - get secret info (secret_key, email password, db password, etc) out of settings
+
+>> Second Push for Stable & FUnctional <<
+X Remove Group ID from emails and replace with the hash
+X BUG - sidebar being pushed down by add_user before anyone is added
+X Hide color picker and ddeadline on browsers != Chrome? - YES, for now
+X Remove borders still showing on payment area
+X BUG - Masonry only going single column on first load
+
+
+X TODO BEFORE PUSHING TO PRODUCTION 
+ X switch allowed hosts
+ X get secret info (secret_key, email password, db password, etc) out of settings
 
 
 X ADD A MOTHERFUCKING PASSCODE TO THE SITE
@@ -202,21 +200,22 @@ Xsubjects for help <
 
 
 
->> Pretty Big Update to do <<
+//////////////// Pretty Big Update to do \\\\\\\\\\\\\\\\\\
 X fix masonry adding new person below add person button
 X come up with a more visible finalized color for a person
 deferred > add finalized to the right breakdown
 > [question] either display payments after all are finalized or after deadline
 X figure out somewhere to display the deadline
 X update newly added expense items to match what django templates render
-> add scheduled emails for the deadline in django (use celery?)
-> overwrite masonry css for mobile
+X overwrite masonry css for mobile
 deferred > fix IE, firefox, safari
 deferred > add jquery ui datepicker for IE, firefox and safari
 deferred > add jquery color picker for IE, firefox and safari
 
 
-
+***********************************************
+>>>>>>>>>>>>>>>>>> Marketing <<<<<<<<<<<<<<<<<<
+***********************************************
 Facebook Announcement -
 
 Hey all, 

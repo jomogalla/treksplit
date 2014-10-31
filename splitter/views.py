@@ -79,6 +79,30 @@ def group(request, group_id="1"):
 	# else:
 	# 	return render_to_response('./passcode.html', {'group':group}, context_instance=RequestContext(request))
 
+# Example creates a new group that is pre-populated
+@ensure_csrf_cookie 
+def example(request, group_hash):
+	# Grab the group's ID
+	group_id = group.id
+
+	# If the group does not exist return 404
+	# group = get_object_or_404(Group, pk=group_id)
+
+	# grab all the people in the group
+	people = Person.objects.filter(group_ID__exact = group_id).order_by('id')
+
+	# grab all the expenses with owners in the above list
+	# expenses = 
+
+	# Grab expenses owned by the people in the group
+	expenses = []
+	for person in people:
+		expenses_temp = list(Item.objects.filter(person_ID__exact = person.id).order_by('id'))
+		expenses = expenses + expenses_temp
+
+	return render_to_response('./index.html', {'people':people, 'expenses':expenses, 'group':group})
+
+
 @ensure_csrf_cookie 
 def group_hash(request, group_hash):
 	# Or the alternate, redirect to create group page
@@ -203,13 +227,13 @@ def person_transaction(request, person_id):
 
 		# using the group's name if there is one
 		if current_group.name is None:
-			group_title = str(current_group.id)
+			body = 'Your email ( ' + email + ')  has been added to a Trek/Split group.\n \n Here is the link - http://www.treksplit.com/' + str(current_group.url_hash) + '/'
+			subject = 'You have been added to a Trek/Split group'
 		else:
-			group_title = current_group.name
+			body = 'Your email ( ' + email + ')  has been added to the Trek/Split group - ' + current_group.name + '.\n \n Here is the link - http://www.treksplit.com/' + str(current_group.url_hash) + '/'
+			subject = 'You have been added to a Trek/Split group - ' + current_group.name
 
 		# body = 'Your email ( %s )  has been added to the Trek/Split group %s.\n \n Here is the link - http://www.treksplit.com/%s/' % (email,group_title,current_group.id)
-		body = 'Your email ( ' + email + ')  has been added to the Trek/Split group - ' + group_title + '.\n \n Here is the link - http://www.treksplit.com/' + str(current_group.id) + '/'
-		subject = 'You have been added to a Trek/Split group - ' + group_title
 		sender = 'treksplit@gmail.com'
 		send_mail(subject, body, sender, [email], fail_silently=False)
 
@@ -233,7 +257,7 @@ def person_transaction(request, person_id):
 		# Everyone is finalized - send an email out
 		if whole_group_finalized:
 			if current_group.name is None:
-				group_title = str(current_group.id)
+				group_title = str(current_group.url_hash)
 			else:
 				group_title = current_group.name
 
@@ -284,10 +308,10 @@ def group_transaction(request, group_id):
 		current_group = Group.objects.get(id__exact=group_id)
 		email_to_invite = request.POST['email']
 		if current_group.name is None:
-			subject = 'Help split up expenses for group ' + group_id
+			subject = 'Help split up expenses'
 		else:	
 			subject = 'Help split up expenses for ' + current_group.name
-		body = 'Join your friends here - http://www.treksplit.com/' + group_id + '/'
+		body = 'Join your friends here - http://www.treksplit.com/' + current_group.url_hash + '/'
 		sender = 'treksplit@gmail.com'
 		send_mail(subject, body, sender, [email_to_invite], fail_silently=False)
 		return HttpResponse('email sent to ' + email_to_invite)

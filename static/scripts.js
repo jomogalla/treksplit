@@ -1,9 +1,18 @@
 $(document).ready(function(){
-$('body').addClass('animated fadeIn');
+// $('body').addClass('animated fadeIn');
 
 //initialize Masonry
 var $container = $('#expense_area');
-$container.masonry();
+$container.masonry({
+  columnWidth: 420,
+  itemSelector: '.expense'
+});
+// Hiding things that only work in chrome
+if(!Boolean(window.chrome)){
+	$("<style type='text/css'> .color{ display:none;} </style>").appendTo("head");
+	$('#deadline_toggle').parent().css('display', 'none');
+}
+
 
 //******************************** CSRF Stuff ********************************//
 function getCookie(name) {
@@ -291,6 +300,7 @@ $( "#expense_area" ).on( "change", ".expense_owner input", function(){
 	   	    $('#' + persons_id).data("name", persons_new_name);
 	   	    $('#' + persons_id).attr("data-name", persons_new_name);
 	   	    $(owner).removeClass('updating');
+	   	    update_numbers();
 	    }
 	});
 });

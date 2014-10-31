@@ -18,7 +18,7 @@
 				<input class="confirm_password" type="password" placeholder="confirm passcode">
 			</div> -->
 			<div class="edit_row">
-				<input class="email text_button" type="email" placeholder="add person's email" value="{% if person.email %}{{person.email}}{%endif%}" >
+				<input class="email faux_button" type="email" placeholder="add person's email" value="{% if person.email %}{{person.email}}{%endif%}" >
 			</div>
 			<div class="edit_row">
 				<input class="color" title="edit the person's color" type="color" placeholder="optional" value="#{% if person.header_color %}{{person.header_color}}{% else %}8fd0ff{%endif%}">
