@@ -1,7 +1,7 @@
 <div id="right_info_bar">
 	<div id="group_name" title="the group's name" data-group="{{ group.id }}" {% if group.name %}data-name="{{group.name}}"{% endif %}>
 		
-		<input id="group_title" title="edit group name" class="faux_button" value="{% if group.name %}{{group.name}}{% endif %}" placeholder="add group name">
+		<input id="group_title" title="click to edit the group name" class="faux_button" value="{% if group.name %}{{group.name}}{% endif %}" placeholder="add group name">
 		<div class="help_box" id="help_group_name">
 			<i class="fa fa-arrow-up"></i><br>
 			to change the group name click above
@@ -10,6 +10,7 @@
 	<div id="totals" class="non_editable">
 		<div id="breakdown_header"> cost breakdown </div>
 		<table id="breakdown_table">
+
 			<tr class="row" id="total_header" title="group total">
 				<td> total </td>
 				<td>  </td>
@@ -37,12 +38,14 @@
 	<div id="payment" class="non_editable">
 		<div id="payment_header"> payment plan </div>
 		<table id="payment_table">
+			<tbody>
 			<tr class="row">
 				<td style="color:#8fd0ff"> Nothing </td>
 				<td class="owes"> here </td>
 				<td   style="color:#ffa58f"> yet </td>
 				<td class="align_center money_sign"> <i class="fa fa-usd"></i></td>
 			</tr>
+			</tbody>
 		</table>
 		<div class="help_box" id="help_group_payments">
 			<i class="fa fa-arrow-up"></i><br>
@@ -86,13 +89,13 @@
 			<div id="help">
 				<div class="help_box" id="help_settings">
 					<i class="fa fa-arrow-up"></i><br>
-					click settings above to: <br><i class="fa fa-calendar"></i> add a group deadline<br> <i class="fa fa-lock"></i> add a group passcode<br><i class="fa fa-trash"></i> delete the group
+					click <strong>settings</strong> above to: <br><i class="fa fa-calendar"></i> add a group deadline<br> <i class="fa fa-lock"></i> add a group passcode<br><i class="fa fa-trash"></i> delete the group
 				</div>
 			</div>
 			<div id="share">
 				<p>
 					send this link<br>
-					<a href="treksplit.com/{{group.url_hash}}/">treksplit.com/{{group.url_hash}}/</a>
+					<a href="http://www.treksplit.com/{{group.url_hash}}/">treksplit.com/{{group.url_hash}}/</a>
 				</p>
 				<p>
 					or

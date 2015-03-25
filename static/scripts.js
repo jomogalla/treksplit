@@ -44,6 +44,12 @@ $.ajaxSetup({
     }
 });
 
+// Binding Tipsy Stuff
+// $('.finalize').tipsy({gravity: 'n'});
+// $('.add').tipsy({gravity: 'n'});
+// $('.edit').tipsy({gravity: 'nw'});
+// $('#group_title').tipsy({gravity: 'e'});
+
 
 //******************************** Expense Functions ********************************//
 

@@ -42,8 +42,6 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 	Maybe like a one inch header that goes across the top that just makes the site feel more defined.
 	Instead of so much white space.
 
-||||||||||||||||||| TO DO FOR BASIC DONENESS |||
-
 
 
 
@@ -52,32 +50,37 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 ********************************************
 >>>>>>>>>>>>>>>>>> To Do <<<<<<<<<<<<<<<<<<<
 ********************************************
+post CSG bugs - 
+> fix 'check out an example' on root page
+
+
+
+
 ________________________________________
 |||||||||||||| LONG TERM |||||||||||||||
 
 > IF THERE ARE MORE THAN 413,318 GROUPS HASH COLLISION WILL OCCUR...
-> get fuckin firefox up to date
+X get fuckin firefox up to date
 > Add a jquery color picker
 > change the payment calculations to be done server side
+ > add an all paid up checkbox for payments (requires new db table)
 > Add a group description/notification/announcement to the group
 > Personalize emails a bit more to make them seem less spammy
-> homescreen - add an example link that generates a new demo page, which also has help on or asks the 				user if they want help on?
 > add cookies to store recently visited urls and possibly to auto authenticate
-> Move passcode.html styling to stylesheet
 > Move add group jquery on welcome page to scripts.js
 > add scheduled emails for the deadline in django (use celery?)
 > Submit to producthunt.com
 > Add HTML Emails
 > Write script to swap production and development settings
+> Dont actually delete a group when a person asks, change a flag that is disabled, but it remains in the db, then delete later?
+> add jquery to handle all the faux button class inputs so they behave the same
 
 _____________________________________
 ||||||||||||| FEATURES ||||||||||||||
 
 X Fix the expenses query to just get the necessary expenses << NUMERO DOS
 X Delete Expenses related to a person when deleting the person
-> Delete expenses related to a group when you delete it
 X Fix CSRF on all views  << NUMERO TRES
-> Update the expense functions to handle not having an id immediately after being created
 X Add delete group functionality
 X Add share functionality << ADD SENDGRID<nvm
 X Add passcode functionality
@@ -92,7 +95,6 @@ X Get jQuery in a script file?
 X Add a hashing algorithm for group urls?
 X Get rid of odd/even row classes
 X Add code to darken the background of light text names in sidebar? Or just choose better default colors
-> Clean up CSS
 X Add something to an expense to notify the user that a Person is being deleted
 X Add italics to inputs as an updating notifier
 X Sort All Elements in the queries
@@ -105,14 +107,11 @@ X Get the start page to use the scripts and styles files
 X Make mobile versions WAY BIGGER
 X add titles to everything
 X Change the Add group name text after adding a group name to change group name(for the first time)
-> add jquery to handle all the faux button class inputs so they behave the same
-> add code to regex the email input to see if its a valid email address
+
 X upgrade DJANGO for the migrate DB function
 > remove _ID from the ends of those dum models
 X remove '+' from 0 values in the totals sidebar section
-> require password input to change password if there is one
 X Add a 'Finished' check box on an individuals expense
-> Add an "all paid up" check box on payments
 
 
 ||||||||||||||||||| BUGS |||||||||||||||||||
@@ -128,14 +127,14 @@ X passcode placeholder returning to add passcode is thanks to jquery right above
 X Adding a person on mobile adds it to the list and it shouldnt.
 
 
-////////////// Stable & fully functional Update \\\\\\\\\\\\\
-X fix firefox & safari css
-X fix mobile for new features (help, update_display, add another peson)
-X Add info to the home screen (recently used treks/explanation/etc)
-	add an example link that generates a new demo page, which also has help on or asks the user if they want help on?
-> Make example page be at the URL ./example/
-    make it not editable
-X make the expenses name be wider
+
+
+////////////// AdvBook Update \\\\\\\\\\\\\
+X Make example page be at the URL ./example/
+    > make it not editable
+> Delete expenses related to a group when you delete it
+> add code to regex the email input to see if its a valid email address
+> require password input to change password if there is one
 > Clean css
 	consolidate mobile versions
 	put into categories
@@ -144,6 +143,25 @@ X make the expenses name be wider
 	 - Person
 	 - Expense
 	 - Mobile
+> add jquery ui datepicker for IE, firefox and safari
+> add jquery color picker for IE, firefox and safari
+> add thead, tfoot, caption to tables
+> add meta for charset
+X Update the expense functions to handle not having an id immediately after being created
+> Move passcode.html styling to stylesheet
+
+
+
+{{{{{{{{{{{{------  PAST UPDATES  -------}}}}}}}}}}}}
+
+////////////// Stable & fully functional Update \\\\\\\\\\\\\
+X fix firefox & safari css
+X fix mobile for new features (help, update_display, add another peson)
+X Add info to the home screen (recently used treks/explanation/etc)
+	add an example link that generates a new demo page, which also has help on or asks the user if they want help on?
+
+X make the expenses name be wider
+
 X copy the functionality from share to change email and change group passcode
 X take steps to secure the site - turn debugging off, create a 404/error page
     https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -200,6 +218,7 @@ Xsubjects for help <
 
 
 
+
 //////////////// Pretty Big Update to do \\\\\\\\\\\\\\\\\\
 X fix masonry adding new person below add person button
 X come up with a more visible finalized color for a person
@@ -209,8 +228,7 @@ X figure out somewhere to display the deadline
 X update newly added expense items to match what django templates render
 X overwrite masonry css for mobile
 deferred > fix IE, firefox, safari
-deferred > add jquery ui datepicker for IE, firefox and safari
-deferred > add jquery color picker for IE, firefox and safari
+
 
 
 ***********************************************

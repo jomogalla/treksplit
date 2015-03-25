@@ -31,12 +31,25 @@ body{
 }
 /* HELP STYLING */
 #help_group_name{
-	font-size: 0.5em;
+	font-size: 0.65em;
 }
 #front_page_help{
-	/*position: absolute;*/
-	/*bottom: 0px;*/
+	position: fixed;
+	bottom: 0px;
 	/*left:0px;*/
+}
+/* Help box arrow custom positions */
+#help_settings i:first-of-type{
+	position: absolute;
+	right: 90px;
+}
+#help_edit_person i:first-of-type{
+	position: absolute;
+	left: 8px;
+}
+#help_finalize i:first-of-type{
+	position: absolute;
+	right: 145px;
 }
 #front_page_help > .help_box{
 	/*background-color: white;*/
@@ -55,6 +68,7 @@ body{
 #front_page_help > .help_box i{
 	font-size: 1.3em;
 }
+
 .secret{
 	/*display: none !important;*/
 }
@@ -64,19 +78,29 @@ body{
 .help_box{
 	padding: 5px;
 	text-align: center;
-	font-size: 0.7em;
-	color: #3e3e3e;
+	font-size: 0.9em;
+	color: #A3A3A3;
 	text-shadow: none;
 	display: none;
-	background-color: #fffbf5;
+	/*background-color: #fffbf5;*/
+	background-color: #EAF7FF;
 	font-family: "Courier New", Courier, monospace;
+	position: relative;
+	/*border: 3px #E9E7EF solid;*/
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-top:none;
+	/*background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(233,231,239,0.1) 15%,rgba(233,231,239,0.65) 100%);*/
+
 }
 .help_box i{
+	/*background-color: white;*/
 /*	position: absolute;
 	top: 3px;
 	left: 3px;*/
 	color:#C6BDDD;
 	text-align: left;
+	text-shadow: 0px 0px 10px #fff;
 	/*display: block;*/
 	/*font-size: 1.3em;*/
 }
@@ -99,7 +123,7 @@ html{
 #group_name{
 	text-align: center;
 	font-size: 22px;
-	padding: 5px;
+	/*padding-top: 10px;*/
 }
 #group_title{
 	font-size: 22px;
@@ -745,113 +769,111 @@ p{
 	}
 }*/
 @media only screen and (max-width: 1024px){
-  body{
-  	font-size: 3em;
-  }
-  #close_warning{
-  	font-size: 1.1em;
-
-  }
-  .settings_row{
-  	margin-top: 20px;
-  	margin-bottom: 20px;
-  }
-  .email{
-  	font-size: 1.2em;
-  }
-  input{
-  	font-size: 1.5em;
-  	/*text-align: center;*/
-  	width: 80%;
-  }
-  .expense_total{
-  	font-size: 3em;
-  }
-  table{font-size: 1.5em;}
-  button{
-  	font-size: 3em;
-  }
-  #right_info_bar {
-    width: 100%;
-    text-align: center;
-    right:0px;
-    position: relative;
-    background-color:#fafafa;
-	border-bottom:1px #DCD2FA solid;
-	float: none;	
-  }
-  #right_info_background{
-  	display: none;
-  }
-  #right_control_bar{
-  	width: 100%;
-  	position: absolute;
-  	bottom: auto;
-  	top:0px;
-
-  }
-  .expense_button{
-  	height: auto;
-  }
-  #right_control_bar a{
-	font-size: 16px;
-  }
-  #payment, #totals{
-  	float: none;
-  }
-  #totals{
-  	margin-top: 10px;
-  }
-  #advertisement{
-  	display: none;
-  }
-  #add_user{
-  	margin:0px;
-  	margin-bottom: 18px;
-  	width: 100%;
-
-  }
-  #payment{
-  	/*margin-bottom: 35px;*/
-  	margin-top: 0px;
-  }
-  #breakdown_table, #payment_table{
-  	width: 100%
-  }
-  #breakdown_header, #payment_header{
-  	margin-left: 0px;
-  }
-  body{
-  	min-width: 100%;
-  }
-  .expense{
-  	float:none;
-  	width: inherit;
-  }
-  #expense_area{
-  	margin-right: 0px;
-  }
-  .expense_table{
-  	width: 100%;
-  }
-  #settings_buttons{
-  	margin-left:0px;
-  	font-size: 1.4em;
-  }
-  #share, #settings_buttons, #share, #logo{
-  	padding-left: 0px;
-  }
-  #group_name{
-  	padding-top: 80px;
-  	float: none;
-  }
-  .expense_owner input{
-  	font-size: inherit;
-  }
-/*}
-@media only screen and (max-width: 980px){*/
+	body{
+		font-size: 3em;
+	}
+		#close_warning{
+		font-size: 1.1em;
+	}
+	.settings_row{
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+	.email{
+		font-size: 1.2em;
+	}
+	input{
+		font-size: 1.5em;
+		/*text-align: center;*/
+		width: 80%;
+	}
+	.expense_total{
+		font-size: 3em;
+	}
+	table{
+		font-size: 1.5em;
+	}
+	button{
+		font-size: 3em;
+	}
+	#right_info_bar {
+		width: 100%;
+		text-align: center;
+		right:0px;
+		position: relative;
+		background-color:#fafafa;
+		border-bottom:1px #DCD2FA solid;
+		float: none;
+		min-height: inherit;	
+	}
+	#right_info_background{
+		display: none;
+	}
+	#right_control_bar{
+		width: 100%;
+		position: absolute;
+		bottom: auto;
+		top:0px;
+	}
+	.expense_button{
+		height: auto;
+	}
+	#right_control_bar a{
+		font-size: 0.9em;
+	}
+	#payment, #totals{
+		float: none;
+	}
+	#totals{
+		margin-top: 10px;
+	}
+	#advertisement{
+		display: none;
+	}
+	#add_user{
+		margin:0px;
+		margin-bottom: 18px;
+		width: 100%;
+	}
+	#payment{
+		/*margin-bottom: 35px;*/
+		margin-top: 0px;
+	}
+	#breakdown_table, #payment_table{
+		width: 100%
+	}
+	#breakdown_header, #payment_header{
+		margin-left: 0px;
+	}
+	body{
+		min-width: 100%;
+	}
+	.expense{
+		float:none;
+		width: inherit;
+	}
+	#expense_area{
+		margin-right: 0px;
+	}
+	.expense_table{
+		width: 100%;
+	}
+	#settings_buttons{
+		margin-left:0px;
+		font-size: 1.4em;
+	}
+	#share, #settings_buttons, #share, #logo{
+		padding-left: 0px;
+	}
+	#group_name{
+		padding-top: 80px;
+		float: none;
+	}
+	.expense_owner input{
+		font-size: inherit;
+	}
 	#intro{
-		margin-top: 25%
+		margin: 25% auto;
 	}
 	.expense{
 		border-bottom: 2px #D2d2d2 solid;
@@ -1032,5 +1054,42 @@ p{
 	#help_group_name{
 		font-size: 1.5em;
 	}
+	.text_button{
+		font-size:1em;
+	}
+	#intro p:last-of-type{
+		margin: 30px auto;
+	}
+	#extras{
+		padding-top: 20px;
+		border-top:5px #EEE8FF solid;
+	}
 
 }
+
+/* TIPSY */
+.tipsy { font-size: 1em; position: absolute; padding: 5px; z-index: 100000; }
+.tipsy-inner { background-color: #000; color: #FFF; max-width: 200px; padding: 5px 8px 4px 8px; text-align: center; }
+
+/* Rounded corners */
+.tipsy-inner { border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+  
+/* Uncomment for shadow */
+/*.tipsy-inner { box-shadow: 0 0 5px #000000; -webkit-box-shadow: 0 0 5px #000000; -moz-box-shadow: 0 0 5px #000000; }*/
+  
+.tipsy-arrow { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #000; }
+  
+/* Rules to colour arrows */
+.tipsy-arrow-n { border-bottom-color: #000; }
+.tipsy-arrow-s { border-top-color: #000; }
+.tipsy-arrow-e { border-left-color: #000; }
+.tipsy-arrow-w { border-right-color: #000; }
+
+.tipsy-n .tipsy-arrow { top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent; }
+.tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent;}
+.tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-bottom-style: solid; border-top: none;  border-left-color: transparent; border-right-color: transparent;}
+.tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+.tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+.tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
+.tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
+.tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
