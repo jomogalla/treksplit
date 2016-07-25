@@ -2,3 +2,4 @@ venv
 *.pyc
 staticfiles
 .DS_Store
+./treksplit/settings_local.py
