@@ -57,7 +57,10 @@
 			<!-- <button class="expense_button add" title="add an expense"><i class="fa fa-plus"></i></button>
 			<button class="expense_button finalize {% if person.finalized %}finalized{% endif %}" title="finalize your expenses"><i class="fa fa-check"></i></button> -->
 			<button class="expense_button add" title="click to add an expense">add expense</button>
-			<button class="expense_button finalize {% if person.finalized %}finalized{% endif %}" title="click done when you are finished inputting expenses">done</button>
+			<button class="expense_button finalize {% if person.finalized %}finalized{% endif %}" title="click done when you are finished inputting expenses">
+				{% if person.finalized %}thats everything{% endif %}
+				{% if not person.finalized %}all done{% endif %}
+			</button>
 		</div>
 		<div class="help_box" id="help_finalize">
 		<i class="fa fa-arrow-up"></i><br>
