@@ -9,29 +9,34 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+import os, environ
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+# Setup environ
+env = environ.Env()
+environ.Env.read_env()
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', '')
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+# ADMIN_ENABLED = False
 ADMINS = ('Jason', 'treksplit@gmail.com')
 MANAGERS = ('Jason', 'treksplit@gmail.com')
 
 # Email
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 
 # Application definition
@@ -44,10 +49,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'splitter',
-    'south',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,10 +82,10 @@ DATABASES = {
     # gold database on heroku
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.environ.get('DATABASE_NAME', ''),                      # Or path to database file if using sqlite3.
-        'USER': os.environ.get('DATABASE_USER', ''),                      # Not used with sqlite3.
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),                  # Not used with sqlite3.
-        'HOST': os.environ.get('DATABASE_HOST', ''),                      # Set to empty string for localhost. Not used with sqlite3.
+        'NAME': env('DATABASE_NAME'),                      # Or path to database file if using sqlite3.
+        'USER': env('DATABASE_USER'),                      # Not used with sqlite3.
+        'PASSWORD': env('DATABASE_PASSWORD'),                  # Not used with sqlite3.
+        'HOST': env('DATABASE_HOST'),                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -118,7 +123,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['.treksplit.com']
+ALLOWED_HOSTS = ['.treksplit.com', 'localhost']
 
 # Static asset configuration
 import os
@@ -140,17 +145,19 @@ STATICFILES_DIRS = (
 )
 
 PROJECT_DIR = os.path.dirname(__file__) # this is not Django setting.
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    # "/Users/j/Dropbox/treksplit_mac/templates/"
-    # "C:/Users/Jason/Dropbox/pyWeather/templates"
-    os.path.join(PROJECT_DIR, "../templates/"),
-)
-TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )),
-)
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [os.path.join(PROJECT_DIR, '../templates/')],
+    'APP_DIRS': True,
+    'OPTIONS': {
+        'context_processors': [
+            'django.template.context_processors.debug',
+            'django.template.context_processors.request',
+            'django.contrib.auth.context_processors.auth',
+            'django.contrib.messages.context_processors.messages',
+        ]
+    },
+    
+}]
+
+

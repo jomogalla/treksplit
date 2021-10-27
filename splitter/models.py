@@ -5,7 +5,7 @@ import datetime
 class Person(models.Model):
  name = models.CharField(max_length=200, blank=True, null=True)
  passcode = models.CharField(max_length=15, blank=True, null=True)
- group_ID = models.ForeignKey('Group')
+ group_ID = models.ForeignKey('Group', on_delete=models.DO_NOTHING)
  # group = models.ForeignKey('Group')
  # ^^^ Update to this ^^^
  email = models.EmailField(blank=True, null=True)
@@ -19,10 +19,10 @@ class Item(models.Model):
  price = models.DecimalField(max_digits=19, decimal_places=2, blank=True, null=True)
  date = models.DateTimeField(blank=True, null=True)
  category = models.CharField(max_length=20, blank=True, null=True)
- person_ID = models.ForeignKey('Person')
+ person_ID = models.ForeignKey('Person', on_delete=models.DO_NOTHING)
  # person = models.ForeignKey('Person')
  # ^^^ Update to this ^^^
- receipt_picture = models.ImageField(upload_to='receipt_pics', blank=True, null=True)
+#  receipt_picture = models.ImageField(upload_to='receipt_pics', blank=True, null=True)
  comment = models.TextField(blank=True, null=True)
 
 class Group(models.Model):
@@ -33,7 +33,7 @@ class Group(models.Model):
  use_categories = models.BooleanField(blank=True, default=False)
  use_pictures = models.BooleanField(blank=True, default=False)
  use_descriptions = models.BooleanField(blank=True, default=False)
- administrator_ID = models.ForeignKey('Person', null=True)
+ administrator_ID = models.ForeignKey('Person', null=True, on_delete=models.DO_NOTHING)
  deadline = models.DateField(blank=True, null=True)
  currency = models.CharField(max_length=7, default="usd")
  url_hash = models.CharField(max_length=6, null=True)
