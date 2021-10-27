@@ -1,17 +1,17 @@
 import datetime
 import string, random
 
-from django.shortcuts import render, render_to_response, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie 
-from django.core.context_processors import csrf
+# from django.core.context_processors import csrf
 from django.template import RequestContext
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required # <<<< added for authenticaton 
 from django.contrib.auth import authenticate, login
 
 
-from models import Group, Person, Item
+from splitter.models import Group, Person, Item
 
 colors_for_now = ['e5a7ab', 'ecc8bc', 'ffe1c7', 'fcedca', 'e8e1b0', 'c6d5b5', 'c2e5ee', 'dce0ef', 'ead8ff', 'e2bad4']
 
@@ -19,11 +19,11 @@ colors_for_now = ['e5a7ab', 'ecc8bc', 'ffe1c7', 'fcedca', 'e8e1b0', 'c6d5b5', 'c
 @ensure_csrf_cookie   
 def no_group(request):
 	# return the empty landing page
-	return render_to_response('./welcome.html')
+	return render(request, './welcome.html')
 
 @ensure_csrf_cookie 
 def passcode(request):
-	return render_to_response('./passcode.html')
+	return render(request, './passcode.html')
 
 # displays the main interface
 # @login_required
@@ -100,7 +100,7 @@ def example(request, group_hash):
 		expenses_temp = list(Item.objects.filter(person_ID__exact = person.id).order_by('id'))
 		expenses = expenses + expenses_temp
 
-	return render_to_response('./index.html', {'people':people, 'expenses':expenses, 'group':group})
+	return render(request, './index.html', {'people':people, 'expenses':expenses, 'group':group})
 
 
 @ensure_csrf_cookie 
@@ -138,10 +138,10 @@ def group_hash(request, group_hash):
 			expenses_temp = list(Item.objects.filter(person_ID__exact = person.id).order_by('id'))
 			expenses = expenses + expenses_temp
 
-		return render_to_response('./index.html', {'people':people, 'expenses':expenses, 'group':group})
+		return render(request, './index.html', {'people':people, 'expenses':expenses, 'group':group})
 	# otherwise send them to the passcode page
 	else:
-		return render_to_response('./passcode.html', {'group':group}, context_instance=RequestContext(request))
+		return render(request, './passcode.html', {'group':group}, context_instance=RequestContext(request))
 
 # handles all expense transactions
 def expense_transaction(request, expense_id):
@@ -189,7 +189,7 @@ def person_transaction(request, person_id):
 		new_person = Person.objects.create(group_ID=group, header_color=get_me_a_color())
 		# return their ID
 		# return HttpResponse(new_person.id)
-		return render_to_response('./person.html', {'person':new_person,})
+		return render(request, './person.html', {'person':new_person,})
 
 	# Deleting a Person
 	elif request.POST['operation'] == 'delete':
@@ -347,7 +347,7 @@ def group_transaction(request, group_id):
 	# Change Group Deadline
 	elif request.POST['operation'] == "change_deadline":
 		new_deadline = request.POST['deadline']
-		print new_deadline
+		# print new_deadline
 		current_group = Group.objects.get(id__exact=group_id)
 		current_group.deadline = new_deadline
 		current_group.save()
