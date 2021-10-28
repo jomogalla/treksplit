@@ -141,7 +141,7 @@ def group_hash(request, group_hash):
 		return render(request, './index.html', {'people':people, 'expenses':expenses, 'group':group})
 	# otherwise send them to the passcode page
 	else:
-		return render(request, './passcode.html', {'group':group}, context_instance=RequestContext(request))
+		return render(request, './passcode.html', {'group':group})
 
 # handles all expense transactions
 def expense_transaction(request, expense_id):
