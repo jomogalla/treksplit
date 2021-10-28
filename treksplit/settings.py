@@ -96,13 +96,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-
 MEDIA_ROOT = 'media'
-
-# AUTHENTICATION_BACKENDS = ('group_backend')
-# LOGIN_URL = '/passcode/'
-# AUTH_USER_MODEL = 'splitter.Group'
-
 
 # BELOW ADDED FROM HEROKU GUIDE
 # Parse database configuration from $DATABASE_URL
@@ -117,15 +111,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['.treksplit.com', 'localhost']
 
 # Static asset configuration
-import os
-# PROJECT_DIR = os.path.dirname(__file__)
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# STATIC_ROOT = '/Users/j/Dropbox/treksplit_mac/'
-# STATIC_URL = '/static/'
-
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, '/static/'),
-# )
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'

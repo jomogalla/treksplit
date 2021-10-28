@@ -107,20 +107,7 @@ import dj_database_url
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Allow all host headers
-# ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS = ['.treksplit.com']
-
-# Static asset configuration
-import os
-# PROJECT_DIR = os.path.dirname(__file__)
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# STATIC_ROOT = '/Users/j/Dropbox/treksplit_mac/'
-# STATIC_URL = '/static/'
-
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, '/static/'),
-# )
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
