@@ -81,6 +81,8 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
 CON_MAX_AGE = 60
 
 LANGUAGE_CODE = 'en-us'
