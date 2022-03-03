@@ -1,6 +1,5 @@
 <div id="right_info_bar">
 	<div id="group_name" title="the group's name" data-group="{{ group.id }}" {% if group.name %}data-name="{{group.name}}"{% endif %}>
-		
 		<input id="group_title" title="click to edit the group name" class="faux_button" value="{% if group.name %}{{group.name}}{% endif %}" placeholder="add group name">
 		<div class="help_box" id="help_group_name">
 			<i class="fa fa-arrow-up"></i><br>
@@ -55,7 +54,6 @@
 	<div id="right_control_bar">
 		{% if group.deadline %}
 		<div id="warning">
-			<!-- <i class="fa fa-exclamation-triangle"></i> this data may be deleted / use <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank">Chrome</a> <i class="fa fa-exclamation-triangle"></i> -->
 				all expenses are due by {{ group.deadline }}
 				<button id="close_warning" class="text_button"> <i class="fa fa-times"></i></button>
 		</div>
@@ -69,23 +67,6 @@
 				<button id="share_button" class="text_button" title="share this trek/split group">share</button>
 				<button id="settings_button" class="text_button" title="edit this group's settings">settings</button>
 			</div>
-<!-- 			<div id="about">
-				<p>
-					<button id="help_button" class="text_button"> help </button>
-				</p>
-				<p>
-					Split up your group's expenses. Spend the extra time having fun.
-				</p>
-				<p>
-					Created by <br><a href="http://www.domogalla.org" target="_blank">Jason Domogalla</a>
-				</p>
-				<p>
-					Enjoy!
-				</p>
-				<p>
-					<a href="mailto:treksplit@gmail.com">Contact Me</a>
-				</p>
-			</div> -->
 			<div id="help">
 				<div class="help_box" id="help_settings">
 					<i class="fa fa-arrow-up"></i><br>
@@ -103,12 +84,6 @@
 				<input type="email" class="faux_button" id="invite_email" placeholder="send an email"><button id="send_email" class="text_button">send <i class="fa fa-arrow-right"></i></button>
 			</div>
 			<div id="settings">
-<!-- 				<div class="settings_row">
-					<button id="change_passcode_requirement" title="require passcode protection for each person" class="text_button">add passcode requirement</button>
-				</div>
-				<div class="settings_row">
-					<input type="text"	title="change the group's name" placeholder="{% if group.name %}change{% else %}add{% endif %} group name" id="change_group_name" {% if group.name %}data-name="{{ group.name }}"{% endif %} class="faux_button">
-				</div> -->
 				<div class="settings_row">
 					<button id="deadline_toggle" class="text_button">{% if group.deadline %}change{% else %}add{% endif %} deadline</button>
 					<input type="date" style="display:none;" 	title="change the deadline for expenses" placeholder="" value="{% if group.deadline %}{{group.deadline|date:"Y-m-d"}}{% endif %}" id="change_group_deadline" class="faux_button">
@@ -124,13 +99,6 @@
 				</div>
 			</div>					
 		</div>
-		<!-- <div id="advertisement"> -->
-			<!-- <img src="./goat.jpg"> -->
-<!-- 			<i class="fa fa-money fa-4x"></i>
-			<i class="fa fa-random fa-3x"></i>
-			<i class="fa fa-picture-o fa-5x"></i>
-			<button id="hide_ad" class="text_button align_right">hide</button> -->
-		<!-- </div> -->
 	</div>
 	<div id="right_info_background"></div>
 </div>

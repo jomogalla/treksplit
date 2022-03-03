@@ -1,5 +1,4 @@
 $(document).ready(function(){
-// $('body').addClass('animated fadeIn');
 
 //initialize Masonry
 var $container = $('#expense_area');
@@ -7,6 +6,7 @@ $container.masonry({
   columnWidth: 420,
   itemSelector: '.expense'
 });
+
 // Hiding things that only work in chrome
 if(!Boolean(window.chrome)){
 	$("<style type='text/css'> .color{ display:none;} </style>").appendTo("head");
@@ -36,20 +36,13 @@ function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 $.ajaxSetup({
-    crossDomain: false, // obviates need for sameOrigin test
+    crossDomain: false, // removes need for sameOrigin test
     beforeSend: function(xhr, settings) {
         if (!csrfSafeMethod(settings.type)) {
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
     }
 });
-
-// Binding Tipsy Stuff
-// $('.finalize').tipsy({gravity: 'n'});
-// $('.add').tipsy({gravity: 'n'});
-// $('.edit').tipsy({gravity: 'nw'});
-// $('#group_title').tipsy({gravity: 'e'});
-
 
 //******************************** Expense Functions ********************************//
 
@@ -58,32 +51,25 @@ $.ajaxSetup({
 $( "#expense_area" ).on( "click", ".expense_button.add", function(){
 	$(this).focus();
 });
+
 // triggered by focusing on the Add Button
 $( "#expense_area" ).on( "focus", ".expense_button.add", function(){
 	var persons_id = $(this).closest(".expense").data("person");
 
-
 	// I would like to get this from the server so I don't have two parallel sets of Expense Rows
-	//  that always need updating, it just isnt quick enough for the interface to do that..
+	// that always need updating, it just isnt quick enough for the interface to do that..
 	var new_row = $('<tr class="row"{% if expense.id %} data-expense="{{expense.id}}"{% endif %}{% if person.id %} data-owner="{{person.id}}"{% endif %}><td><button class="expense_button delete" title="delete the expense"><i class="fa fa-times"></i></button></td><td class="item_name"><input type="text" placeholder="item" title="edit the expense\'s name"{% if expense.name %}value="{{expense.name}}"{% endif %}></td><td class="cost"><input type="number" title="edit the expense\'s price"placeholder="price" {% if expense.price %}value="{{expense.price}}"{% endif %}></td><!-- <td><button class="expense_button comment" title="comment on this expense"><i class="fa fa-comment"></i></button></td> --></tr>');
 
 	// first expense added has no row to grab
-	// $('#' + persons_id +' table tr:last').after(new_row);
 	$('#' + persons_id +' table tbody').append(new_row);
 	new_row.attr('data-owner', persons_id);
 	new_row.addClass("new_row");
-	// $(this).closest(".expense").toggleClass('maximum_z_index');
 	$('.new_row').show("slow", function(){$container.masonry();});
-	// setTimeout(function(){$(this).closest(".expense").toggleClass('maximum_z_index');}, 500);
-
-
 	$('.new_row').removeClass("new_row");
 
 	// focus the cursor in the created input box
 	$(this).parent().siblings(".expense_table").find('tr:last-child .item_name input').focus();
 
-	
-	// alert(persons_id);
 	// add the expense to the database
 	$.ajax({
 	    url: '/expense/0/',
@@ -92,15 +78,9 @@ $( "#expense_area" ).on( "focus", ".expense_button.add", function(){
 	    	owner: persons_id,
 	    },
 	    success: function(result) {
-	    	// alert(new_row.html());
 	   	     display_update('expense ' + result + ' successfully added');
-	   	     // ALSO, UPDATE THE above added html's id!!!
-	   	     // new_expense_id = result;
-	   	     // alert(new_row.parent().html());
-	   	     // alert($("#" + random_identifier));
-	   	     new_row.attr('data-expense', result); 
 
-			// $('.new_row').removeClass("new_row");
+	   	     new_row.attr('data-expense', result);
 	    }
 	});
 
@@ -112,6 +92,7 @@ $( "#expense_area" ).on( "click", ".expense_button.delete", function() {
 	var expense_button = $(this);
 	var expense_id = $(this).closest('tr').data("expense");
 	$(this).closest('tr td input').addClass('deleting');
+
 	$.ajax({
 	    url: '/expense/' + expense_id + '/',
 	    type: 'POST',
@@ -136,6 +117,7 @@ $("#expense_area").on("change", ".item_name input",function(){
 	var owner = $(this);
 	var expenses_id = $(this).closest("tr").data("expense");
 	owner.addClass('updating');
+
 	$.ajax({
 	    url: '/expense/' + expenses_id + "/",
 	    type: 'POST',
@@ -187,15 +169,6 @@ $('#add_user').click(function(){
 	    success: function(result) {
    	     	$('#add_user').before(result);
 
-   	     	// Grab their ID
-   	     	// var persons_id = $('#add_user').prev().find('.expense').attr("data", "person");
-   	     	// var persons_color = $('#add_user').prev().find('.expense').attr("color");
-   	     	// if(typeof $('#add_user').prev().find('.expense').data("person") != null){
-   	     	// 	var persons_id = $('#add_user').prev().find('.expense').attr("data", "person");
-   	     	// }
-   	     	// else{
-   	     	// 	var persons_id = 
-   	     	// }
    	     	var persons_id = $('#add_user').prev().data("person");
    	     	var persons_color = $('#add_user').prev().data("color");
    	     	$('#'+persons_id).addClass('new_row');
@@ -204,7 +177,6 @@ $('#add_user').click(function(){
    	     	// Animate it all nicely
 			$('#' + persons_id).slideToggle("slow");
 			$('#' + persons_id).removeClass('new_row');
-			// $('#' + persons_id).css('color', 'new_row');
 
 			// Let them know whats happening
 			display_update("person " + persons_id + " created");
@@ -254,10 +226,6 @@ $( "#expense_area" ).on( "click", ".delete_person", function(){
 	   	     		//remove the person	
 			   	    display_update(persons_name + ' successfully deleted');	
 	
-					// remove clicked element
-					// msnry.remove( $('#'+result).closest('.expense'));
-				  	// layout remaining item elements
-					// msnry.reload();
 					$('#'+result).closest('.expense').remove();
 					$('#sidebar_person_total_'+ result).remove();
 					$("#centered").css("display","none");
@@ -288,8 +256,8 @@ $( "#expense_area" ).on( "change", ".expense_owner input", function(){
 		persons_old_name = "person " + persons_id;
 	}
 
-	
 	$(this).addClass('updating');
+
 	$.ajax({
 	    url: '/person/' + persons_id + "/",
 	    type: 'POST',
@@ -383,7 +351,6 @@ $( "#expense_area" ).on( "click", ".finalize", function(){
 
 // Change Person's Email
 $("#expense_area").on("change", ".email",function(){
-
 	var persons_id = $(this).closest(".expense").data("person");
 	var persons_name = $(this).closest(".expense").data("name");
 	$.ajax({
@@ -401,6 +368,7 @@ $("#expense_area").on("change", ".email",function(){
 	    }
 	});
 });
+
 // Make the placeholder disappear when focused on
 $("#expense_area").on("focus", ".email",function(){
 	$(this).attr("placeholder", "");
@@ -430,15 +398,12 @@ $( "#expense_area" ).on( "click", "#add_group", function() {
 	$("#centered").text("TREK/SPLIT");
 	$("#centered").addClass("centered_text");
 
-
-
 	$.ajax({
 	    url: '/group/0/',
 	    type: 'POST',
 	    data: {},
 	    success: function(result) {
 	   	     // put the code below in here plz
-	   	     // alert(result);
 	   	     window.location.replace("./" + result);
 	    }
 	});
@@ -501,7 +466,6 @@ $('#group_title').change(function(){
 		   	     display_update('group name changed to ' + result);
 		   	     $(document).attr('title', 'trek/split - ' +result);
 		   	     the_input_box.data("name", result);
-		   	     // $("#group_name").text(result);
 		   	     $("#group_name").attr("data-name", result);
 
 		   	 }
@@ -509,7 +473,6 @@ $('#group_title').change(function(){
 		   	 	display_update('group name removed');
 				$(document).attr('title', 'trek/split');
 				the_input_box.data("name", "");
-				// $("#group_name").text(group_id);
 				$("#group_name").attr("data-name", "");	
 		   	 }
 	    }
@@ -617,32 +580,8 @@ $('#share_button').click(function(){
 		border_swap('#share_button', '#share_button');
 		$( "#share" ).slideToggle( "fast");
 	}
-	// Below focuses on the email input
-	// $("#invite_email").focus();
 });
 
-// Still in here because it has been recently removed/changed
-// Toggle About Tab
-// $('#about_button').click(function(){
-// 	//if settings is open, we gotta fade it out too
-// 	if($('#settings').css('display') == 'block'){
-// 		border_swap('#about_button', '#settings_button');
-// 		$( "#settings" ).slideToggle( "fast");
-// 		$( "#about" ).slideToggle( "fast");
-		
-// 	}
-// 	//if share is open, we gotta close it
-// 	else if($('#share').css('display') == 'block'){
-// 		border_swap('#about_button', '#share_button');
-// 		$( "#share" ).slideToggle( "fast");
-// 		$( "#about" ).slideToggle( "fast");
-// 	}
-// 	else{
-// 		border_swap('#about_button', '#about_button');
-// 		$( '#about' ).slideToggle( "fast");
-
-// 	}
-// });
 // Toggle Help
 $('#help_button').click(function(){
 	//if settings is open, we gotta fade it out too
@@ -671,9 +610,6 @@ $('#help_button').click(function(){
 
 	}
 });
-
-// Change the Group's expense options
-// NOT IMPLEMENTED
 
 // Toggle Editable Deadline
 $('#deadline_toggle').click(function(){
@@ -757,6 +693,7 @@ $('#change_group_passcode').keypress(function(e) {
 			
 	}
 });
+
 // Make the placeholder disappear when focused on
 $('#change_group_passcode').focus(function(){
 	$(this).attr("placeholder", "");
@@ -766,20 +703,10 @@ $('#change_group_passcode').blur(function(){
 	$(this).attr("placeholder", "change group passcode");
 });
 
-
-// // Toggle Requirement for individual Passcodes
-// $("#right_info_bar").on("click", "#change_passcode_requirement",function(){
-// 	display_update('functionality not implemented');
-// });
-
-
 // Hide the advertisement... display update for now, and the buttons not even here
 $("#hide_ad").click(function(){
 	$('#advertisement').slideToggle("slow");
 });
-
-
-
 
 
 //******************************** General Functions ********************************//
@@ -827,7 +754,7 @@ var blackout_prompt = function(prompt){
 	$('#centered').css("display", "block");
 	$('#blackout').css("display","block");
 	$('#centered').html("<p>" + prompt + "</p><button id='yes' class='text_button modal'>yes</button> / <button id='no' class='text_button modal'>no</button>");
-	// var response = false;
+
 	var deferred = $.Deferred();
 	$('#yes').click(function(){
 		deferred.resolve(true);
@@ -838,10 +765,6 @@ var blackout_prompt = function(prompt){
 		$('#blackout').css("display","none");
 	});
 	return deferred.promise();
-};
-// >> ?? <<
-var confimation = function(){
-	
 };
 
 // Code used to underline the current control bar button (help/share/settings)
@@ -880,7 +803,7 @@ var display_update = function( message ){
 // & calculates payments 
 var update_numbers = function(){
 	// running question:
-	// Do I do this in jquery? Is that more vulnerable to people fucking around?
+	// Do I do this in jquery? Is that more vulnerable to people messing around?
 	// it will mean less data transfer, maybe quicker UI?
 	// or do I do it server side and just return everything?
 	// do it server side so i can email ppl the tables
@@ -893,9 +816,7 @@ var update_numbers = function(){
 		$(this).find('td.cost input').each(function(){
 			// make sure our value is a number and there is something there
 			if(numberRegex.test($(this).val()) && $(this).val() != "") {
-	  			personal_sum += parseFloat($(this).val()); 
-	  			// FIGURE OUT HOW TO ROUND THESE DAMN NUMBERS
-	  			// $(this).val(parseFloat($(this).val()));
+	  			personal_sum += parseFloat($(this).val());
 			}
 		    
 		});  

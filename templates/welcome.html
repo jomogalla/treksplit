@@ -1,88 +1,85 @@
 <html>
-<head>
-<title>trek/split</title>
-<link rel="icon" type="image/png" href="{{ STATIC_URL }}/static/mtns.png">
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.0.0/animate.min.css"> -->
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/static/styles.css">
+	<head>
+		<title>trek/split</title>
+		<link rel="icon" type="image/png" href="{{ STATIC_URL }}/static/mtns.png">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/static/styles.css">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-38941814-2', 'treksplit.com');
-  ga('send', 'pageview');
+		ga('create', 'UA-38941814-2', 'treksplit.com');
+		ga('send', 'pageview');
 
-</script>
-</head>
-<body>
-<div id="intro">
-	<h1>trek/split</h1>
-	<p> take the busy work out of splitting up expenses between your friends.</p>
-	<p>no registration.</p>
-	<p>no cost.</p>
-	<button id="add_group" class="text_button">create a group <i class="fa fa-arrow-right"></i></button>
-	<p>or</p>
-	<a class="text_button" href="./example/">check out an example <i class="fa fa-arrow-right"></i></a>
-</div>
+		</script>
+	</head>
+	<body>
+		<div id="intro">
+			<h1>trek/split</h1>
+			<p> take the busy work out of splitting up expenses between your friends.</p>
+			<p>no registration.</p>
+			<p>no cost.</p>
+			<button id="add_group" class="text_button">create a group <i class="fa fa-arrow-right"></i></button>
+			<p>or</p>
+			<a class="text_button" href="./example/">check out an example <i class="fa fa-arrow-right"></i></a>
+		</div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-	// $('body').addClass('animated fadeIn');
-	//******************************** CSRF Stuff ********************************//
-	function getCookie(name) {
-	    var cookieValue = null;
-	    if (document.cookie && document.cookie != '') {
-	        var cookies = document.cookie.split(';');
-	        for (var i = 0; i < cookies.length; i++) {
-	            var cookie = jQuery.trim(cookies[i]);
-	            // Does this cookie string begin with the name we want?
-	            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-	                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-	                break;
-	            }
-	        }
-	    }
-	    return cookieValue;
-	}
-	var csrftoken = getCookie('csrftoken');
-	function csrfSafeMethod(method) {
-	    // these HTTP methods do not require CSRF protection
-	    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-	}
-	$.ajaxSetup({
-	    crossDomain: false, // obviates need for sameOrigin test
-	    beforeSend: function(xhr, settings) {
-	        if (!csrfSafeMethod(settings.type)) {
-	            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-	        }
-	    }
-	});
-	$( "body" ).on( "click", "#add_group", function() {
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				//******************************** CSRF Stuff ********************************//
+				function getCookie(name) {
+					var cookieValue = null;
+					if (document.cookie && document.cookie != '') {
+						var cookies = document.cookie.split(';');
+						for (var i = 0; i < cookies.length; i++) {
+							var cookie = jQuery.trim(cookies[i]);
+							// Does this cookie string begin with the name we want?
+							if (cookie.substring(0, name.length + 1) == (name + '=')) {
+								cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+								break;
+							}
+						}
+					}
+					return cookieValue;
+				}
+				var csrftoken = getCookie('csrftoken');
+				function csrfSafeMethod(method) {
+					// these HTTP methods do not require CSRF protection
+					return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+				}
+				$.ajaxSetup({
+					crossDomain: false, // removes need for sameOrigin test
+					beforeSend: function(xhr, settings) {
+						if (!csrfSafeMethod(settings.type)) {
+							xhr.setRequestHeader("X-CSRFToken", csrftoken);
+						}
+					}
+				});
+				$( "body" ).on( "click", "#add_group", function() {
 
-		// Dump this person from the tables VIA AJAX
-		$("#intro").html("<i class='fa fa-cog fa-spin fa-5x'></i><p>one moment please</p>");
+					// Dump this person from the tables VIA AJAX
+					$("#intro").html("<i class='fa fa-cog fa-spin fa-5x'></i><p>one moment please</p>");
 
-		$.ajax({
-		    url: '/group/0/',
-		    type: 'POST',
-		    data: {},
-		    success: function(result) {
-		    	// $("#centered").html("<p>redirecting <i class='fa fa-arrow-right'></i></p>");
-   		    	var time_to_redirect = 300;
-		  		$('body').addClass('animated fadeOut');
-		  		setTimeout(function(){
-		  			window.location.replace("./" + result);
-		  		}, time_to_redirect);
-		    }
-		});
-	});
-});
-</script>
-</body>
+					$.ajax({
+						url: '/group/0/',
+						type: 'POST',
+						data: {},
+						success: function(result) {
+							var time_to_redirect = 300;
+							$('body').addClass('animated fadeOut');
+							setTimeout(function(){
+								window.location.replace("./" + result);
+							}, time_to_redirect);
+						}
+					});
+				});
+			});
+		</script>
+	</body>
 </html>

@@ -1,69 +1,49 @@
 
-	<div class="expense" id="{{person.id}}" data-person="{{person.id}}" {% if person.name %}data-name="{{ person.name }}"{% endif %} {% if person.header_color %}data-color="{{ person.header_color }}"{% endif %}>
-		<div class="expense_header" style="background-color:#{{person.header_color}};">
-			<button class="expense_button edit" title="click to add email, change color or delete the person"><i class="fa fa-bars"></i></button>
-			<!-- <button class="expense_button edit" title="edit the person"><i class="fa fa-cog"></i></button> -->
-			<span class="expense_owner">
-				<input type="text" title="edit the person's name" placeholder="name" {% if person.name %}value="{{person.name}}"{% endif %}>
-			</span>
-			<span title="total for the person's expenses" class="expense_total">
-				0.00
-			</span>
+<div class="expense" id="{{person.id}}" data-person="{{person.id}}" {% if person.name %}data-name="{{ person.name }}"{% endif %} {% if person.header_color %}data-color="{{ person.header_color }}"{% endif %}>
+	<div class="expense_header" style="background-color:#{{person.header_color}};">
+		<button class="expense_button edit" title="click to add email, change color or delete the person"><i class="fa fa-bars"></i></button>
+		<span class="expense_owner">
+			<input type="text" title="edit the person's name" placeholder="name" {% if person.name %}value="{{person.name}}"{% endif %}>
+		</span>
+		<span title="total for the person's expenses" class="expense_total">
+			0.00
+		</span>
+	</div>
+	<div class="edit_person_wrapper">
+		<div class="edit_row">
+			<input class="email faux_button" type="email" placeholder="add person's email" value="{% if person.email %}{{person.email}}{%endif%}" >
 		</div>
-		<div class="edit_person_wrapper">
-<!-- 			<div class="edit_row">
-				<input title="passcode protect this person" class="password faux_button" type="password" placeholder="enter a passcode">
-			</div> -->
-<!-- 			<div class="edit_row">
-				<input class="confirm_password" type="password" placeholder="confirm passcode">
-			</div> -->
-			<div class="edit_row">
-				<input class="email faux_button" type="email" placeholder="add person's email" value="{% if person.email %}{{person.email}}{%endif%}" >
-			</div>
-			<div class="edit_row">
-				<input class="color" title="edit the person's color" type="color" placeholder="optional" value="#{% if person.header_color %}{{person.header_color}}{% else %}8fd0ff{%endif%}">
-			</div>
-			<div class="edit_row">
-				<button title="delete the person" class="delete_person text_button">delete person</button>
-			</div>
+		<div class="edit_row">
+			<input class="color" title="edit the person's color" type="color" placeholder="optional" value="#{% if person.header_color %}{{person.header_color}}{% else %}8fd0ff{%endif%}">
 		</div>
-		<div class="help_box" id="help_edit_person">
-			<i class="fa fa-arrow-up"></i><br> click the <strong>bars</strong> above to: <br><i class="fa fa-envelope"></i> add a person's email <br><i class="fa fa-eyedropper"></i> change a person's color <br> <i class="fa fa-trash"></i> delete a person<br>
-		</div>
-		<table class="expense_table editable">
-			<tbody>
-				<!-- left for entertainment -->
-				<!-- hmmm this needs to load all the expenses... -->
-				<!-- WHOA -->
-				<!-- HOLD ON A MINUTE -->
-				<!-- THIS NEEDS TO GRAB THE MOTHERFUCKIN RIGHT DUDES ID TO KNOW HIS EXPENSES -->
-			{% for expense in expenses %}
-				{% if expense.person_ID.id == person.id  %}
-					{% include "expense.html"%}
-				{% endif %}
-			{% endfor %}
-<!-- 			<tr class="odd_row">
-				<td colspan="3" class="align_center"> 
-					<button class="expense_button add" title="add an expense"><i class="fa fa-plus"></i></button>
-					<button class="expense_button finalize" title="finalize your expenses"><i class="fa fa-check"></i></button>
-				</td>
-			</tr> -->
-			</tbody>
-		</table>
-		<div class="help_box" id="help_edit_person">
-				<i class="fa fa-arrow-up"></i><br> click the <i class="fa fa-times"></i> above to delete an expense
-		</div>
-		<div class="bottom_buttons">
-			<!-- <button class="expense_button add" title="add an expense"><i class="fa fa-plus"></i></button>
-			<button class="expense_button finalize {% if person.finalized %}finalized{% endif %}" title="finalize your expenses"><i class="fa fa-check"></i></button> -->
-			<button class="expense_button add" title="click to add an expense">add expense</button>
-			<button class="expense_button finalize {% if person.finalized %}finalized{% endif %}" title="click done when you are finished inputting expenses">
-				{% if person.finalized %}thats everything{% endif %}
-				{% if not person.finalized %}all done{% endif %}
-			</button>
-		</div>
-		<div class="help_box" id="help_finalize">
-		<i class="fa fa-arrow-up"></i><br>
-			click <strong>done</strong> when you are finished inputting expenses
+		<div class="edit_row">
+			<button title="delete the person" class="delete_person text_button">delete person</button>
 		</div>
 	</div>
+	<div class="help_box" id="help_edit_person">
+		<i class="fa fa-arrow-up"></i><br> click the <strong>bars</strong> above to: <br><i class="fa fa-envelope"></i> add a person's email <br><i class="fa fa-eyedropper"></i> change a person's color <br> <i class="fa fa-trash"></i> delete a person<br>
+	</div>
+	<table class="expense_table editable">
+		<tbody>
+		{% for expense in expenses %}
+			{% if expense.person_ID.id == person.id  %}
+				{% include "expense.html"%}
+			{% endif %}
+		{% endfor %}
+		</tbody>
+	</table>
+	<div class="help_box" id="help_edit_person">
+		<i class="fa fa-arrow-up"></i><br> click the <i class="fa fa-times"></i> above to delete an expense
+	</div>
+	<div class="bottom_buttons">
+		<button class="expense_button add" title="click to add an expense">add expense</button>
+		<button class="expense_button finalize {% if person.finalized %}finalized{% endif %}" title="click done when you are finished inputting expenses">
+			{% if person.finalized %}thats everything{% endif %}
+			{% if not person.finalized %}all done{% endif %}
+		</button>
+	</div>
+	<div class="help_box" id="help_finalize">
+	<i class="fa fa-arrow-up"></i><br>
+		click <strong>done</strong> when you are finished inputting expenses
+	</div>
+</div>

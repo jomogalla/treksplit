@@ -40,44 +40,8 @@ def group(request, group_id="1"):
 	# otherwise no go 
 	if int(group_id) < int(250):
 		return redirect('/' + str(group.url_hash) + '/')
-	# else if int(group_id) == 1:
-	# 	group = get_object_or_404(Group, pk=group_id)
-
-	# 	# grab all the people in the group
-	# 	people = Person.objects.filter(group_ID__exact = group_id).order_by('id')
-
-	# 	# grab all the expenses with owners in the above list
-	# 	# expenses = 
-
-	# 	# TIRED OF THINKING, GRABBING ALL EXPENSES FOR NOW
-	# 	# expenses = Person.item_set
-	# 	expenses = Item.objects.all().order_by('id')
-
-	# 	return render_to_response('./index.html', {'people':people, 'expenses':expenses, 'group':group})
 	else:
 		return redirect('/')
-
-	# insecure_passcode = ""
-	# if request.method == 'POST':
-	# 	insecure_passcode = request.POST['passcode']
-
-	# if group.passcode == insecure_passcode or group.passcode == None:
-	# 	# If the group does not exist return 404
-	# 	# group = get_object_or_404(Group, pk=group_id)
-
-	# 	# grab all the people in the group
-	# 	people = Person.objects.filter(group_ID__exact = group_id).order_by('id')
-
-	# 	# grab all the expenses with owners in the above list
-	# 	# expenses = 
-
-	# 	# TIRED OF THINKING, GRABBING ALL EXPENSES FOR NOW
-	# 	# expenses = Person.item_set
-	# 	expenses = Item.objects.all().order_by('id')
-
-	# 	return render_to_response('./index.html', {'people':people, 'expenses':expenses, 'group':group})
-	# else:
-	# 	return render_to_response('./passcode.html', {'group':group}, context_instance=RequestContext(request))
 
 # Example creates a new group that is pre-populated
 @ensure_csrf_cookie 
@@ -85,14 +49,8 @@ def example(request, group_hash):
 	# Grab the group's ID
 	group_id = group.id
 
-	# If the group does not exist return 404
-	# group = get_object_or_404(Group, pk=group_id)
-
 	# grab all the people in the group
 	people = Person.objects.filter(group_ID__exact = group_id).order_by('id')
-
-	# grab all the expenses with owners in the above list
-	# expenses = 
 
 	# Grab expenses owned by the people in the group
 	expenses = []
@@ -123,14 +81,8 @@ def group_hash(request, group_hash):
 	# If the group has no passcode
 	# proceed
 	if group.passcode == insecure_passcode or group.passcode == None or group.passcode == "":
-		# If the group does not exist return 404
-		# group = get_object_or_404(Group, pk=group_id)
-
 		# grab all the people in the group
 		people = Person.objects.filter(group_ID__exact = group_id).order_by('id')
-
-		# grab all the expenses with owners in the above list
-		# expenses = 
 
 		# Grab expenses owned by the people in the group
 		expenses = []
@@ -188,7 +140,6 @@ def person_transaction(request, person_id):
 		# Create the Person
 		new_person = Person.objects.create(group_ID=group, header_color=get_me_a_color())
 		# return their ID
-		# return HttpResponse(new_person.id)
 		return render(request, './person.html', {'person':new_person,})
 
 	# Deleting a Person
@@ -233,7 +184,6 @@ def person_transaction(request, person_id):
 			body = 'Your email ( ' + email + ')  has been added to the Trek/Split group - ' + current_group.name + '.\n \n Here is the link - http://www.treksplit.com/' + str(current_group.url_hash) + '/'
 			subject = 'You have been added to a Trek/Split group - ' + current_group.name
 
-		# body = 'Your email ( %s )  has been added to the Trek/Split group %s.\n \n Here is the link - http://www.treksplit.com/%s/' % (email,group_title,current_group.id)
 		sender = 'treksplit@gmail.com'
 		send_mail(subject, body, sender, [email], fail_silently=False)
 
@@ -291,7 +241,6 @@ def group_transaction(request, group_id):
 	# if groupid=0 create a new group!
 	if group_id == '0':
 		new_group = Group.objects.create()
-		# print new_group.id
 		new_group.url_hash = gen_hash(new_group.id)
 		new_group.save()
 		return HttpResponse(new_group.url_hash)
@@ -347,7 +296,6 @@ def group_transaction(request, group_id):
 	# Change Group Deadline
 	elif request.POST['operation'] == "change_deadline":
 		new_deadline = request.POST['deadline']
-		# print new_deadline
 		current_group = Group.objects.get(id__exact=group_id)
 		current_group.deadline = new_deadline
 		current_group.save()
