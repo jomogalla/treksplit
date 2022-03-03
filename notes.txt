@@ -1,3 +1,29 @@
+********************************************
+>>>>>>>>>>>>>>>>>> To Do <<<<<<<<<<<<<<<<<<<
+********************************************
+
+
+\\\\\\\\\\\\\\\\\ TREKSPLIT V2 ///////////////////
+> Update to DjangoRest
+>> Make deleting just change an active flag
+>> Add Category Table (for categorizing expenses to exclude them for people)
+>> Update example page to reset nightly (or something)
+>> Calculate split server-side
+>> Add sweet emails
+> Update Frontend
+>> React or Vue? React - More jobs  |  Vue - More experience
+>>> Update JS first then CSS? Same time? Piece by piece?
+>> Typescript
+>> Remove jQuery, Masonry, fontAwesome
+>> Remove 3rd party CDNs for scripts (maybe put in cloudfront...)
+>> Add colorpicker for people
+>> require password input to change password if there is one
+>> add cookies/localstorage to store recently visited urls and list them on homepage
+>> validate emails entered?
+>> add venmo link 
+
+
+
 ************ NOTES *************
 ** a place to store me notes ***
 ********************************
@@ -45,22 +71,38 @@ http://ibuildings.nl/blog/2013/03/4-http-security-headers-you-should-always-be-u
 
 
 
+{{{{{{{{{{{{------  PAST UPDATES  -------}}}}}}}}}}}}
 
+////////////// AdvBook Update \\\\\\\\\\\\\
+ >>>> Removed/Fixed in V2 Update <<<<<<<<<
+X Make example page be at the URL ./example/
+    > make it not editable
+> Delete expenses related to a group when you delete it
+> add code to regex the email input to see if its a valid email address
+> require password input to change password if there is one
+> Clean css
+	consolidate mobile versions
+	put into categories
+	 - General
+	 - Group
+	 - Person
+	 - Expense
+	 - Mobile
+> add jquery ui datepicker for IE, firefox and safari
+> add jquery color picker for IE, firefox and safari
+> add thead, tfoot, caption to tables
+> add meta for charset
+X Update the expense functions to handle not having an id immediately after being created
+> Move passcode.html styling to stylesheet
 
-********************************************
->>>>>>>>>>>>>>>>>> To Do <<<<<<<<<<<<<<<<<<<
-********************************************
 post CSG bugs - 
 > fix 'check out an example' on root page
-
-
-
 
 ________________________________________
 |||||||||||||| LONG TERM |||||||||||||||
 
 > IF THERE ARE MORE THAN 413,318 GROUPS HASH COLLISION WILL OCCUR...
-X get fuckin firefox up to date
+X get firefox up to date
 > Add a jquery color picker
 > change the payment calculations to be done server side
  > add an all paid up checkbox for payments (requires new db table)
@@ -113,7 +155,6 @@ X upgrade DJANGO for the migrate DB function
 X remove '+' from 0 values in the totals sidebar section
 X Add a 'Finished' check box on an individuals expense
 
-
 ||||||||||||||||||| BUGS |||||||||||||||||||
 X new person's colors are not updating in the sdiebar
 X add group button broken
@@ -125,34 +166,6 @@ X Not updating totals after an expense delete (updates if two expenses are delet
 X Payment plan sections aint updatin
 X passcode placeholder returning to add passcode is thanks to jquery right above! fix?
 X Adding a person on mobile adds it to the list and it shouldnt.
-
-
-
-
-////////////// AdvBook Update \\\\\\\\\\\\\
-X Make example page be at the URL ./example/
-    > make it not editable
-> Delete expenses related to a group when you delete it
-> add code to regex the email input to see if its a valid email address
-> require password input to change password if there is one
-> Clean css
-	consolidate mobile versions
-	put into categories
-	 - General
-	 - Group
-	 - Person
-	 - Expense
-	 - Mobile
-> add jquery ui datepicker for IE, firefox and safari
-> add jquery color picker for IE, firefox and safari
-> add thead, tfoot, caption to tables
-> add meta for charset
-X Update the expense functions to handle not having an id immediately after being created
-> Move passcode.html styling to stylesheet
-
-
-
-{{{{{{{{{{{{------  PAST UPDATES  -------}}}}}}}}}}}}
 
 ////////////// Stable & fully functional Update \\\\\\\\\\\\\
 X fix firefox & safari css

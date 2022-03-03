@@ -38,8 +38,8 @@
 	<div class="bottom_buttons">
 		<button class="expense_button add" title="click to add an expense">add expense</button>
 		<button class="expense_button finalize {% if person.finalized %}finalized{% endif %}" title="click done when you are finished inputting expenses">
-			{% if person.finalized %}thats everything{% endif %}
-			{% if not person.finalized %}all done{% endif %}
+			{% if person.finalized %}finalized{% endif %}
+			{% if not person.finalized %}finalize{% endif %}
 		</button>
 	</div>
 	<div class="help_box" id="help_finalize">
