@@ -257,10 +257,8 @@ a{
 	color: #555555;
 }
 .bottom_buttons{
-	width: 4.4em;
-	width: 11.5em;
-	margin-left: auto;
-	margin-right: auto;
+	display: flex;
+	justify-content: center;
 }
 .finalize{
 	color: #d2d2d2;
