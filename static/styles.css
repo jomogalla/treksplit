@@ -622,12 +622,19 @@ p{
 .delete_person:hover{
 	color:#ff6e6b;
 }
-#intro{
+
+#intro,
+#spinner {
 	margin-top: 50px;
 	text-align: center;
 	padding: 10px;
 	cursor: default;
 }
+
+#spinner {
+	display: none;
+}
+
 #intro p{
 	font-size: 1.5em;
 	margin: 25px 0;

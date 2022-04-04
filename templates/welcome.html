@@ -18,58 +18,12 @@
 			<p>or</p>
 			<a class="text_button" href="./example/">check out an example <i class="fa fa-arrow-right"></i></a>
 		</div>
+		<div id="spinner">
+			<i class='fa fa-cog fa-spin fa-5x'></i>
+			<p>one moment please</p>
+		</div>
+		<script src="{{ STATIC_URL }}/static/scripts/csrf.js"></script>
+		<script src="{{ STATIC_URL }}/static/scripts/welcome.js"></script>
 
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-		<script>
-			$(document).ready(function(){
-				//******************************** CSRF Stuff ********************************//
-				function getCookie(name) {
-					var cookieValue = null;
-					if (document.cookie && document.cookie != '') {
-						var cookies = document.cookie.split(';');
-						for (var i = 0; i < cookies.length; i++) {
-							var cookie = jQuery.trim(cookies[i]);
-							// Does this cookie string begin with the name we want?
-							if (cookie.substring(0, name.length + 1) == (name + '=')) {
-								cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-								break;
-							}
-						}
-					}
-					return cookieValue;
-				}
-				var csrftoken = getCookie('csrftoken');
-				function csrfSafeMethod(method) {
-					// these HTTP methods do not require CSRF protection
-					return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-				}
-				$.ajaxSetup({
-					crossDomain: false, // removes need for sameOrigin test
-					beforeSend: function(xhr, settings) {
-						if (!csrfSafeMethod(settings.type)) {
-							xhr.setRequestHeader("X-CSRFToken", csrftoken);
-						}
-					}
-				});
-				$( "body" ).on( "click", "#add_group", function() {
-
-					// Dump this person from the tables VIA AJAX
-					$("#intro").html("<i class='fa fa-cog fa-spin fa-5x'></i><p>one moment please</p>");
-
-					$.ajax({
-						url: '/group/0/',
-						type: 'POST',
-						data: {},
-						success: function(result) {
-							var time_to_redirect = 300;
-							$('body').addClass('animated fadeOut');
-							setTimeout(function(){
-								window.location.replace("./" + result);
-							}, time_to_redirect);
-						}
-					});
-				});
-			});
-		</script>
 	</body>
 </html>
