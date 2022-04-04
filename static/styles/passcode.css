@@ -1,0 +1,59 @@
+#add_group{
+    cursor:pointer;
+}
+#centered{
+    height: 13em;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;	font-size: 18px;
+    text-align: center;
+}
+
+body{
+    font-family: Verdana, Geneva, sans-serif;
+}
+.text_button{
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #888888;
+    font-size: 20px;
+    text-align: center;
+}
+.text_button:hover{
+    color: #555555;
+}
+.faux_button{
+    font-size: 15px;
+    padding: 3px;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    font-size: 18px;
+}
+
+p:first-child{
+    font-size: 24px;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}
+@media only screen and (max-width: 720px){
+    body{}
+    #centered{
+        font-size: 4em;
+    }
+    p:first-child{
+        font-size: 2em;
+    }
+    .faux_button{
+        font-size: 1.2em;
+    }
+    .text_button{
+        font-size: 1em;
+    }
+}
