@@ -3,7 +3,7 @@ from django.urls import include, path, re_path
 from django.contrib import admin
 admin.autodiscover()
 
-from splitter.views import no_group, group, group_hash, expense_transaction, person_transaction, group_transaction, passcode
+from splitter.views import no_group, group, group_hash, expense_transaction, person_transaction, group_transaction, passcode, error
 
 urlpatterns = [
     re_path(r'^$', no_group),
@@ -17,4 +17,6 @@ urlpatterns = [
     re_path(r'^expense/(?P<expense_id>\d+)/$', expense_transaction),
     re_path(r'^person/(?P<person_id>\d+)/$', person_transaction),
     re_path(r'^group/(?P<group_id>\d+)/$', group_transaction),
+
+    re_path(r'^error/(?P<error_id>\d+)', error),
 ]

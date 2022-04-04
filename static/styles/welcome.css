@@ -1,0 +1,12 @@
+.recently-visited {
+    display: none;
+}
+
+.recently-visited ul{
+    list-style: none;
+    padding: 0;
+}
+
+.recently-visited li{
+    margin: 20px;
+}

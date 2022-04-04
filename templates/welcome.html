@@ -5,24 +5,31 @@
 		<script src="{{ STATIC_URL }}/static/scripts/google-analytics.js"></script>
 		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/static/styles.css">
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/static/styles/welcome.css">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body>
 		<div id="intro">
 			<h1>trek/split</h1>
-			<p> take the busy work out of splitting up expenses between your friends.</p>
-			<p>no registration.</p>
-			<p>no cost.</p>
-			<button id="add_group" class="text_button">create a group <i class="fa fa-arrow-right"></i></button>
+			<div id="copy">
+				<p> take the busy work out of splitting up expenses between your friends.</p>
+				<p>no registration.</p>
+				<p>no cost.</p>
+			</div>
+
+			<button id="add-group" class="text_button">create a group <i class="fa fa-arrow-right"></i></button>
 			<p>or</p>
-			<a class="text_button" href="./example/">check out an example <i class="fa fa-arrow-right"></i></a>
+			<div id="recently-visited" class="recently-visited">
+			</div>
+			<a id="example" class="text_button" href="./example/">check out an example <i class="fa fa-arrow-right"></i></a>
 		</div>
 		<div id="spinner">
 			<i class='fa fa-cog fa-spin fa-5x'></i>
 			<p>one moment please</p>
 		</div>
 		<script src="{{ STATIC_URL }}/static/scripts/csrf.js"></script>
+		<script src="{{ STATIC_URL }}/static/scripts/recentlyVisited.js"></script>
 		<script src="{{ STATIC_URL }}/static/scripts/welcome.js"></script>
 
 	</body>

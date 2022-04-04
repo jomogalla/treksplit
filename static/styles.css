@@ -646,11 +646,7 @@ p{
 	font-size: 4em;
 	font-weight: normal;
 }
-#intro p:last-of-type{
-	color:#888888;
-	font-size: 1em;
-	margin: 0px;
-}
+
 #intro button{
 	font-size: 2em;
 }

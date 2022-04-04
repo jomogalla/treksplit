@@ -304,6 +304,9 @@ def group_transaction(request, group_id):
 	# Default Catch-All that does nothing
 	return HttpResponse("whoa making a group transaction on group %s" % group_id)
 
+def error(request, error_id):
+	return render(request, f'./{error_id}.html')
+
 # Generates the url for groups, using the group id as seed
 def gen_hash(seed):
     base = string.ascii_letters+string.digits # Output hash base: all alphabets and digits

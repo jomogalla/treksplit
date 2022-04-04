@@ -57,6 +57,12 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script src="{{ STATIC_URL }}/static/jquery.tipsy.js"></script>
 		<script type="text/javascript" src="{{ STATIC_URL }}/static/scripts.js"></script>
+		<script src="{{ STATIC_URL }}/static/scripts/recentlyVisited.js"></script>
+		<script defer>
+			const hash = '{{ group.url_hash }}'
+			const groupName = '{{ group.name }}';
+			recentlyVisited.addVisit(hash, groupName);
+		</script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/masonry/3.1.5/masonry.pkgd.min.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.min.js"></script>
 	</body>
