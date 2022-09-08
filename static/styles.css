@@ -648,6 +648,23 @@ p{
 #intro button{
 	font-size: 2em;
 }
+
+.alert {
+	background-color: EEE8FF;
+    padding: 33px;
+    font-size: 1.3rem;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    text-align: center;
+}
+
+.alert a {
+	text-decoration: none;
+}
+
+.alert a span {
+	text-decoration: underline;
+}
 /*********** Mobile ***********/
 @media only screen and (max-width: 735px){
 	.settings_row{
@@ -841,7 +858,6 @@ p{
 		padding-top: 10px;
 		border-top: 2px #EEE8FF solid;
 	}
-
 }
 
 /* TIPSY */
